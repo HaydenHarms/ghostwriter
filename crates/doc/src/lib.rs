@@ -40,6 +40,7 @@ pub mod resolve;
 pub mod section;
 pub mod smart_art;
 pub mod styles;
+pub mod suggest; // companion hook
 pub mod symbol_fonts;
 pub mod table;
 pub mod wordart;

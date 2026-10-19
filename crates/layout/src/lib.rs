@@ -223,7 +223,8 @@ impl HideDeleted {
     }
     /// Whether text deleted by revision `del` (`None`: not deleted) is left out.
     pub fn hides(self, doc: &Document, del: Option<u32>) -> bool {
-        del.is_some() && if doc.move_name(del).is_some() { self.moved_from } else { self.plain }
+        // companion hook: the words a suggestion replaces are never shown.
+        wordcraft_doc::suggest::is_suggestion(doc, del) || del.is_some() && if doc.move_name(del).is_some() { self.moved_from } else { self.plain }
     }
 }
 

@@ -758,7 +758,9 @@ fn lines(
             if c.kind == ClKind::Marker {
                 continue;
             }
-            if let Some(h) = st.rc.highlight.or(st.rc.shading) {
+            // companion hook: a suggestion's words are drawn on orange.
+            let suggested = wordcraft_doc::suggest::is_suggestion(doc, st.rc.ins).then_some(wordcraft_doc::suggest::FILL);
+            if let Some(h) = suggested.or(st.rc.highlight).or(st.rc.shading) {
                 out.push(Draw::Fill { rect: Rect::new(x + cx, top, (nx - cx).max(0.0), line.height), color: h, alpha, text_bg: true });
             }
             let b = st.rc.border;
@@ -919,7 +921,8 @@ fn lines(
             }
             let shown = opts.markup && m.insertions_deletions;
             let del = rc.del.filter(|_| shown);
-            let ins = rc.ins.filter(|_| shown && del.is_none());
+            // companion hook: a suggestion's words are drawn as plain text (on orange), not as markup.
+            let ins = rc.ins.filter(|_| shown && del.is_none() && !wordcraft_doc::suggest::is_suggestion(doc, rc.ins));
             let author = |r: u32| revision_color(doc.revisions.get(r as usize).map(|v| author_index(doc, &v.author)).unwrap_or(0));
             // Moved text: the Moves marks and colours (by default green, double strikethrough
             // where it was, double underline where it went).

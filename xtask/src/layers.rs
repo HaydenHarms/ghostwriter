@@ -53,6 +53,7 @@ pub const TABLE: &[(&str, Class)] = &[
     // apps and tooling
     ("wordcraft", Class::Exempt),
     ("cli", Class::Exempt),
+    ("companion", Class::Exempt), // companion hook
     ("web", Class::Exempt),
     ("xtask", Class::Exempt),
 ];

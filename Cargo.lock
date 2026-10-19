@@ -5176,6 +5176,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "wordcraft-companion"
+version = "0.8.0"
+dependencies = [
+ "serde_json",
+ "wordcraft-mcp",
+]
+
+[[package]]
 name = "wordcraft-control-key"
 version = "0.8.0"
 

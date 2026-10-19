@@ -74,6 +74,7 @@ pub mod ribbon;
 pub mod ribbon_fit;
 pub mod ruler_tabs;
 pub mod scroll;
+pub mod suggest; // companion hook
 pub mod system_clipboard;
 pub mod table_mouse;
 pub mod table_pen;
@@ -2229,6 +2230,7 @@ impl WordApp {
             }
             egui::CentralPanel::default().frame(egui::Frame::NONE.fill(t.canvas)).show(ui, |ui| {
                 canvas::show(self, ui);
+                suggest::show(self, ui); // companion hook
             });
         }
         content_controls::popup(self, &ctx);
