@@ -126,6 +126,8 @@ All code is in new files, except a few hooks, each marked `companion hook`
 - `crates/layout/src/lib.rs` (`HideDeleted::hides`): replaced words are left out of the layout.
 - `crates/layout/src/display.rs` (two lines): suggested words on orange, drawn as plain text.
 - `crates/ui-egui/src/suggest.rs` + one call in `crates/ui-egui/src/lib.rs`: the ✓/✗ card.
+- `crates/ui-egui/src/i18n/companion.tsv` (+ `companion.rs`, two lines in `i18n/mod.rs`): the
+  command labels in every interface language, apart from the upstream catalogs.
 - `apps/wordcraft-companion/`: the watcher. `Cargo.toml` (`default-members`) and
   `xtask/src/layers.rs` list it.
 
@@ -139,4 +141,4 @@ cargo xtask ci
 ```
 
 A conflict can only be in one of the hook lines above; keep upstream's version of the line and
-put the hook back. `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 10 lines afterwards.
+put the hook back. `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 12 lines afterwards.

@@ -26,6 +26,7 @@
 //! - [`fmt`]: fill `{name}` placeholders after a lookup; translators may reorder them.
 
 mod catalog;
+mod companion; // companion hook
 
 use std::cell::Cell;
 use std::sync::OnceLock;
@@ -170,7 +171,7 @@ pub static LANGUAGES: [LangInfo; 23] = [
 impl LangInfo {
     fn catalog(&self) -> &Catalog {
         self.catalog.get_or_init(|| {
-            let (catalog, errors) = Catalog::parse(self.source);
+            let (catalog, errors) = Catalog::parse(&format!("{}\n{}", self.source, companion::rows(self.code))); // companion hook
             for error in errors {
                 log::warn!("{} interface catalog: {error}; that entry shows in English", self.code);
             }

@@ -1,0 +1,157 @@
+# Companion (fork addition, docs/companion.md): its command labels in every language.
+# Columns, separated by a TAB: language code <TAB> English source <TAB> translation.
+# Kept apart from the upstream catalogs so merging upstream never conflicts here.
+zh-hans	Companion	写作助手
+zh-hans	Add Suggestion	添加建议
+zh-hans	List Suggestions	列出建议
+zh-hans	Suggestion Context	建议上下文
+zh-hans	Accept Suggestion	接受建议
+zh-hans	Reject Suggestion	拒绝建议
+zh-hans	Withdraw Suggestion	撤回建议
+zh-hant	Companion	寫作助手
+zh-hant	Add Suggestion	新增建議
+zh-hant	List Suggestions	列出建議
+zh-hant	Suggestion Context	建議上下文
+zh-hant	Accept Suggestion	接受建議
+zh-hant	Reject Suggestion	拒絕建議
+zh-hant	Withdraw Suggestion	撤回建議
+ja	Companion	コンパニオン
+ja	Add Suggestion	提案を追加
+ja	List Suggestions	提案の一覧
+ja	Suggestion Context	提案のコンテキスト
+ja	Accept Suggestion	提案を承諾
+ja	Reject Suggestion	提案を却下
+ja	Withdraw Suggestion	提案を取り下げ
+ko	Companion	도우미
+ko	Add Suggestion	제안 추가
+ko	List Suggestions	제안 목록
+ko	Suggestion Context	제안 컨텍스트
+ko	Accept Suggestion	제안 수락
+ko	Reject Suggestion	제안 거부
+ko	Withdraw Suggestion	제안 철회
+uk	Companion	Помічник
+uk	Add Suggestion	Додати пропозицію
+uk	List Suggestions	Список пропозицій
+uk	Suggestion Context	Контекст пропозиції
+uk	Accept Suggestion	Прийняти пропозицію
+uk	Reject Suggestion	Відхилити пропозицію
+uk	Withdraw Suggestion	Відкликати пропозицію
+es	Companion	Asistente
+es	Add Suggestion	Agregar sugerencia
+es	List Suggestions	Enumerar sugerencias
+es	Suggestion Context	Contexto de la sugerencia
+es	Accept Suggestion	Aceptar sugerencia
+es	Reject Suggestion	Rechazar sugerencia
+es	Withdraw Suggestion	Retirar sugerencia
+pt-br	Companion	Assistente
+pt-br	Add Suggestion	Adicionar sugestão
+pt-br	List Suggestions	Listar sugestões
+pt-br	Suggestion Context	Contexto da sugestão
+pt-br	Accept Suggestion	Aceitar sugestão
+pt-br	Reject Suggestion	Rejeitar sugestão
+pt-br	Withdraw Suggestion	Retirar sugestão
+sr	Companion	Помоћник
+sr	Add Suggestion	Додај предлог
+sr	List Suggestions	Наведи предлоге
+sr	Suggestion Context	Контекст предлога
+sr	Accept Suggestion	Прихвати предлог
+sr	Reject Suggestion	Одбаци предлог
+sr	Withdraw Suggestion	Повуци предлог
+sr-latn	Companion	Pomoćnik
+sr-latn	Add Suggestion	Dodaj predlog
+sr-latn	List Suggestions	Navedi predloge
+sr-latn	Suggestion Context	Kontekst predloga
+sr-latn	Accept Suggestion	Prihvati predlog
+sr-latn	Reject Suggestion	Odbaci predlog
+sr-latn	Withdraw Suggestion	Povuci predlog
+pl	Companion	Asystent
+pl	Add Suggestion	Dodaj sugestię
+pl	List Suggestions	Wyświetl sugestie
+pl	Suggestion Context	Kontekst sugestii
+pl	Accept Suggestion	Zaakceptuj sugestię
+pl	Reject Suggestion	Odrzuć sugestię
+pl	Withdraw Suggestion	Wycofaj sugestię
+cs	Companion	Pomocník
+cs	Add Suggestion	Přidat návrh
+cs	List Suggestions	Seznam návrhů
+cs	Suggestion Context	Kontext návrhu
+cs	Accept Suggestion	Přijmout návrh
+cs	Reject Suggestion	Odmítnout návrh
+cs	Withdraw Suggestion	Stáhnout návrh
+et	Companion	Abiline
+et	Add Suggestion	Lisa soovitus
+et	List Suggestions	Loetle soovitused
+et	Suggestion Context	Soovituse kontekst
+et	Accept Suggestion	Nõustu soovitusega
+et	Reject Suggestion	Keeldu soovitusest
+et	Withdraw Suggestion	Võta soovitus tagasi
+de	Companion	Begleiter
+de	Add Suggestion	Vorschlag hinzufügen
+de	List Suggestions	Vorschläge auflisten
+de	Suggestion Context	Vorschlagskontext
+de	Accept Suggestion	Vorschlag annehmen
+de	Reject Suggestion	Vorschlag ablehnen
+de	Withdraw Suggestion	Vorschlag zurückziehen
+ru	Companion	Помощник
+ru	Add Suggestion	Добавить предложение
+ru	List Suggestions	Список предложений
+ru	Suggestion Context	Контекст предложения
+ru	Accept Suggestion	Принять предложение
+ru	Reject Suggestion	Отклонить предложение
+ru	Withdraw Suggestion	Отозвать предложение
+tr	Companion	Yardımcı
+tr	Add Suggestion	Öneri Ekle
+tr	List Suggestions	Önerileri Listele
+tr	Suggestion Context	Öneri Bağlamı
+tr	Accept Suggestion	Öneriyi Kabul Et
+tr	Reject Suggestion	Öneriyi Reddet
+tr	Withdraw Suggestion	Öneriyi Geri Çek
+it	Companion	Assistente
+it	Add Suggestion	Aggiungi suggerimento
+it	List Suggestions	Elenca suggerimenti
+it	Suggestion Context	Contesto del suggerimento
+it	Accept Suggestion	Accetta suggerimento
+it	Reject Suggestion	Rifiuta suggerimento
+it	Withdraw Suggestion	Ritira suggerimento
+hu	Companion	Segítő
+hu	Add Suggestion	Javaslat hozzáadása
+hu	List Suggestions	Javaslatok listája
+hu	Suggestion Context	Javaslat környezete
+hu	Accept Suggestion	Javaslat elfogadása
+hu	Reject Suggestion	Javaslat elutasítása
+hu	Withdraw Suggestion	Javaslat visszavonása
+fr	Companion	Assistant
+fr	Add Suggestion	Ajouter une suggestion
+fr	List Suggestions	Lister les suggestions
+fr	Suggestion Context	Contexte de la suggestion
+fr	Accept Suggestion	Accepter la suggestion
+fr	Reject Suggestion	Refuser la suggestion
+fr	Withdraw Suggestion	Retirer la suggestion
+bg	Companion	Помощник
+bg	Add Suggestion	Добавяне на предложение
+bg	List Suggestions	Списък с предложения
+bg	Suggestion Context	Контекст на предложението
+bg	Accept Suggestion	Приемане на предложението
+bg	Reject Suggestion	Отхвърляне на предложението
+bg	Withdraw Suggestion	Оттегляне на предложението
+vi	Companion	Trợ lý
+vi	Add Suggestion	Thêm đề xuất
+vi	List Suggestions	Liệt kê đề xuất
+vi	Suggestion Context	Ngữ cảnh đề xuất
+vi	Accept Suggestion	Chấp nhận đề xuất
+vi	Reject Suggestion	Từ chối đề xuất
+vi	Withdraw Suggestion	Rút lại đề xuất
+sv	Companion	Följeslagare
+sv	Add Suggestion	Lägg till förslag
+sv	List Suggestions	Lista förslag
+sv	Suggestion Context	Förslagskontext
+sv	Accept Suggestion	Godkänn förslag
+sv	Reject Suggestion	Avvisa förslag
+sv	Withdraw Suggestion	Dra tillbaka förslag
+hr	Companion	Pomoćnik
+hr	Add Suggestion	Dodaj prijedlog
+hr	List Suggestions	Popis prijedloga
+hr	Suggestion Context	Kontekst prijedloga
+hr	Accept Suggestion	Prihvati prijedlog
+hr	Reject Suggestion	Odbij prijedlog
+hr	Withdraw Suggestion	Povuci prijedlog
