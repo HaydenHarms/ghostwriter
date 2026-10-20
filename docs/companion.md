@@ -249,14 +249,19 @@ All code is in new files, except a few hooks, each marked `companion hook`
 ### Keeping up with upstream
 
 ```sh
-git remote add upstream https://github.com/storytold/wordcraft.git   # once
-git fetch upstream
-git merge upstream/main
-cargo xtask ci
+scripts/update-from-wordcraft.sh      # on Windows, from Git Bash
+git push
 ```
 
-A code conflict can only be in one of the hook lines above; keep upstream's version of the line
-and put the hook back. Documentation conflicts: keep Ghostwriter's `README.md`, `ROADMAP.md`,
+The script fetches WordCraft's `main`, merges it, settles Ghostwriter's own conflicts (it keeps
+Ghostwriter's README, roadmap and agent files, takes WordCraft's `Cargo.toml` and `Cargo.lock`
+with Ghostwriter's version and companion line put back), then builds, lints and runs the
+Ghostwriter tests. On 2026-10-20 it merged 899 WordCraft commits with no other conflicts and no
+code changes.
+
+If it stops on a conflict, that's a hook line: keep upstream's version of the line and put the
+hook back, then `git add` and `git commit`. By hand, the same thing is `git fetch
+https://github.com/storytold/wordcraft.git main`, `git merge FETCH_HEAD`, and for conflicts: keep Ghostwriter's `README.md`, `ROADMAP.md`,
 `docs/roadmap.md`, `AGENTS.md` and `CLAUDE.md` (`git checkout --ours <file>`, then re-apply any
 upstream rule change to the agent files by hand). For the other files in `docs/`, take upstream's
 version and put back the one-paragraph `**Ghostwriter:**` note under the title (and the

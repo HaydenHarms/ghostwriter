@@ -43,6 +43,8 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 
 ## Progress log
 
+- **2026-10-20 · WordCraft merged.** 899 upstream commits (to `d1b0bfc`) with no code conflicts;
+  `scripts/update-from-wordcraft.sh` now does the whole update.
 - **2026-10-20 · Claude panel.** Home › Claude: start Claude from the window, switch suggestions
   and learning on or off (also per document), pick the model, see and forget what it has learned.
   The companion follows the panel live and stops with the window.

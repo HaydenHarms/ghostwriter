@@ -4,7 +4,7 @@ Ghostwriter is a word processor where **Claude suggests edits in the page as you
 
 ## Start every session here
 1. Read [`ROADMAP.md`](ROADMAP.md) and [`docs/roadmap.md`](docs/roadmap.md) (Current focus), then [`docs/companion.md`](docs/companion.md): how the suggestions, the companion, the MCP instructions and releases work.
-2. Ghostwriter's own code lives in new files (`*/suggest.rs`, `apps/wordcraft-companion/`, `i18n/companion.*`, `skills/ghostwriter/`, `packaging/windows/ghostwriter*`, `.github/workflows/ghostwriter-release.yml`). Upstream files get only one-line hooks marked `// companion hook` or `// ghostwriter brand`; keep the counts in `docs/companion.md` right. Don't take on Word-parity work here: it belongs upstream.
+2. Ghostwriter's own code lives in new files (`*/suggest.rs`, `apps/wordcraft-companion/`, `i18n/companion.*`, `skills/ghostwriter/`, `packaging/windows/ghostwriter*`, `.github/workflows/ghostwriter-release.yml`). Upstream files get only one-line hooks marked `// companion hook` or `// ghostwriter brand`; keep the counts in `docs/companion.md` right. Don't take on Word-parity work here: it belongs upstream. Bring WordCraft's changes in with `scripts/update-from-wordcraft.sh`.
 3. Suggestions only: Claude never changes the writer's text unless they ask; a suggestion never lands at or moves the caret.
 4. Don't stop to ask unless a decision is genuinely the owner's (licensing, publishing, pushing to new remotes, secrets, signing certificates).
 
