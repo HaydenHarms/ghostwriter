@@ -127,6 +127,8 @@ if ($env:CRAFT_FONTS_DIR) {
     Copy-Item $ofl.FullName (Join-Path $Portable "OFL-$($ofl.Directory.Name).txt")
   }
 }
+# The Claude Code skill (docs/companion.md, "Ask Claude Code directly").
+Copy-Item -Recurse (Join-Path $Root 'skills\ghostwriter') (Join-Path $Portable 'skill-ghostwriter')
 $Zip = Join-Path $Dist "ghostwriter-$Version-windows-$Arch-portable.zip"
 Remove-Item -Force $Zip -ErrorAction SilentlyContinue
 Compress-Archive -Path $Portable -DestinationPath $Zip

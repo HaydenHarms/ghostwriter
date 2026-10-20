@@ -7,6 +7,7 @@
 
 pub mod backend;
 pub mod server;
+pub mod suggest; // companion hook
 pub mod tools;
 
 pub use backend::{Backend, Remote};

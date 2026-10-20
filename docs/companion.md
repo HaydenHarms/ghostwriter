@@ -121,10 +121,31 @@ Section 3 must answer the "induced demand" objection before the conclusion.
 Every call counts toward your Claude plan's usage limits. Writing steadily, expect about one call
 per paragraph.
 
-## For other clients (Claude Code over MCP, scripts)
+## Ask Claude Code directly (MCP)
 
-The companion only uses commands any client can run (`wordcraft-cli mcp --connect 127.0.0.1:7981`
-gives them to an interactive Claude Code session):
+Besides the companion watching as you type, you can ask Claude for suggestions when you want them
+("tighten paragraph 3", "check my citations against the brief"). They land in the page the same
+way, in orange with ✓/✗.
+
+1. With Ghostwriter open, add its MCP server to Claude Code once:
+
+   ```powershell
+   claude mcp add ghostwriter -- ghostwriter-cli mcp --connect 127.0.0.1:7981
+   ```
+
+   (From a source build: `.\target\release\wordcraft-cli.exe` in place of `ghostwriter-cli`.)
+2. Optionally, install the skill so Claude knows when to reach for it: copy
+   [`skills/ghostwriter/`](../skills/ghostwriter/SKILL.md) to `%USERPROFILE%\.claude\skills\ghostwriter\`.
+3. Start `claude` and ask, for example: *"Read my open Ghostwriter document and suggest edits to
+   the third section against my brief in essay.brief.md."*
+
+You don't need the skill: the server sends every client short instructions on the `suggest.*`
+commands when it connects (`crates/mcp/src/suggest.rs`). The skill adds worked examples and
+when to use them. Claude Desktop and other MCP clients use the same server command.
+
+### The commands
+
+Any client can run these (the companion uses only these):
 
 | Command | Params | |
 |---|---|---|
@@ -147,6 +168,8 @@ All code is in new files, except a few hooks, each marked `companion hook`
 - `crates/ui-egui/src/suggest.rs` + one call in `crates/ui-egui/src/lib.rs`: the ✓/✗ card.
 - `crates/ui-egui/src/i18n/companion.tsv` (+ `companion.rs`, two lines in `i18n/mod.rs`): the
   command labels in every interface language, apart from the upstream catalogs.
+- `crates/mcp/src/suggest.rs` (+ one line each in `lib.rs` and `server.rs`): the instructions
+  every MCP client gets on the `suggest.*` commands.
 - `apps/wordcraft-companion/`: the watcher. `Cargo.toml` (`default-members`) and
   `xtask/src/layers.rs` list it.
 
@@ -160,7 +183,7 @@ cargo xtask ci
 ```
 
 A conflict can only be in one of the hook lines above; keep upstream's version of the line and
-put the hook back. `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 12 lines afterwards.
+put the hook back. `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 14 lines afterwards.
 
 The Ghostwriter name works the same way: the 13 lines marked `ghostwriter brand`
 (`git grep -n "ghostwriter brand" -- '*.rs'`) set the window title, the About box, the
