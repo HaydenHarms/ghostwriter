@@ -1,6 +1,6 @@
 # Ghostwriter roadmap
 
-**Stage: 1.0, Windows** · next: 1.1 (learns your style; the Claude panel)
+**Stage: 1.1, Windows** · next: bigger suggestions on request (G8)
 
 > **Last updated:** 2026-10-20 · **Change:** major (the goal restated as live Claude suggestions; WordCraft's Word-parity roadmap moved to upstream)
 
@@ -12,7 +12,7 @@ parity is tracked upstream, in WordCraft's own
 in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (see
 [docs/companion.md](docs/companion.md#keeping-up-with-upstream)).
 
-## What works today (1.0.1)
+## What works today (1.1.0)
 
 | Area | State |
 |---|---|
@@ -24,8 +24,8 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 | Saved files | done: suggestions are tracked changes by *Claude (suggestion)*; Word reads them |
 | Windows | done: x64 and ARM64 installers and portable zips, unsigned |
 | macOS, Linux | builds from source; no packages |
-| Learning your style | done (unreleased): accepts and rejects noted in a feedback log; a style profile Claude builds from your writing by itself (first after ~150 words) and refines from your decisions; rejected edits not repeated; MCP clients get the profile too |
-| Claude panel | done (unreleased): Home › Claude; start Claude from the window, suggestions and learning on/off, per-document learning, model, profile preview, forget; live, no restart |
+| Learning your style | done: accepts and rejects noted in a feedback log; a style profile Claude builds from your writing by itself (first after ~150 words) and refines from your decisions; rejected edits not repeated; MCP clients get the profile too |
+| Claude panel | done: Home › Claude; start Claude from the window, suggestions and learning on/off, per-document learning, model, profile preview, forget; live, no restart |
 | Interface languages | the suggestion commands are translated into all 22 of WordCraft's languages |
 
 ## Next
@@ -43,6 +43,7 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 
 ## Progress log
 
+- **2026-10-20 · 1.1.0.** The Claude panel, style learning and the latest WordCraft, released.
 - **2026-10-20 · WordCraft merged.** 899 upstream commits (to `d1b0bfc`) with no code conflicts;
   `scripts/update-from-wordcraft.sh` now does the whole update.
 - **2026-10-20 · Claude panel.** Home › Claude: start Claude from the window, switch suggestions

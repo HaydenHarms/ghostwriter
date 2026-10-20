@@ -110,8 +110,7 @@ commands (`context`, `add`, `list`, `accept`, `reject`, `withdraw`). They're des
 
 ## Roadmap
 
-Ghostwriter **1.0** is the first working version on Windows; learning your style and the Claude
-panel are next to ship.
+Ghostwriter **1.1** runs on Windows, with the Claude panel and style learning.
 After that, roughly in order:
 
 1. **Bigger suggestions on request**, from the Claude panel: a transition between two sections,

@@ -276,10 +276,10 @@ again with `cargo xtask version set <version>` before tagging a release.
 
 ## Releasing
 
-1. `cargo xtask version set 1.1.0`, write `docs/releases/ghostwriter-1.1.0.md`, and add the
+1. `cargo xtask version set 1.2.0`, write `docs/releases/ghostwriter-1.2.0.md`, and add the
    release to the progress log in `ROADMAP.md`.
-2. Commit and push, then either `git tag v1.1.0 && git push origin v1.1.0`, or run the workflow by
+2. Commit and push, then either `git tag v1.2.0 && git push origin v1.2.0`, or run the workflow by
    hand on `main` (Actions › Ghostwriter release › Run workflow); it creates the tag.
 3. `.github/workflows/ghostwriter-release.yml` builds the Windows x64 and ARM64 installers
    (`packaging/windows/ghostwriter-package.ps1`, `ghostwriter.wxs`) and publishes
-   "Ghostwriter 1.1.0" with them. Upstream's `release.yml` stays as it is and isn't used.
+   "Ghostwriter 1.2.0" with them. Upstream's `release.yml` stays as it is and isn't used.
