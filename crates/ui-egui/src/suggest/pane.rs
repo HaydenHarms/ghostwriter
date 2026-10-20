@@ -14,9 +14,9 @@ use crate::WordApp;
 use crate::theme::Tokens;
 use crate::widgets::{big_toggle, group};
 
-/// The Review tab's Claude group.
+/// The Review tab's Ghostwriter group: the Claude button.
 pub fn ribbon_group(app: &mut WordApp, ui: &mut Ui) {
-    group(ui, "Claude", None, app, |ui, app| {
+    group(ui, "Ghostwriter", None, app, |ui, app| {
         big_toggle(ui, app, "ghostwriter", "Claude", "suggest.panel", panel_open());
     });
 }
