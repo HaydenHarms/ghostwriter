@@ -120,6 +120,10 @@ mod native {
         /// The companion's report and its age in seconds.
         status: Option<(Map<String, Value>, u64)>,
         learned: String,
+        /// The latest "Ask Claude" request's id.
+        request: u64,
+        /// A structure review's notes: (document, [(paragraph, note)]).
+        notes: (Option<String>, Vec<(usize, String)>),
     }
 
     thread_local! {
@@ -144,6 +148,8 @@ mod native {
                     settings: settings::read(&dir),
                     status: settings::status(&dir),
                     learned: Profile::new(dir.clone()).style().1,
+                    request: settings::request(&dir).map_or(0, |r| r.id),
+                    notes: settings::notes(&dir),
                 });
             }
             c.as_ref().map(f)
@@ -220,10 +226,115 @@ mod native {
         ui.add_space(2.0);
     }
 
+    /// The body paragraph the caret is in.
+    fn caret_block(app: &WordApp) -> Option<usize> {
+        let f = &app.session.sel.focus;
+        (f.story == wordcraft_doc::StoryRef::Body && f.path.0.len() == 1).then(|| f.path.0.first().and_then(|b| usize::try_from(*b).ok())).flatten()
+    }
+
+    /// The opening words of body paragraph `block`.
+    fn opening(app: &WordApp, block: usize) -> String {
+        let text = match app.session.doc.body.get(block).map(|b| &**b) {
+            Some(wordcraft_doc::Block::Para(p)) => p.text.as_str(),
+            _ => "",
+        };
+        let words: Vec<&str> = text.split_whitespace().take(6).collect();
+        let more = text.split_whitespace().count() > words.len();
+        format!("{}{}", words.join(" "), if more { "…" } else { "" })
+    }
+
+    /// Ask Claude for a transition, a missing step or a structure review, and show the review's
+    /// notes. `running`: the companion's status while it runs; `request`: the latest request's id.
+    fn ask_claude(
+        app: &mut WordApp,
+        ui: &mut Ui,
+        running: Option<&Map<String, Value>>,
+        request: u64,
+        notes: &(Option<String>, Vec<(usize, String)>),
+        t: &Tokens,
+    ) {
+        section(ui, "Ask Claude");
+        // The companion reports the last request it settled; a newer one is still being worked on.
+        let last = running.and_then(|st| st.get("answer")).filter(|a| a.is_object());
+        let settled = last.and_then(|a| a.get("id")).and_then(Value::as_u64);
+        let pending = settled.is_some_and(|id| request > id);
+        let answer = last.filter(|a| settled == Some(request) && a.get("old").is_none());
+        let path = app.session.path.as_ref().map(|p| p.display().to_string());
+        for (kind, label, tip) in settings::ASKS {
+            let r = ui.add_enabled(running.is_some() && !pending, egui::Button::new(tl!(label)).min_size(egui::vec2(ui.available_width(), 0.0)));
+            if r.on_hover_text(tl!(tip)).clicked()
+                && let Some(d) = dir()
+            {
+                let block = if kind == "structure" { None } else { caret_block(app) };
+                if let Err(e) = settings::ask(&d, kind, block, path.as_deref()) {
+                    log::warn!("Claude panel: {e}");
+                }
+                cached(true, |_| ());
+            }
+        }
+        if running.is_none() {
+            ui.label(RichText::new(tl!("Start Claude to ask it.")).font(regular(12.0)).color(t.text_dim));
+        } else if pending {
+            ui.label(RichText::new(tl!("Claude is working on it…")).font(regular(12.0)).color(t.text_dim));
+        } else if let Some(a) = answer {
+            let n = |k: &str| a.get(k).and_then(Value::as_u64).unwrap_or(0);
+            let line = match a.get("error").and_then(Value::as_str) {
+                Some(e) => e.to_string(),
+                None if n("suggestions") == 0 && n("notes") == 0 => tl!("Nothing to suggest here.").to_string(),
+                None => {
+                    let mut parts = Vec::new();
+                    if n("suggestions") > 0 {
+                        parts.push(tl!("Suggestions added: {n}").replace("{n}", &n("suggestions").to_string()));
+                    }
+                    if n("notes") > 0 {
+                        parts.push(tl!("Notes: {n}").replace("{n}", &n("notes").to_string()));
+                    }
+                    parts.join(" · ")
+                }
+            };
+            ui.label(RichText::new(line).font(regular(12.0)).color(t.text_dim));
+        }
+
+        // A structure review's notes, for this document.
+        let (doc, list) = notes;
+        if list.is_empty() || *doc != path {
+            return;
+        }
+        section(ui, "Claude's notes");
+        for (block, note) in list {
+            let r = egui::Frame::NONE
+                .fill(t.canvas)
+                .inner_margin(6)
+                .corner_radius(4)
+                .show(ui, |ui| {
+                    ui.set_width(ui.available_width());
+                    ui.label(RichText::new(opening(app, *block)).font(regular(11.0)).color(t.text_dim));
+                    ui.label(RichText::new(note).font(regular(12.0)));
+                })
+                .response
+                .interact(egui::Sense::click())
+                .on_hover_text(tl!("Go to this paragraph"));
+            if r.clicked() {
+                let _ = app.run("caret.set", json!({"pos": {"block": block, "off": 0}}));
+            }
+            ui.add_space(4.0);
+        }
+        if ui.button(tl!("Clear notes")).clicked()
+            && let Some(d) = dir()
+        {
+            if let Err(e) = settings::write_notes(&d, doc.as_deref(), &[]) {
+                log::warn!("Claude panel: {e}");
+            }
+            cached(true, |_| ());
+        }
+    }
+
     pub(super) fn pane(app: &mut WordApp, ui: &mut Ui) {
         let t = Tokens::get(ui.ctx());
         ui.ctx().request_repaint_after(std::time::Duration::from_secs(1));
-        let Some((s, status, learned)) = cached(false, |c| (c.settings.clone(), c.status.clone(), c.learned.clone())) else {
+        let Some((s, status, learned, request, notes)) =
+            cached(false, |c| (c.settings.clone(), c.status.clone(), c.learned.clone(), c.request, c.notes.clone()))
+        else {
             ui.label(tl!("Claude isn't running"));
             return;
         };
@@ -236,6 +347,7 @@ mod native {
             Some((st, _)) => match st.get("busy").and_then(Value::as_str) {
                 Some("suggesting") => (t.orange, tl!("Claude is suggesting…")),
                 Some("learning") => (t.orange, tl!("Claude is learning your style…")),
+                Some(_) => (t.orange, tl!("Claude is working on your request…")),
                 _ if !flag("suggest") && !flag("learn") => (t.text_disabled, tl!("Claude is paused")),
                 _ => (t.green, tl!("Claude is reading along")),
             },
@@ -274,6 +386,8 @@ mod native {
                 }
             }
         }
+
+        ask_claude(app, ui, running.map(|(st, _)| st), request, &notes, &t);
 
         // Suggestions.
         section(ui, "Suggestions");

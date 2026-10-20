@@ -1,6 +1,6 @@
 # Ghostwriter roadmap
 
-**Stage: 1.1, Windows** · next: bigger suggestions on request (G8)
+**Stage: 1.1, Windows** · next: 1.2 (Ask Claude: transitions, missing steps, structure)
 
 > **Last updated:** 2026-10-20 · **Change:** major (the goal restated as live Claude suggestions; WordCraft's Word-parity roadmap moved to upstream)
 
@@ -26,6 +26,7 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 | macOS, Linux | builds from source; no packages |
 | Learning your style | done: accepts and rejects noted in a feedback log; a style profile Claude builds from your writing by itself (first after ~150 words) and refines from your decisions; rejected edits not repeated; MCP clients get the profile too |
 | Claude panel | done: Home › Claude; start Claude from the window, suggestions and learning on/off, per-document learning, model, profile preview, forget; live, no restart |
+| Ask Claude | done (unreleased): panel buttons for a transition, a missing step and a structure review; notes in the panel, click to jump |
 | Interface languages | the suggestion commands are translated into all 22 of WordCraft's languages |
 
 ## Next
@@ -36,13 +37,15 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 | G2 | Start Claude from the window | done: the Claude panel | — |
 | G3 | Own settings | separate settings folder and control port from WordCraft, so both can run at once | 3–5 h |
 | G4 | macOS and Linux packages | DMG, AppImage/deb built by the release workflow | 6–10 h |
-| G5 | Whole-document passes | on request: structure, argument and consistency across sections, not only the paragraph at the caret | 8–12 h |
+| G5 | Whole-document passes | the structure review (G8) covers order and flow; still to come: consistency of terms, facts and claims across sections | 6–10 h |
 | G6 | Learning from rejections | done: feedback log, style profile, no repeats | — |
 | G7 | Explain a suggestion | a short reason on the card, from Claude's answer | 3–5 h |
-| G8 | Bigger suggestions on request | buttons in the Claude panel: a transition between sections, a paragraph's missing step, a structure pass; still suggestions to accept or reject | 8–14 h |
+| G8 | Bigger suggestions on request | done: Ask Claude in the panel (transition, missing step, structure review with notes) | — |
 
 ## Progress log
 
+- **2026-10-20 · Ask Claude.** Claude panel buttons for a transition, a missing step and a
+  structure review; the review's notes sit in the panel and jump to their paragraph.
 - **2026-10-20 · 1.1.0.** The Claude panel, style learning and the latest WordCraft, released.
 - **2026-10-20 · WordCraft merged.** 899 upstream commits (to `d1b0bfc`) with no code conflicts;
   `scripts/update-from-wordcraft.sh` now does the whole update.

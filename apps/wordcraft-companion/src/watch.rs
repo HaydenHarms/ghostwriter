@@ -50,6 +50,32 @@ impl Context {
         Context { blocks, caret, document }
     }
 
+    /// Mark the suggestions waiting in each paragraph (`suggest.list`'s entries) as ⟦words⟧, so a
+    /// prompt can tell Claude not to quote them.
+    pub fn mark_pending(&mut self, list: &Value) {
+        let mut spans: Vec<(usize, usize, &str)> = list
+            .as_array()
+            .into_iter()
+            .flatten()
+            .filter_map(|sp| {
+                let block = usize::try_from(sp.get("block")?.as_u64()?).ok()?;
+                let at = usize::try_from(sp.get("at")?.as_u64()?).ok()?;
+                Some((block, at, sp.get("text")?.as_str()?))
+            })
+            .filter(|(_, _, text)| !text.is_empty())
+            .collect();
+        // Last first, so earlier offsets still hold.
+        spans.sort_by_key(|s| std::cmp::Reverse((s.0, s.1)));
+        for (block, at, text) in spans {
+            let Some(b) = self.blocks.iter_mut().find(|b| b.index == block) else { continue };
+            let end = at.saturating_add(text.len());
+            if b.text.get(at..end) == Some(text) {
+                b.text.insert(end, '⟧');
+                b.text.insert(at, '⟦');
+            }
+        }
+    }
+
     pub fn block(&self, index: usize) -> Option<&Block> {
         self.blocks.iter().find(|b| b.index == index)
     }
@@ -184,6 +210,14 @@ mod tests {
         let c2 = ctx(&["Heading", &longer], 1);
         assert_eq!(w.observe(&c2, t0 + Duration::from_secs(6)), None);
         assert_eq!(w.observe(&c2, t0 + Duration::from_secs(10)), Some(1));
+    }
+
+    #[test]
+    fn pending_suggestions_are_marked() {
+        let mut c = ctx(&["Heading", "Space is half. Rent is the reason, not the best."], 1);
+        let list = serde_json::json!([{"block": 1, "at": 0, "text": "Space is half. "}, {"block": 1, "at": 35, "text": "not "}, {"block": 1, "at": 3, "text": "nope"}]);
+        c.mark_pending(&list);
+        assert_eq!(c.blocks[1].text, "⟦Space is half. ⟧Rent is the reason, ⟦not ⟧the best.");
     }
 
     #[test]

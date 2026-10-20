@@ -861,3 +861,356 @@ hr	Open profile	Otvori profil
 hr	Forget my style	Zaboravi moj stil
 hr	Forget everything Claude has learned about your writing	Zaboravi sve što je Claude naučio o vašem pisanju
 hr	Click again to forget	Kliknite ponovno za zaborav
+# The Claude panel: Ask Claude and its notes.
+zh-hans	Ask Claude	问 Claude
+zh-hans	Suggest a transition	建议过渡句
+zh-hans	Suggest a missing step	建议缺失的一步
+zh-hans	Review structure	检查结构
+zh-hans	A sentence linking the paragraph you're in to the one before it	一句把当前段落与上一段连起来的话
+zh-hans	A sentence where this paragraph's reasoning jumps	在本段推理跳跃处补上的一句话
+zh-hans	Notes on the order and flow of the whole piece, and small fixes	关于全文顺序与行文的意见，以及小修改
+zh-hans	Start Claude to ask it.	启动 Claude 后才能提问。
+zh-hans	Claude is working on it…	Claude 正在处理…
+zh-hans	Suggestions added: {n}	已添加建议：{n}
+zh-hans	Notes: {n}	意见：{n}
+zh-hans	Nothing to suggest here.	这里没有可建议的。
+zh-hans	Claude's notes	Claude 的意见
+zh-hans	Clear notes	清除意见
+zh-hans	Go to this paragraph	转到此段落
+zh-hans	Claude is working on your request…	Claude 正在处理你的请求…
+zh-hant	Ask Claude	問 Claude
+zh-hant	Suggest a transition	建議過渡句
+zh-hant	Suggest a missing step	建議缺少的一步
+zh-hant	Review structure	檢查結構
+zh-hant	A sentence linking the paragraph you're in to the one before it	一句把目前段落與上一段連起來的話
+zh-hant	A sentence where this paragraph's reasoning jumps	在本段推理跳躍處補上的一句話
+zh-hant	Notes on the order and flow of the whole piece, and small fixes	關於全文順序與行文的意見，以及小修改
+zh-hant	Start Claude to ask it.	啟動 Claude 後才能提問。
+zh-hant	Claude is working on it…	Claude 正在處理…
+zh-hant	Suggestions added: {n}	已新增建議：{n}
+zh-hant	Notes: {n}	意見：{n}
+zh-hant	Nothing to suggest here.	這裡沒有可建議的。
+zh-hant	Claude's notes	Claude 的意見
+zh-hant	Clear notes	清除意見
+zh-hant	Go to this paragraph	前往此段落
+zh-hant	Claude is working on your request…	Claude 正在處理你的請求…
+ja	Ask Claude	Claude に頼む
+ja	Suggest a transition	つなぎの文を提案
+ja	Suggest a missing step	抜けている段階を提案
+ja	Review structure	構成を見直す
+ja	A sentence linking the paragraph you're in to the one before it	今いる段落を前の段落とつなぐ一文
+ja	A sentence where this paragraph's reasoning jumps	この段落の論理が飛んでいる箇所に入れる一文
+ja	Notes on the order and flow of the whole piece, and small fixes	文章全体の順序と流れについてのメモと、小さな修正
+ja	Start Claude to ask it.	頼むには Claude を開始してください。
+ja	Claude is working on it…	Claude が作業中です…
+ja	Suggestions added: {n}	追加した提案: {n}
+ja	Notes: {n}	メモ: {n}
+ja	Nothing to suggest here.	ここで提案することはありません。
+ja	Claude's notes	Claude のメモ
+ja	Clear notes	メモを消去
+ja	Go to this paragraph	この段落へ移動
+ja	Claude is working on your request…	Claude があなたの依頼に取り組んでいます…
+ko	Ask Claude	Claude에게 요청
+ko	Suggest a transition	연결 문장 제안
+ko	Suggest a missing step	빠진 단계 제안
+ko	Review structure	구조 검토
+ko	A sentence linking the paragraph you're in to the one before it	지금 단락을 앞 단락과 이어 주는 한 문장
+ko	A sentence where this paragraph's reasoning jumps	이 단락의 논리가 건너뛰는 곳에 넣을 한 문장
+ko	Notes on the order and flow of the whole piece, and small fixes	글 전체의 순서와 흐름에 대한 메모와 작은 수정
+ko	Start Claude to ask it.	요청하려면 Claude를 시작하세요.
+ko	Claude is working on it…	Claude가 작업 중…
+ko	Suggestions added: {n}	추가된 제안: {n}
+ko	Notes: {n}	메모: {n}
+ko	Nothing to suggest here.	여기에는 제안할 것이 없습니다.
+ko	Claude's notes	Claude의 메모
+ko	Clear notes	메모 지우기
+ko	Go to this paragraph	이 단락으로 이동
+ko	Claude is working on your request…	Claude가 요청을 처리하는 중…
+uk	Ask Claude	Запитати Claude
+uk	Suggest a transition	Запропонувати перехід
+uk	Suggest a missing step	Запропонувати пропущений крок
+uk	Review structure	Перевірити структуру
+uk	A sentence linking the paragraph you're in to the one before it	Речення, що пов'язує поточний абзац із попереднім
+uk	A sentence where this paragraph's reasoning jumps	Речення там, де міркування в цьому абзаці перескакує
+uk	Notes on the order and flow of the whole piece, and small fixes	Нотатки про порядок і плинність усього тексту та дрібні правки
+uk	Start Claude to ask it.	Запустіть Claude, щоб запитати.
+uk	Claude is working on it…	Claude працює над цим…
+uk	Suggestions added: {n}	Додано пропозицій: {n}
+uk	Notes: {n}	Нотаток: {n}
+uk	Nothing to suggest here.	Тут нічого запропонувати.
+uk	Claude's notes	Нотатки Claude
+uk	Clear notes	Очистити нотатки
+uk	Go to this paragraph	Перейти до цього абзацу
+uk	Claude is working on your request…	Claude опрацьовує ваш запит…
+es	Ask Claude	Preguntar a Claude
+es	Suggest a transition	Sugerir una transición
+es	Suggest a missing step	Sugerir un paso que falta
+es	Review structure	Revisar la estructura
+es	A sentence linking the paragraph you're in to the one before it	Una frase que une el párrafo en el que estás con el anterior
+es	A sentence where this paragraph's reasoning jumps	Una frase donde el razonamiento de este párrafo da un salto
+es	Notes on the order and flow of the whole piece, and small fixes	Notas sobre el orden y la fluidez de todo el texto, y pequeñas correcciones
+es	Start Claude to ask it.	Inicia Claude para preguntarle.
+es	Claude is working on it…	Claude está en ello…
+es	Suggestions added: {n}	Sugerencias añadidas: {n}
+es	Notes: {n}	Notas: {n}
+es	Nothing to suggest here.	No hay nada que sugerir aquí.
+es	Claude's notes	Notas de Claude
+es	Clear notes	Borrar notas
+es	Go to this paragraph	Ir a este párrafo
+es	Claude is working on your request…	Claude está trabajando en tu petición…
+pt-br	Ask Claude	Perguntar ao Claude
+pt-br	Suggest a transition	Sugerir uma transição
+pt-br	Suggest a missing step	Sugerir uma etapa que falta
+pt-br	Review structure	Revisar a estrutura
+pt-br	A sentence linking the paragraph you're in to the one before it	Uma frase que liga o parágrafo em que você está ao anterior
+pt-br	A sentence where this paragraph's reasoning jumps	Uma frase onde o raciocínio deste parágrafo dá um salto
+pt-br	Notes on the order and flow of the whole piece, and small fixes	Notas sobre a ordem e o fluxo do texto todo, e pequenas correções
+pt-br	Start Claude to ask it.	Inicie o Claude para perguntar.
+pt-br	Claude is working on it…	O Claude está trabalhando nisso…
+pt-br	Suggestions added: {n}	Sugestões adicionadas: {n}
+pt-br	Notes: {n}	Notas: {n}
+pt-br	Nothing to suggest here.	Nada a sugerir aqui.
+pt-br	Claude's notes	Notas do Claude
+pt-br	Clear notes	Limpar notas
+pt-br	Go to this paragraph	Ir para este parágrafo
+pt-br	Claude is working on your request…	O Claude está trabalhando no seu pedido…
+sr	Ask Claude	Питај Claude
+sr	Suggest a transition	Предложи прелаз
+sr	Suggest a missing step	Предложи корак који недостаје
+sr	Review structure	Прегледај структуру
+sr	A sentence linking the paragraph you're in to the one before it	Реченица која повезује тренутни пасус са претходним
+sr	A sentence where this paragraph's reasoning jumps	Реченица на месту где резоновање у овом пасусу прескаче
+sr	Notes on the order and flow of the whole piece, and small fixes	Белешке о редоследу и току целог текста и мале исправке
+sr	Start Claude to ask it.	Покрените Claude да бисте питали.
+sr	Claude is working on it…	Claude ради на томе…
+sr	Suggestions added: {n}	Додато предлога: {n}
+sr	Notes: {n}	Белешки: {n}
+sr	Nothing to suggest here.	Овде нема шта да се предложи.
+sr	Claude's notes	Claude-ове белешке
+sr	Clear notes	Обриши белешке
+sr	Go to this paragraph	Иди на овај пасус
+sr	Claude is working on your request…	Claude обрађује ваш захтев…
+sr-latn	Ask Claude	Pitaj Claude
+sr-latn	Suggest a transition	Predloži prelaz
+sr-latn	Suggest a missing step	Predloži korak koji nedostaje
+sr-latn	Review structure	Pregledaj strukturu
+sr-latn	A sentence linking the paragraph you're in to the one before it	Rečenica koja povezuje trenutni pasus sa prethodnim
+sr-latn	A sentence where this paragraph's reasoning jumps	Rečenica na mestu gde rezonovanje u ovom pasusu preskače
+sr-latn	Notes on the order and flow of the whole piece, and small fixes	Beleške o redosledu i toku celog teksta i male ispravke
+sr-latn	Start Claude to ask it.	Pokrenite Claude da biste pitali.
+sr-latn	Claude is working on it…	Claude radi na tome…
+sr-latn	Suggestions added: {n}	Dodato predloga: {n}
+sr-latn	Notes: {n}	Beleški: {n}
+sr-latn	Nothing to suggest here.	Ovde nema šta da se predloži.
+sr-latn	Claude's notes	Claude-ove beleške
+sr-latn	Clear notes	Obriši beleške
+sr-latn	Go to this paragraph	Idi na ovaj pasus
+sr-latn	Claude is working on your request…	Claude obrađuje vaš zahtev…
+pl	Ask Claude	Zapytaj Claude
+pl	Suggest a transition	Zaproponuj przejście
+pl	Suggest a missing step	Zaproponuj brakujący krok
+pl	Review structure	Przejrzyj strukturę
+pl	A sentence linking the paragraph you're in to the one before it	Zdanie łączące bieżący akapit z poprzednim
+pl	A sentence where this paragraph's reasoning jumps	Zdanie w miejscu, w którym rozumowanie w tym akapicie przeskakuje
+pl	Notes on the order and flow of the whole piece, and small fixes	Uwagi o kolejności i płynności całego tekstu oraz drobne poprawki
+pl	Start Claude to ask it.	Uruchom Claude, aby zapytać.
+pl	Claude is working on it…	Claude nad tym pracuje…
+pl	Suggestions added: {n}	Dodane sugestie: {n}
+pl	Notes: {n}	Uwagi: {n}
+pl	Nothing to suggest here.	Nie ma tu nic do zaproponowania.
+pl	Claude's notes	Uwagi Claude
+pl	Clear notes	Wyczyść uwagi
+pl	Go to this paragraph	Przejdź do tego akapitu
+pl	Claude is working on your request…	Claude zajmuje się Twoją prośbą…
+cs	Ask Claude	Zeptat se Claude
+cs	Suggest a transition	Navrhnout přechod
+cs	Suggest a missing step	Navrhnout chybějící krok
+cs	Review structure	Zkontrolovat strukturu
+cs	A sentence linking the paragraph you're in to the one before it	Věta, která spojí aktuální odstavec s předchozím
+cs	A sentence where this paragraph's reasoning jumps	Věta v místě, kde úvaha v tomto odstavci přeskakuje
+cs	Notes on the order and flow of the whole piece, and small fixes	Poznámky k pořadí a plynulosti celého textu a drobné opravy
+cs	Start Claude to ask it.	Spusťte Claude a zeptejte se.
+cs	Claude is working on it…	Claude na tom pracuje…
+cs	Suggestions added: {n}	Přidané návrhy: {n}
+cs	Notes: {n}	Poznámky: {n}
+cs	Nothing to suggest here.	Tady není co navrhnout.
+cs	Claude's notes	Poznámky od Claude
+cs	Clear notes	Vymazat poznámky
+cs	Go to this paragraph	Přejít na tento odstavec
+cs	Claude is working on your request…	Claude zpracovává váš požadavek…
+et	Ask Claude	Küsi Claude'ilt
+et	Suggest a transition	Soovita üleminekut
+et	Suggest a missing step	Soovita puuduvat sammu
+et	Review structure	Vaata struktuur üle
+et	A sentence linking the paragraph you're in to the one before it	Lause, mis seob praeguse lõigu eelmisega
+et	A sentence where this paragraph's reasoning jumps	Lause kohas, kus selle lõigu arutluskäik hüppab
+et	Notes on the order and flow of the whole piece, and small fixes	Märkused kogu teksti järjekorra ja voolavuse kohta ning väikesed parandused
+et	Start Claude to ask it.	Küsimiseks käivitage Claude.
+et	Claude is working on it…	Claude tegeleb sellega…
+et	Suggestions added: {n}	Lisatud soovitusi: {n}
+et	Notes: {n}	Märkusi: {n}
+et	Nothing to suggest here.	Siin pole midagi soovitada.
+et	Claude's notes	Claude'i märkused
+et	Clear notes	Tühjenda märkused
+et	Go to this paragraph	Mine selle lõigu juurde
+et	Claude is working on your request…	Claude töötleb teie palvet…
+de	Ask Claude	Claude fragen
+de	Suggest a transition	Übergang vorschlagen
+de	Suggest a missing step	Fehlenden Schritt vorschlagen
+de	Review structure	Aufbau prüfen
+de	A sentence linking the paragraph you're in to the one before it	Ein Satz, der Ihren aktuellen Absatz mit dem vorherigen verbindet
+de	A sentence where this paragraph's reasoning jumps	Ein Satz an der Stelle, an der die Argumentation dieses Absatzes springt
+de	Notes on the order and flow of the whole piece, and small fixes	Hinweise zu Reihenfolge und Fluss des ganzen Texts sowie kleine Korrekturen
+de	Start Claude to ask it.	Starten Sie Claude, um zu fragen.
+de	Claude is working on it…	Claude arbeitet daran…
+de	Suggestions added: {n}	Vorschläge eingefügt: {n}
+de	Notes: {n}	Hinweise: {n}
+de	Nothing to suggest here.	Hier gibt es nichts vorzuschlagen.
+de	Claude's notes	Claudes Hinweise
+de	Clear notes	Hinweise löschen
+de	Go to this paragraph	Zu diesem Absatz springen
+de	Claude is working on your request…	Claude bearbeitet Ihre Anfrage…
+ru	Ask Claude	Спросить Claude
+ru	Suggest a transition	Предложить переход
+ru	Suggest a missing step	Предложить пропущенный шаг
+ru	Review structure	Проверить структуру
+ru	A sentence linking the paragraph you're in to the one before it	Предложение, связывающее текущий абзац с предыдущим
+ru	A sentence where this paragraph's reasoning jumps	Предложение там, где рассуждение в этом абзаце перескакивает
+ru	Notes on the order and flow of the whole piece, and small fixes	Заметки о порядке и связности всего текста и небольшие правки
+ru	Start Claude to ask it.	Запустите Claude, чтобы спросить.
+ru	Claude is working on it…	Claude работает над этим…
+ru	Suggestions added: {n}	Добавлено предложений: {n}
+ru	Notes: {n}	Заметок: {n}
+ru	Nothing to suggest here.	Здесь нечего предложить.
+ru	Claude's notes	Заметки Claude
+ru	Clear notes	Очистить заметки
+ru	Go to this paragraph	Перейти к этому абзацу
+ru	Claude is working on your request…	Claude обрабатывает ваш запрос…
+tr	Ask Claude	Claude'a Sor
+tr	Suggest a transition	Geçiş Öner
+tr	Suggest a missing step	Eksik Adım Öner
+tr	Review structure	Yapıyı Gözden Geçir
+tr	A sentence linking the paragraph you're in to the one before it	Bulunduğunuz paragrafı bir öncekine bağlayan bir cümle
+tr	A sentence where this paragraph's reasoning jumps	Bu paragraftaki akıl yürütmenin atladığı yere bir cümle
+tr	Notes on the order and flow of the whole piece, and small fixes	Tüm metnin sırası ve akışı hakkında notlar ve küçük düzeltmeler
+tr	Start Claude to ask it.	Sormak için Claude'u başlatın.
+tr	Claude is working on it…	Claude bunun üzerinde çalışıyor…
+tr	Suggestions added: {n}	Eklenen öneriler: {n}
+tr	Notes: {n}	Notlar: {n}
+tr	Nothing to suggest here.	Burada önerilecek bir şey yok.
+tr	Claude's notes	Claude'un notları
+tr	Clear notes	Notları temizle
+tr	Go to this paragraph	Bu paragrafa git
+tr	Claude is working on your request…	Claude isteğiniz üzerinde çalışıyor…
+it	Ask Claude	Chiedi a Claude
+it	Suggest a transition	Suggerisci una transizione
+it	Suggest a missing step	Suggerisci un passaggio mancante
+it	Review structure	Rivedi la struttura
+it	A sentence linking the paragraph you're in to the one before it	Una frase che collega il paragrafo in cui sei a quello precedente
+it	A sentence where this paragraph's reasoning jumps	Una frase dove il ragionamento di questo paragrafo fa un salto
+it	Notes on the order and flow of the whole piece, and small fixes	Note sull'ordine e lo scorrere di tutto il testo, e piccole correzioni
+it	Start Claude to ask it.	Avvia Claude per chiedergli.
+it	Claude is working on it…	Claude ci sta lavorando…
+it	Suggestions added: {n}	Suggerimenti aggiunti: {n}
+it	Notes: {n}	Note: {n}
+it	Nothing to suggest here.	Niente da suggerire qui.
+it	Claude's notes	Note di Claude
+it	Clear notes	Cancella note
+it	Go to this paragraph	Vai a questo paragrafo
+it	Claude is working on your request…	Claude sta lavorando alla tua richiesta…
+hu	Ask Claude	Kérdezd a Claude-ot
+hu	Suggest a transition	Átvezetés javaslása
+hu	Suggest a missing step	Hiányzó lépés javaslása
+hu	Review structure	Szerkezet áttekintése
+hu	A sentence linking the paragraph you're in to the one before it	Egy mondat, amely összeköti az aktuális bekezdést az előzővel
+hu	A sentence where this paragraph's reasoning jumps	Egy mondat ott, ahol ennek a bekezdésnek a gondolatmenete ugrik
+hu	Notes on the order and flow of the whole piece, and small fixes	Megjegyzések a teljes szöveg sorrendjéről és gördülékenységéről, és apró javítások
+hu	Start Claude to ask it.	A kérdezéshez indítsa el a Claude-ot.
+hu	Claude is working on it…	A Claude dolgozik rajta…
+hu	Suggestions added: {n}	Hozzáadott javaslatok: {n}
+hu	Notes: {n}	Megjegyzések: {n}
+hu	Nothing to suggest here.	Itt nincs mit javasolni.
+hu	Claude's notes	A Claude megjegyzései
+hu	Clear notes	Megjegyzések törlése
+hu	Go to this paragraph	Ugrás erre a bekezdésre
+hu	Claude is working on your request…	A Claude dolgozik a kérésén…
+fr	Ask Claude	Demander à Claude
+fr	Suggest a transition	Proposer une transition
+fr	Suggest a missing step	Proposer une étape manquante
+fr	Review structure	Revoir la structure
+fr	A sentence linking the paragraph you're in to the one before it	Une phrase qui relie votre paragraphe au précédent
+fr	A sentence where this paragraph's reasoning jumps	Une phrase là où le raisonnement de ce paragraphe fait un saut
+fr	Notes on the order and flow of the whole piece, and small fixes	Des notes sur l'ordre et l'enchaînement de tout le texte, et de petites corrections
+fr	Start Claude to ask it.	Lancez Claude pour lui demander.
+fr	Claude is working on it…	Claude y travaille…
+fr	Suggestions added: {n}	Suggestions ajoutées : {n}
+fr	Notes: {n}	Notes : {n}
+fr	Nothing to suggest here.	Rien à proposer ici.
+fr	Claude's notes	Notes de Claude
+fr	Clear notes	Effacer les notes
+fr	Go to this paragraph	Aller à ce paragraphe
+fr	Claude is working on your request…	Claude traite votre demande…
+bg	Ask Claude	Попитай Claude
+bg	Suggest a transition	Предложи преход
+bg	Suggest a missing step	Предложи липсваща стъпка
+bg	Review structure	Преглед на структурата
+bg	A sentence linking the paragraph you're in to the one before it	Изречение, което свързва текущия абзац с предишния
+bg	A sentence where this paragraph's reasoning jumps	Изречение там, където разсъждението в този абзац прескача
+bg	Notes on the order and flow of the whole piece, and small fixes	Бележки за реда и плавността на целия текст и малки поправки
+bg	Start Claude to ask it.	Стартирайте Claude, за да попитате.
+bg	Claude is working on it…	Claude работи по това…
+bg	Suggestions added: {n}	Добавени предложения: {n}
+bg	Notes: {n}	Бележки: {n}
+bg	Nothing to suggest here.	Тук няма какво да се предложи.
+bg	Claude's notes	Бележките на Claude
+bg	Clear notes	Изчистване на бележките
+bg	Go to this paragraph	Към този абзац
+bg	Claude is working on your request…	Claude обработва заявката ви…
+vi	Ask Claude	Hỏi Claude
+vi	Suggest a transition	Đề xuất câu chuyển ý
+vi	Suggest a missing step	Đề xuất bước còn thiếu
+vi	Review structure	Xem lại cấu trúc
+vi	A sentence linking the paragraph you're in to the one before it	Một câu nối đoạn bạn đang viết với đoạn trước
+vi	A sentence where this paragraph's reasoning jumps	Một câu ở chỗ lập luận của đoạn này bị nhảy cóc
+vi	Notes on the order and flow of the whole piece, and small fixes	Ghi chú về thứ tự và mạch văn của cả bài, kèm vài sửa nhỏ
+vi	Start Claude to ask it.	Khởi động Claude để hỏi.
+vi	Claude is working on it…	Claude đang làm…
+vi	Suggestions added: {n}	Đã thêm đề xuất: {n}
+vi	Notes: {n}	Ghi chú: {n}
+vi	Nothing to suggest here.	Không có gì để đề xuất ở đây.
+vi	Claude's notes	Ghi chú của Claude
+vi	Clear notes	Xóa ghi chú
+vi	Go to this paragraph	Đến đoạn này
+vi	Claude is working on your request…	Claude đang xử lý yêu cầu của bạn…
+sv	Ask Claude	Fråga Claude
+sv	Suggest a transition	Föreslå en övergång
+sv	Suggest a missing step	Föreslå ett saknat steg
+sv	Review structure	Granska strukturen
+sv	A sentence linking the paragraph you're in to the one before it	En mening som binder ihop stycket du är i med det före
+sv	A sentence where this paragraph's reasoning jumps	En mening där resonemanget i det här stycket hoppar
+sv	Notes on the order and flow of the whole piece, and small fixes	Anteckningar om ordning och flyt i hela texten, och små rättelser
+sv	Start Claude to ask it.	Starta Claude för att fråga.
+sv	Claude is working on it…	Claude arbetar på det…
+sv	Suggestions added: {n}	Tillagda förslag: {n}
+sv	Notes: {n}	Anteckningar: {n}
+sv	Nothing to suggest here.	Inget att föreslå här.
+sv	Claude's notes	Claudes anteckningar
+sv	Clear notes	Rensa anteckningar
+sv	Go to this paragraph	Gå till det här stycket
+sv	Claude is working on your request…	Claude arbetar med din förfrågan…
+hr	Ask Claude	Pitaj Claudea
+hr	Suggest a transition	Predloži prijelaz
+hr	Suggest a missing step	Predloži korak koji nedostaje
+hr	Review structure	Pregledaj strukturu
+hr	A sentence linking the paragraph you're in to the one before it	Rečenica koja povezuje trenutni odlomak s prethodnim
+hr	A sentence where this paragraph's reasoning jumps	Rečenica na mjestu gdje razmišljanje u ovom odlomku preskače
+hr	Notes on the order and flow of the whole piece, and small fixes	Bilješke o redoslijedu i tijeku cijelog teksta te male ispravke
+hr	Start Claude to ask it.	Pokrenite Claudea da biste pitali.
+hr	Claude is working on it…	Claude radi na tome…
+hr	Suggestions added: {n}	Dodano prijedloga: {n}
+hr	Notes: {n}	Bilježaka: {n}
+hr	Nothing to suggest here.	Ovdje nema što predložiti.
+hr	Claude's notes	Claudeove bilješke
+hr	Clear notes	Obriši bilješke
+hr	Go to this paragraph	Idi na ovaj odlomak
+hr	Claude is working on your request…	Claude obrađuje vaš zahtjev…

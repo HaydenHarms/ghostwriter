@@ -85,6 +85,22 @@ which the running companion reads; the companion reports back through `status.js
 in the panel wins over the companion's command-line options; anything you never touched there
 keeps the option's value.
 
+### Ask Claude
+
+Under the status line, three buttons ask Claude for something bigger than a live suggestion. They
+work on request only, while Claude is running, and count toward its calls this hour.
+
+| | |
+|---|---|
+| **Suggest a transition** | one sentence (about 30 words at most) linking the paragraph the caret is in to the one before it, as a suggestion at its start (or at the end of the paragraph before) |
+| **Suggest a missing step** | up to two sentences where the caret's paragraph skips a step in its reasoning, each placed where the step belongs |
+| **Review structure** | **Claude's notes** in the panel on order, flow, repetition and sections to move, merge or cut (up to 6, each tied to a paragraph: click one to go there; **Clear notes** removes them), plus up to 4 small in-place fixes as suggestions |
+
+What Claude adds is still a suggestion you accept or reject, written from what the document already
+says, in your voice: no new facts, claims or examples. Words that are already a pending suggestion
+are marked for Claude so it doesn't build on them. The panel writes the request to `request.json`;
+notes come back in `notes.json` (kept per document, so they're there when you reopen it).
+
 ## A brief, if you want one
 
 You don't need to tell Ghostwriter anything: it learns your style from your writing (below).

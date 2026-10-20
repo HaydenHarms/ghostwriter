@@ -79,6 +79,10 @@ The panel is where you steer it, and changes apply at once:
 - **Suggestions** on or off, how many per paragraph, and how long you pause before Claude looks.
 - **Model**: Fast (lighter on your plan's limits), Balanced, or Thorough.
 - **Learn my style** on or off, and **Learn from this document** off for someone else's writing.
+- **Ask Claude**, on request: **Suggest a transition** into the paragraph you're in, **Suggest a
+  missing step** where its reasoning jumps, or **Review structure** for notes on the whole piece's
+  order and flow (click a note to jump to its paragraph). What Claude adds still arrives as
+  suggestions.
 - **What Claude has learned**: your style profile, with **Open profile** and **Forget my style**.
 - Whether Claude is running, and how many calls it has made this hour.
 
@@ -113,11 +117,8 @@ commands (`context`, `add`, `list`, `accept`, `reject`, `withdraw`). They're des
 Ghostwriter **1.1** runs on Windows, with the Claude panel and style learning.
 After that, roughly in order:
 
-1. **Bigger suggestions on request**, from the Claude panel: a transition between two sections,
-   a paragraph that's missing a step, a structure pass over the whole piece, still as suggestions
-   you accept or reject.
-2. **Own settings**, so Ghostwriter and WordCraft can be open side by side.
-3. **macOS and Linux** packages (the code already builds there; only packaging is Windows-only).
+1. **Own settings**, so Ghostwriter and WordCraft can be open side by side.
+2. **macOS and Linux** packages (the code already builds there; only packaging is Windows-only).
 
 Details and progress: [ROADMAP.md](ROADMAP.md).
 

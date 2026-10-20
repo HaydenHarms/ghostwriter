@@ -4,7 +4,7 @@ use serde_json::Value;
 
 use wordcraft_mcp::suggest::profile::Decision;
 
-use crate::watch::{Block, Context};
+use crate::watch::{Block, Context, is_heading};
 
 /// The instructions; the brief, style guide and paragraphs follow.
 const INSTRUCTIONS: &str = r#"You are an editor sitting beside the writer in their word processor. This is THEIR writing: your job is to help them say what they mean, better and more fully in their own voice, never to write it for them. The writer keeps typing while you work. Propose at most MAX small edits to the TARGET paragraph only. Each appears inline in the document, highlighted, and the writer accepts or rejects it with one click, so it must read naturally in place.
@@ -46,6 +46,26 @@ pub fn build(ctx: &Context, target: usize, m: &Material) -> Option<String> {
         "The writer has moved on from this paragraph."
     };
     let mut p = INSTRUCTIONS.replace("MAX", &m.max.to_string()).replace("CARET_RULE", caret_rule);
+    writer(&mut p, m);
+    outline(&mut p, ctx);
+    let pos = ctx.blocks.iter().position(|b| b.index == target)?;
+    let before: Vec<&str> =
+        ctx.blocks.get(pos.saturating_sub(3)..pos).unwrap_or_default().iter().map(|b| b.text.as_str()).filter(|t| !t.is_empty()).collect();
+    if !before.is_empty() {
+        p.push_str("\n\n## Paragraphs before (context only, don't edit)\n");
+        p.push_str(&before.join("\n\n"));
+    }
+    p.push_str("\n\n## TARGET paragraph\n");
+    p.push_str(&t.text);
+    if let Some(next) = ctx.blocks.get(pos + 1).filter(|b| !b.text.is_empty()) {
+        p.push_str("\n\n## Paragraph after (context only, don't edit)\n");
+        p.push_str(&next.text);
+    }
+    Some(p)
+}
+
+/// The brief, style guide, style profile and recent decisions, as sections of a prompt.
+fn writer(p: &mut String, m: &Material) {
     if let Some(b) = m.brief.filter(|b| !b.trim().is_empty()) {
         p.push_str("\n\n## The writer's brief for this piece\n");
         p.push_str(b.trim());
@@ -73,6 +93,10 @@ pub fn build(ctx: &Context, target: usize, m: &Material) -> Option<String> {
         p.push_str("\n\n## Edits this writer accepted (this kind is welcome)\n");
         p.push_str(&accepted.join("\n"));
     }
+}
+
+/// The headings so far, as a section of a prompt.
+fn outline(p: &mut String, ctx: &Context) {
     let outline: Vec<&str> = ctx
         .blocks
         .iter()
@@ -87,20 +111,77 @@ pub fn build(ctx: &Context, target: usize, m: &Material) -> Option<String> {
             p.push('\n');
         }
     }
-    let pos = ctx.blocks.iter().position(|b| b.index == target)?;
-    let before: Vec<&str> =
-        ctx.blocks.get(pos.saturating_sub(3)..pos).unwrap_or_default().iter().map(|b| b.text.as_str()).filter(|t| !t.is_empty()).collect();
-    if !before.is_empty() {
-        p.push_str("\n\n## Paragraphs before (context only, don't edit)\n");
-        p.push_str(&before.join("\n\n"));
+}
+
+const TRANSITION: &str = r#"You are an editor beside the writer in their word processor. This is THEIR writing. They asked you for a TRANSITION into the TARGET paragraph: one sentence, at most about 30 words, that carries the reader from the paragraph before into it. Write it the way the writer would (their voice, their words, their rhythm; see the style profile), using only ideas already in the document: no new claims, facts or examples. If the two paragraphs already connect well, propose a few-word change to the TARGET's first sentence instead, or nothing at all.
+
+Place the sentence with "before": the first words of the TARGET paragraph, copied character for character, and "insert": the sentence followed by one space. If it reads better as the close of the paragraph before, use "after": the last words of that paragraph, copied exactly, and "insert": one space and the sentence. No line breaks. Words in ⟦double brackets⟧ are earlier suggestions still waiting for the writer: never quote them. "why" is a short reason (under 12 words).
+
+Reply with JSON only, no prose and no code fence:
+{"suggestions": [{"before": "...", "insert": "... ", "why": "..."}]}"#;
+
+const GAP: &str = r#"You are an editor beside the writer in their word processor. This is THEIR writing. They asked you to find where the TARGET paragraph's reasoning jumps: a step the reader needs that the writer skipped. Propose at most 2 additions, each one sentence of at most about 30 words, placed exactly where the step belongs: "after" is the exact words just before that point in the TARGET paragraph (the end of a sentence, copied character for character) and "insert" is one space and the sentence. Build each step only from what the writer has already said or clearly implies in the document, in their voice (see the style profile); never add new facts, claims or examples. If the reasoning doesn't jump, return no suggestions. No line breaks. Words in ⟦double brackets⟧ are earlier suggestions still waiting for the writer: never quote them. "why" is a short reason (under 12 words).
+
+Reply with JSON only, no prose and no code fence:
+{"suggestions": [{"after": "...", "insert": " ...", "why": "..."}]}"#;
+
+const STRUCTURE: &str = r#"You are an editor beside the writer in their word processor. This is THEIR writing. They asked for a STRUCTURE review of the whole piece, given below as numbered paragraphs. Look at the order and flow, repetition, missing signposts, sections that don't earn their place, and how the argument builds. Don't rewrite: the writer decides.
+
+Return:
+- "notes": at most 6, each tied to the paragraph it's about ("paragraph": its number) and under 30 words, saying what to consider and why, e.g. "Repeats the point of [4]; merge the two or cut this one." Notes are for what a small edit can't fix: moving, merging, cutting or adding a section.
+- "suggestions": at most 4 small edits that fix flow in place (a signposting phrase, a sharper topic sentence), each with "paragraph": its number and "find"/"replace", or "after"/"insert", copied exactly from that paragraph. Each brings in at most about a dozen new words, in the writer's voice. No line breaks. Words in ⟦double brackets⟧ are earlier suggestions still waiting for the writer: never quote them.
+
+Reply with JSON only, no prose and no code fence:
+{"notes": [{"paragraph": 3, "note": "..."}], "suggestions": [{"paragraph": 5, "find": "...", "replace": "...", "why": "..."}]}"#;
+
+/// The longest document a structure review sends, in bytes.
+const MAX_DOCUMENT: usize = 80_000;
+
+/// The prompt for one of the Claude panel's "Ask Claude" buttons (`kind`: transition, gap,
+/// structure) about paragraph `target`. `None` when there's nothing to ask about (no paragraph
+/// before a transition, an empty document).
+pub fn ask(kind: &str, ctx: &Context, target: Option<usize>, m: &Material) -> Option<String> {
+    let mut p = match kind {
+        "transition" => TRANSITION.to_string(),
+        "gap" => GAP.to_string(),
+        "structure" => STRUCTURE.to_string(),
+        _ => return None,
+    };
+    writer(&mut p, m);
+    if kind == "structure" {
+        p.push_str("\n\n## The piece, numbered paragraphs\n");
+        let mut n = 0;
+        for b in ctx.blocks.iter().filter(|b| !b.text.trim().is_empty()) {
+            let style = b.style.as_deref().map(|s| format!(" ({s})")).unwrap_or_default();
+            let line = format!("[{}]{style} {}\n", b.index, b.text);
+            n += line.len();
+            if n > MAX_DOCUMENT {
+                p.push_str("[…the rest is left out for length]\n");
+                break;
+            }
+            p.push_str(&line);
+        }
+        return (n > 0).then_some(p);
+    }
+    outline(&mut p, ctx);
+    let pos = ctx.blocks.iter().position(|b| Some(b.index) == target)?;
+    let t = ctx.blocks.get(pos)?;
+    let prev = ctx.blocks.get(..pos).unwrap_or_default().iter().rev().find(|b| !b.text.trim().is_empty() && !is_heading(b));
+    if kind == "transition" {
+        let prev = prev?;
+        p.push_str("\n\n## The paragraph before\n");
+        p.push_str(&prev.text);
+    } else if let Some(prev) = prev {
+        p.push_str("\n\n## The paragraph before (context only, don't edit)\n");
+        p.push_str(&prev.text);
     }
     p.push_str("\n\n## TARGET paragraph\n");
     p.push_str(&t.text);
-    if let Some(next) = ctx.blocks.get(pos + 1).filter(|b| !b.text.is_empty()) {
+    if let Some(next) = ctx.blocks.get(pos + 1).filter(|b| !b.text.trim().is_empty()) {
         p.push_str("\n\n## Paragraph after (context only, don't edit)\n");
         p.push_str(&next.text);
     }
-    Some(p)
+    (!t.text.trim().is_empty()).then_some(p)
 }
 
 /// One edit Claude proposes: `suggest.add` parameters, and why.
@@ -110,8 +191,9 @@ pub struct Proposal {
     pub why: String,
 }
 
-/// Read Claude's reply: the output of `claude -p --output-format json` (or its bare text).
-pub fn parse(stdout: &str) -> Result<Vec<Proposal>, String> {
+/// The JSON object in Claude's reply: the output of `claude -p --output-format json` (or its bare
+/// text).
+fn reply_json(stdout: &str) -> Result<Value, String> {
     let outer: Option<Value> = serde_json::from_str(stdout.trim()).ok();
     if let Some(o) = &outer
         && o.get("is_error").and_then(Value::as_bool) == Some(true)
@@ -120,17 +202,39 @@ pub fn parse(stdout: &str) -> Result<Vec<Proposal>, String> {
     }
     let text = outer.as_ref().and_then(|o| o.get("result")).and_then(Value::as_str).unwrap_or(stdout);
     let (Some(a), Some(b)) = (text.find('{'), text.rfind('}')) else { return Err(format!("no JSON in the reply: {}", short(text))) };
-    let inner: Value =
-        serde_json::from_str(text.get(a..=b).unwrap_or_default()).map_err(|e| format!("bad JSON in the reply ({e}): {}", short(text)))?;
+    serde_json::from_str(text.get(a..=b).unwrap_or_default()).map_err(|e| format!("bad JSON in the reply ({e}): {}", short(text)))
+}
+
+/// A structure review's notes: (paragraph, note).
+pub fn parse_notes(stdout: &str) -> Result<Vec<(usize, String)>, String> {
+    let inner = reply_json(stdout)?;
+    Ok(inner
+        .get("notes")
+        .and_then(Value::as_array)
+        .into_iter()
+        .flatten()
+        .filter_map(|n| {
+            let block = usize::try_from(n.get("paragraph")?.as_u64()?).ok()?;
+            let note = n.get("note")?.as_str()?.trim();
+            (!note.is_empty()).then(|| (block, note.chars().take(400).collect()))
+        })
+        .take(8)
+        .collect())
+}
+
+/// Read Claude's suggestions from its reply.
+pub fn parse(stdout: &str) -> Result<Vec<Proposal>, String> {
+    let inner = reply_json(stdout)?;
     let list = inner.get("suggestions").and_then(Value::as_array).cloned().unwrap_or_default();
     Ok(list
         .into_iter()
         .filter_map(|s| {
             let str_of = |k: &str| s.get(k).and_then(Value::as_str).filter(|t| !t.is_empty()).map(str::to_string);
             let why = str_of("why").unwrap_or_default();
-            let params = match (str_of("find"), str_of("replace"), str_of("after"), str_of("insert")) {
-                (Some(f), Some(r), _, _) if f != r => serde_json::json!({"find": f, "replace": r}),
-                (_, _, Some(a), Some(i)) => serde_json::json!({"after": a, "insert": i}),
+            let params = match (str_of("find"), str_of("replace"), str_of("after"), str_of("before"), str_of("insert")) {
+                (Some(f), Some(r), _, _, _) if f != r => serde_json::json!({"find": f, "replace": r}),
+                (_, _, Some(a), _, Some(i)) => serde_json::json!({"after": a, "insert": i}),
+                (_, _, _, Some(b), Some(i)) => serde_json::json!({"before": b, "insert": i}),
                 _ => return None,
             };
             Some(Proposal { params, why })
@@ -295,6 +399,34 @@ mod tests {
         assert!(!was_rejected(&pr(serde_json::json!({"find": "the road", "replace": "a road"})), &ds), "too short to block");
         assert!(was_rejected(&pr(serde_json::json!({"after": "roads.", "insert": " indeed"})), &ds));
         assert!(!was_rejected(&pr(serde_json::json!({"find": "roads", "replace": "streets"})), &ds));
+    }
+
+    #[test]
+    fn the_ask_prompts_carry_the_right_paragraphs() {
+        let b = |i: usize, t: &str, s: Option<&str>| Block { index: i, text: t.into(), style: s.map(str::to_string), suggestions: 0 };
+        let ctx = Context {
+            blocks: vec![b(0, "Rents", Some("Heading1")), b(1, "First para.", None), b(2, "", None), b(3, "Target para.", None), b(4, "Next.", None)],
+            caret: Some(3),
+            document: None,
+        };
+        let m = Material { brief: None, style: None, profile: Some("Terse."), decisions: &[], max: 3 };
+        let t = ask("transition", &ctx, Some(3), &m).unwrap();
+        assert!(t.contains("TRANSITION") && t.contains("## The paragraph before\nFirst para.") && t.contains("## TARGET paragraph\nTarget para."));
+        assert!(t.contains("## The writer's style profile\nTerse."));
+        assert!(ask("transition", &ctx, Some(1), &m).is_none(), "nothing before the first paragraph but a heading");
+        assert!(ask("gap", &ctx, Some(1), &m).unwrap().contains("## TARGET paragraph\nFirst para."));
+        let s = ask("structure", &ctx, None, &m).unwrap();
+        assert!(s.contains("[0] (Heading1) Rents\n[1] First para.\n[3] Target para.\n[4] Next."), "{s}");
+        assert!(ask("nonsense", &ctx, Some(3), &m).is_none());
+        assert!(ask("gap", &ctx, None, &m).is_none());
+    }
+
+    #[test]
+    fn reads_notes_and_before_suggestions() {
+        let reply = serde_json::json!({"is_error": false, "result":
+            "{\"notes\": [{\"paragraph\": 3, \"note\": \"Merge with [1].\"}, {\"paragraph\": \"x\", \"note\": \"bad\"}], \"suggestions\": [{\"before\": \"Target\", \"insert\": \"So. \"}]}"});
+        assert_eq!(parse_notes(&reply.to_string()).unwrap(), vec![(3, "Merge with [1].".to_string())]);
+        assert_eq!(parse(&reply.to_string()).unwrap()[0].params, serde_json::json!({"before": "Target", "insert": "So. "}));
     }
 
     #[test]

@@ -208,7 +208,8 @@ fn apply(o: &mut Options, base: &Options, dir: Option<&std::path::Path>, documen
 }
 
 /// Report to the Claude panel (`status.json`). `busy`: what Claude is doing right now.
-fn report(dir: Option<&std::path::Path>, live: &Live, o: &Options, calls: usize, document: Option<&str>, busy: Option<&str>) {
+/// `answer`: how the panel's last request went (`{id, suggestions, notes, error}`), or null.
+fn report(dir: Option<&std::path::Path>, live: &Live, o: &Options, calls: usize, document: Option<&str>, busy: Option<&str>, answer: &Value) {
     let Some(dir) = dir else { return };
     let mut m = serde_json::Map::new();
     m.insert("pid".into(), json!(std::process::id()));
@@ -221,7 +222,82 @@ fn report(dir: Option<&std::path::Path>, live: &Live, o: &Options, calls: usize,
     m.insert("maxPerHour".into(), json!(o.max_per_hour));
     m.insert("document".into(), json!(document));
     m.insert("message".into(), json!(last_log()));
+    m.insert("answer".into(), answer.clone());
     let _ = settings::write_status(dir, m);
+}
+
+/// The last words of `text`, at most `n` of them (a quote that ends a paragraph).
+fn last_words(text: &str, n: usize) -> String {
+    let words: Vec<&str> = text.split_whitespace().collect();
+    words.get(words.len().saturating_sub(n)..).unwrap_or_default().join(" ")
+}
+
+/// Answer one of the Claude panel's "Ask Claude" buttons: ask Claude, post its suggestions, and
+/// keep a structure review's notes for the panel. Returns (suggestions posted, notes kept).
+fn answer(
+    app: &mut Remote,
+    o: &Options,
+    learner: &mut Option<Learner>,
+    ctx: &Context,
+    r: &settings::Request,
+    dir: &std::path::Path,
+) -> Result<(usize, usize), String> {
+    let (brief, style) = (read_optional(&o.brief), read_optional(&o.style));
+    let profile = learner.as_ref().and_then(|l| l.profile.for_prompt());
+    let decisions = learner.as_ref().map(|l| l.profile.decisions()).unwrap_or_default();
+    let material =
+        prompt::Material { brief: brief.as_deref(), style: style.as_deref(), profile: profile.as_deref(), decisions: &decisions, max: o.max };
+    let target = r.block.or(ctx.caret);
+    // Claude sees which words are still suggestions, so it doesn't quote them.
+    let mut marked = ctx.clone();
+    if let Ok(list) = app.call("engine.execute", json!({"command": "suggest.list", "params": {}})) {
+        marked.mark_pending(&list);
+    }
+    let p = prompt::ask(&r.kind, &marked, target, &material).ok_or_else(|| match r.kind.as_str() {
+        "transition" => "there's no paragraph before this one to link from".to_string(),
+        "structure" => "the document is empty".to_string(),
+        _ => "put the caret in a paragraph with some writing first".to_string(),
+    })?;
+    log(&format!("asking {} for {} (the Claude panel)", o.claude.model, r.kind));
+    let reply = o.claude.ask(&p)?;
+    if o.verbose {
+        log(&format!("reply: {}", reply.trim()));
+    }
+    let proposals = prompt::parse(&reply)?;
+    let mut posted = 0;
+    for pr in proposals.iter().filter(|pr| !prompt::was_rejected(pr, &decisions)).take(4) {
+        let mut tried = app.call("engine.execute", json!({"command": "suggest.add", "params": pr.params}));
+        // A transition at the very start of the paragraph the caret is in can be refused (the
+        // caret is there): put it at the end of the paragraph before instead.
+        if tried.is_err()
+            && r.kind == "transition"
+            && let (Some(insert), Some(pos)) =
+                (pr.params.get("insert").and_then(Value::as_str), ctx.blocks.iter().position(|b| Some(b.index) == target))
+            && let Some(prev) = ctx.blocks.get(..pos).unwrap_or_default().iter().rev().find(|b| !b.text.trim().is_empty())
+        {
+            let params = json!({"after": last_words(&prev.text, 6), "insert": format!(" {}", insert.trim())});
+            tried = app.call("engine.execute", json!({"command": "suggest.add", "params": params}));
+        }
+        match tried {
+            Ok(_) => {
+                posted += 1;
+                log(&format!("  posted {} — {}", short(&pr.params), pr.why));
+                if let Some(l) = learner.as_mut() {
+                    l.posted(pr);
+                }
+            }
+            Err(e) => log(&format!("  skipped {}: {e}", short(&pr.params))),
+        }
+    }
+    let mut kept = 0;
+    if r.kind == "structure" {
+        let notes: Vec<(usize, String)> =
+            prompt::parse_notes(&reply)?.into_iter().filter(|(b, _)| ctx.blocks.iter().any(|x| x.index == *b)).collect();
+        kept = notes.len();
+        settings::write_notes(dir, ctx.document.as_deref(), &notes)?;
+    }
+    log(&format!("{} for the Claude panel: {posted} suggestion(s), {kept} note(s)", r.kind));
+    Ok((posted, kept))
 }
 
 /// Tell the Claude panel the companion stopped, and why.
@@ -329,6 +405,10 @@ fn run(base: Options) -> Result<(), String> {
     let mut warned_budget = false;
     let mut unreachable_since: Option<Instant> = None;
     let mut last_report: Option<Instant> = None;
+    // The panel's requests from before this start are old news.
+    let mut answered = dir.as_deref().and_then(settings::request).map_or(0, |r| r.id);
+    // Tell the panel those are settled, so it doesn't wait on them.
+    let mut last_answer = json!({"id": answered, "old": true});
     loop {
         std::thread::sleep(Duration::from_millis(800));
         let ctx = match context(&mut app) {
@@ -367,8 +447,34 @@ fn run(base: Options) -> Result<(), String> {
             calls.pop_front();
         }
         if last_report.is_none_or(|t| now.duration_since(t) >= Duration::from_secs(2)) {
-            report(dir.as_deref(), &live, &o, calls.len(), ctx.document.as_deref(), None);
+            report(dir.as_deref(), &live, &o, calls.len(), ctx.document.as_deref(), None, &last_answer);
             last_report = Some(now);
+        }
+        // The Claude panel's "Ask Claude" buttons.
+        if let Some(d) = dir.as_deref()
+            && let Some(r) = settings::request(d).filter(|r| r.id > answered)
+        {
+            answered = r.id;
+            let result = if calls.len() >= o.max_per_hour {
+                Err(format!("reached {} calls this hour; ask again later", o.max_per_hour))
+            } else {
+                calls.push_back(now);
+                report(Some(d), &live, &o, calls.len(), ctx.document.as_deref(), Some(r.kind.as_str()), &last_answer);
+                let mut l = learner.take().filter(|_| live.learn);
+                let result = answer(&mut app, &o, &mut l, &ctx, &r, d);
+                learner = l.or(learner);
+                result
+            };
+            last_answer = match result {
+                Ok((suggestions, notes)) => json!({"id": r.id, "kind": r.kind, "suggestions": suggestions, "notes": notes, "error": null}),
+                Err(e) => {
+                    log(&format!("couldn't answer the Claude panel: {e}"));
+                    json!({"id": r.id, "kind": r.kind, "suggestions": 0, "notes": 0, "error": e})
+                }
+            };
+            report(Some(d), &live, &o, calls.len(), ctx.document.as_deref(), None, &last_answer);
+            last_report = Some(Instant::now());
+            continue;
         }
         if calls.len() >= o.max_per_hour {
             if !warned_budget {
@@ -381,7 +487,7 @@ fn run(base: Options) -> Result<(), String> {
         let target = watch.observe(&ctx, now).filter(|_| live.suggest);
         if let Some(target) = target {
             calls.push_back(now);
-            report(dir.as_deref(), &live, &o, calls.len(), ctx.document.as_deref(), Some("suggesting"));
+            report(dir.as_deref(), &live, &o, calls.len(), ctx.document.as_deref(), Some("suggesting"), &last_answer);
             let mut l = learner.take().filter(|_| live.learn);
             let r = review(&mut app, &o, &mut watch, &mut l, &ctx, target);
             learner = l.or(learner);
@@ -391,7 +497,7 @@ fn run(base: Options) -> Result<(), String> {
             last_report = None;
         } else if let Some(l) = learner.as_mut().filter(|l| learning && watch.quiet(now) && l.due(&ctx, now)) {
             calls.push_back(now);
-            report(dir.as_deref(), &live, &o, calls.len(), ctx.document.as_deref(), Some("learning"));
+            report(dir.as_deref(), &live, &o, calls.len(), ctx.document.as_deref(), Some("learning"), &last_answer);
             if let Err(e) = l.learn(&ctx, &o.claude, o.verbose, &log) {
                 log(&format!("couldn't update your style profile: {e}"));
             }
