@@ -114,7 +114,7 @@ commands (`context`, `add`, `list`, `accept`, `reject`, `withdraw`). They're des
 
 ## Roadmap
 
-Ghostwriter **1.1** runs on Windows, with the Claude panel and style learning.
+Ghostwriter **1.2** runs on Windows, with the Claude panel, style learning and Ask Claude.
 After that, roughly in order:
 
 1. **Own settings**, so Ghostwriter and WordCraft can be open side by side.
