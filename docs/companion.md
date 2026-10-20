@@ -1,6 +1,6 @@
-# Companion: Claude's suggestions in the page
+# Ghostwriter: Claude's suggestions in the page
 
-*Fork addition, not part of upstream WordCraft.*
+*Ghostwriter is this fork of WordCraft. The companion is its addition, not part of upstream WordCraft.*
 
 You write in WordCraft as usual. When you pause, a small program, `wordcraft-companion`, reads the
 paragraph you're on, asks Claude for a few edits, and puts them **in the page, in orange**, where
@@ -12,7 +12,26 @@ and never land in what you're typing.
 Claude is called through Claude Code's print mode (`claude -p`), so it runs on your Claude Code
 login (your subscription). No API key.
 
-## Set up (Windows)
+## Install (Windows)
+
+1. **Claude Code**: install it and sign in once (`claude`, then `/login`). Check that
+   `claude -p "say hi"` answers in a terminal.
+2. From the repository's **Releases** page, download `ghostwriter-<version>-windows-x64.msi`
+   (`-arm64` for ARM PCs) and run it. The build isn't code-signed, so SmartScreen asks first:
+   **More info → Run anyway**. Ghostwriter installs beside WordCraft, not over it.
+3. Start **Ghostwriter** from the Start menu or by opening a document. The installer sets
+   `WORDCRAFT_CONTROL_PORT=7981`, so every window opens the port the companion uses.
+4. In a terminal, start the companion with a brief for the piece:
+
+   ```powershell
+   ghostwriter-companion --brief my-essay.brief.md
+   ```
+
+   If the command isn't found, open a new terminal, or run it from
+   `C:\Program Files\Ghostwriter\`. (The portable zip has the same three programs, unzipped
+   anywhere. There, set the port yourself, as in step 3 below.)
+
+## Build from source (Windows)
 
 1. **Claude Code**: install it and sign in once (`claude`, then `/login`). Check that
    `claude -p "say hi"` answers in a terminal.
@@ -142,3 +161,18 @@ cargo xtask ci
 
 A conflict can only be in one of the hook lines above; keep upstream's version of the line and
 put the hook back. `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 12 lines afterwards.
+
+The Ghostwriter name works the same way: the 12 lines marked `ghostwriter brand`
+(`git grep -n "ghostwriter brand" -- '*.rs'`) set the window title, the About box, the
+`ProductName` in the Windows program files and the "created by" field in saved DOCX and PDF
+files. Program files, settings and the control-key folder keep WordCraft's names, so Ghostwriter
+and WordCraft share settings. Upstream's sync also bumps the version back to its own: set it
+again with `cargo xtask version set <version>` before tagging a release.
+
+## Releasing
+
+1. `cargo xtask version set 1.0.1`, and write `docs/releases/ghostwriter-1.0.1.md`.
+2. Commit, then `git tag v1.0.1 && git push origin main v1.0.1`.
+3. `.github/workflows/ghostwriter-release.yml` builds the Windows x64 and ARM64 installers
+   (`packaging/windows/ghostwriter-package.ps1`, `ghostwriter.wxs`) and publishes
+   "Ghostwriter 1.0.1" with them. Upstream's `release.yml` stays as it is and isn't used.

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Ghostwriter MSI: this fork's installer (docs/companion.md), derived from wordcraft.wxs. Built by
+  ghostwriter-package.ps1, which installs the binaries as ghostwriter.exe, ghostwriter-cli.exe and
+  ghostwriter-companion.exe.
+
+  UpgradeCode and the component GUIDs below belong to Ghostwriter alone, so it installs beside
+  WordCraft instead of replacing it. Never copy them into wordcraft.wxs or the other way round.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+  <Package
+      Name="Ghostwriter"
+      Manufacturer="Hayden Harms"
+      Version="$(var.Version)"
+      UpgradeCode="2D86C5B8-603D-43E5-B49F-4B66DFAEC443"
+      Scope="perMachine"
+      Compressed="yes"
+      Language="1033">
+    <SummaryInformation Description="Ghostwriter word processor" Manufacturer="Hayden Harms" />
+    <!-- Same-version upgrades let successive pre-releases of one X.Y.Z replace each other
+         (MSI versions are numeric, so 1.2.3-rc.1 and 1.2.3-rc.2 are both 1.2.3). -->
+    <MajorUpgrade AllowSameVersionUpgrades="yes"
+        DowngradeErrorMessage="A newer version of Ghostwriter is already installed." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+
+    <Icon Id="GhostwriterIcon.ico" SourceFile="$(var.IconPath)" />
+    <Property Id="ARPPRODUCTICON" Value="GhostwriterIcon.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/HaydenHarms/wordcraft" />
+    <Property Id="ARPURLUPDATEINFO" Value="https://github.com/HaydenHarms/wordcraft" />
+    <Property Id="ARPHELPLINK" Value="https://github.com/HaydenHarms/wordcraft/issues" />
+
+    <!-- Installer UI (#198): WixUI_Minimal is welcome + license, progress, then a finish page so
+         people can see the install worked. Its dialogs and bitmaps are WiX's own
+         (WixToolset.UI.wixext); package.ps1 builds the license RTF from LICENSE-MIT and
+         LICENSE-APACHE. The finish page offers to launch Ghostwriter (ticked by default) through
+         WixShellExec (WixToolset.Util.wixext); silent installs (/qn) never show it. -->
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.LicenseRtf)" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Ghostwriter" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+    <Property Id="WixShellExecTarget" Value="[#GhostwriterExe]" />
+    <CustomAction Id="LaunchGhostwriter" BinaryRef="Wix4UtilCA_$(sys.BUILDARCHSHORT)" DllEntry="WixShellExec"
+        Impersonate="yes" Return="ignore" />
+    <UI>
+      <ui:WixUI Id="WixUI_Minimal" />
+      <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchGhostwriter"
+          Condition="WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND NOT Installed" />
+    </UI>
+
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="INSTALLFOLDER" Name="Ghostwriter" />
+    </StandardDirectory>
+    <StandardDirectory Id="ProgramMenuFolder" />
+
+    <Feature Id="Main" Title="Ghostwriter" Level="1">
+      <ComponentGroupRef Id="GhostwriterFiles" />
+    </Feature>
+  </Package>
+
+  <Fragment>
+    <ComponentGroup Id="GhostwriterFiles" Directory="INSTALLFOLDER">
+      <Component Id="GhostwriterApp" Guid="F51C04D0-5C68-48C7-8E7A-0E5F28965065">
+        <File Id="GhostwriterExe" Source="$(var.BinDir)\ghostwriter.exe" KeyPath="yes">
+          <Shortcut Id="StartMenuShortcut" Directory="ProgramMenuFolder" Name="Ghostwriter"
+              Description="Ghostwriter word processor" WorkingDirectory="INSTALLFOLDER" Advertise="yes"
+              Icon="GhostwriterIcon.ico" IconIndex="0" />
+        </File>
+
+        <!-- Every launch opens the control port the companion connects to (docs/companion.md). -->
+        <Environment Id="ControlPort" Name="WORDCRAFT_CONTROL_PORT" Value="7981" System="yes" Action="set" Part="all" Permanent="no" />
+        <RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\App Paths\ghostwriter.exe" Value="[#GhostwriterExe]" Type="string" />
+      </Component>
+
+      <!-- File associations (#295). Each document type gets a Ghostwriter ProgId (name, icon, open
+           command) and is listed under the extension's OpenWithProgids, so Ghostwriter shows in
+           Explorer's "Open with". The Word, RTF and ODT types are also Ghostwriter's Capabilities
+           (RegisteredApplications), so it appears in Settings › Default apps, where the user
+           makes it the default (File › Options › General opens that page). Nothing here sets an
+           extension's default: the installer never takes over .docx from another app. Markdown and
+           plain text are only "Open with" candidates. Removed again on uninstall. -->
+      <Component Id="GhostwriterFileTypes" Guid="24673425-0DEC-4827-A790-FC5B2FA10B62">
+        <RegistryValue Root="HKLM" Key="Software\RegisteredApplications" Name="Ghostwriter" Value="Software\Ghostwriter\Capabilities" Type="string" KeyPath="yes" />
+        <RegistryValue Root="HKLM" Key="Software\Ghostwriter\Capabilities" Name="ApplicationName" Value="Ghostwriter" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Ghostwriter\Capabilities" Name="ApplicationDescription" Value="Write and design documents; open and save Word files." Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Ghostwriter\Capabilities" Name="ApplicationIcon" Value="&quot;[#GhostwriterExe]&quot;,0" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe" Name="FriendlyAppName" Value="Ghostwriter" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe\shell\open\command" Value="&quot;[#GhostwriterExe]&quot; &quot;%1&quot;" Type="string" />
+
+        <ProgId Id="Ghostwriter.Document" Description="Word Document" Icon="GhostwriterExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Ghostwriter.Document\shell\open\command" Value="&quot;[#GhostwriterExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.docx\OpenWithProgids" Name="Ghostwriter.Document" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe\SupportedTypes" Name=".docx" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Ghostwriter\Capabilities\FileAssociations" Name=".docx" Value="Ghostwriter.Document" Type="string" />
+
+        <ProgId Id="Ghostwriter.DocumentMacroEnabled" Description="Word Macro-Enabled Document" Icon="GhostwriterExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Ghostwriter.DocumentMacroEnabled\shell\open\command" Value="&quot;[#GhostwriterExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.docm\OpenWithProgids" Name="Ghostwriter.DocumentMacroEnabled" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe\SupportedTypes" Name=".docm" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Ghostwriter\Capabilities\FileAssociations" Name=".docm" Value="Ghostwriter.DocumentMacroEnabled" Type="string" />
+
+        <ProgId Id="Ghostwriter.Template" Description="Word Template" Icon="GhostwriterExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Ghostwriter.Template\shell\open\command" Value="&quot;[#GhostwriterExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.dotx\OpenWithProgids" Name="Ghostwriter.Template" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe\SupportedTypes" Name=".dotx" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Ghostwriter\Capabilities\FileAssociations" Name=".dotx" Value="Ghostwriter.Template" Type="string" />
+
+        <ProgId Id="Ghostwriter.TemplateMacroEnabled" Description="Word Macro-Enabled Template" Icon="GhostwriterExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Ghostwriter.TemplateMacroEnabled\shell\open\command" Value="&quot;[#GhostwriterExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.dotm\OpenWithProgids" Name="Ghostwriter.TemplateMacroEnabled" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe\SupportedTypes" Name=".dotm" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Ghostwriter\Capabilities\FileAssociations" Name=".dotm" Value="Ghostwriter.TemplateMacroEnabled" Type="string" />
+
+        <ProgId Id="Ghostwriter.LegacyDocument" Description="Legacy Word Document" Icon="GhostwriterExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Ghostwriter.LegacyDocument\shell\open\command" Value="&quot;[#GhostwriterExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.doc\OpenWithProgids" Name="Ghostwriter.LegacyDocument" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe\SupportedTypes" Name=".doc" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Ghostwriter\Capabilities\FileAssociations" Name=".doc" Value="Ghostwriter.LegacyDocument" Type="string" />
+
+        <ProgId Id="Ghostwriter.LegacyTemplate" Description="Legacy Word Template" Icon="GhostwriterExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Ghostwriter.LegacyTemplate\shell\open\command" Value="&quot;[#GhostwriterExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.dot\OpenWithProgids" Name="Ghostwriter.LegacyTemplate" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe\SupportedTypes" Name=".dot" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Ghostwriter\Capabilities\FileAssociations" Name=".dot" Value="Ghostwriter.LegacyTemplate" Type="string" />
+
+        <ProgId Id="Ghostwriter.RichText" Description="Rich Text Document" Icon="GhostwriterExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Ghostwriter.RichText\shell\open\command" Value="&quot;[#GhostwriterExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.rtf\OpenWithProgids" Name="Ghostwriter.RichText" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe\SupportedTypes" Name=".rtf" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Ghostwriter\Capabilities\FileAssociations" Name=".rtf" Value="Ghostwriter.RichText" Type="string" />
+
+        <ProgId Id="Ghostwriter.OpenDocumentText" Description="OpenDocument Text" Icon="GhostwriterExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Ghostwriter.OpenDocumentText\shell\open\command" Value="&quot;[#GhostwriterExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.odt\OpenWithProgids" Name="Ghostwriter.OpenDocumentText" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe\SupportedTypes" Name=".odt" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Ghostwriter\Capabilities\FileAssociations" Name=".odt" Value="Ghostwriter.OpenDocumentText" Type="string" />
+
+        <ProgId Id="Ghostwriter.Markdown" Description="Markdown Document" Icon="GhostwriterExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Ghostwriter.Markdown\shell\open\command" Value="&quot;[#GhostwriterExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.md\OpenWithProgids" Name="Ghostwriter.Markdown" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe\SupportedTypes" Name=".md" Value="" Type="string" />
+
+        <ProgId Id="Ghostwriter.PlainText" Description="Text Document" Icon="GhostwriterExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Ghostwriter.PlainText\shell\open\command" Value="&quot;[#GhostwriterExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.txt\OpenWithProgids" Name="Ghostwriter.PlainText" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\ghostwriter.exe\SupportedTypes" Name=".txt" Value="" Type="string" />
+      </Component>
+
+      <Component Id="GhostwriterCli">
+        <File Id="GhostwriterCliExe" Source="$(var.BinDir)\ghostwriter-cli.exe" KeyPath="yes" />
+      </Component>
+
+      <Component Id="GhostwriterCompanion">
+        <File Id="GhostwriterCompanionExe" Source="$(var.BinDir)\ghostwriter-companion.exe" KeyPath="yes" />
+        <!-- On PATH, so `ghostwriter-companion` runs from any new terminal. -->
+        <Environment Id="InstallFolderOnPath" Name="PATH" Value="[INSTALLFOLDER]" System="yes" Action="set" Part="last" Permanent="no" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
