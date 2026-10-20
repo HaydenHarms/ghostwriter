@@ -57,7 +57,7 @@ LEARNING YOUR STYLE (on by default, nothing to set up; see docs/companion.md):
   --learn-only           learn from your decisions (e.g. on Claude Code's suggestions), suggest nothing
   --no-learn             neither record decisions nor use the profile
 
-The Claude panel in Ghostwriter (Review › Claude) changes these while the companion runs; what
+The Claude panel in Ghostwriter (Home › Claude) changes these while the companion runs; what
 you set there wins over the options above.
   --exit-with-app        stop when the Ghostwriter window closes (the panel's Start button uses it)
   --dry-run              print suggestions instead of posting them
@@ -319,7 +319,7 @@ fn run(base: Options) -> Result<(), String> {
         watch.mark_all(&first);
     }
     log(&format!(
-        "watching {} — suggestions after a pause, learning your style; the Claude panel (Review › Claude) sets both. Ctrl+C stops.",
+        "watching {} — suggestions after a pause, learning your style; the Claude panel (Home › Claude) sets both. Ctrl+C stops.",
         o.connect
     ));
     if let Some(l) = &learner {

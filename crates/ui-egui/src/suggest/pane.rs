@@ -1,4 +1,4 @@
-//! The Claude panel (fork addition, see `docs/companion.md`): Review › Claude, or "Claude" in the
+//! The Claude panel (fork addition, see `docs/companion.md`): Home › Claude, or "Claude" in the
 //! command search (`suggest.panel`, which keeps whether it's open). It shows whether the companion is running (and starts it),
 //! and sets what it does: suggestions on or off, how many and how soon, the model, learning the
 //! writer's style (also per document), and the style profile itself.
@@ -14,7 +14,7 @@ use crate::WordApp;
 use crate::theme::Tokens;
 use crate::widgets::{big_toggle, group};
 
-/// The Review tab's Ghostwriter group: the Claude button.
+/// The Home tab's Ghostwriter group, last on the tab: the Claude button.
 pub fn ribbon_group(app: &mut WordApp, ui: &mut Ui) {
     group(ui, "Ghostwriter", None, app, |ui, app| {
         big_toggle(ui, app, "ghostwriter", "Claude", "suggest.panel", panel_open());

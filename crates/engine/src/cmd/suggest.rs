@@ -72,7 +72,7 @@ pub fn specs() -> Vec<CommandSpec> {
         CommandSpec::new("suggest.withdraw", "Withdraw Suggestion", "Review › Companion", |s, v| resolve(s, v, None))
             .params(r#"{"id"?: n, "all"?: bool}"#)
             .pure(),
-        CommandSpec::new("suggest.panel", "Claude", "Review › Claude", panel).params(r#"{"value"?: bool} (without: toggle)"#).pure(),
+        CommandSpec::new("suggest.panel", "Claude", "Home › Ghostwriter", panel).params(r#"{"value"?: bool} (without: toggle)"#).pure(),
         CommandSpec::new("suggest.decisions", "Suggestion Decisions", "Review › Companion", decisions)
             .params(r#"{"since"?: n} → {"next": n, "decisions": [{"seq", "verdict": "accepted"|"rejected", "text", "replaces", "context", "bulk"}]}"#)
             .pure(),

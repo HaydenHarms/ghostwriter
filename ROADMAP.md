@@ -25,7 +25,7 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 | Windows | done: x64 and ARM64 installers and portable zips, unsigned |
 | macOS, Linux | builds from source; no packages |
 | Learning your style | done (unreleased): accepts and rejects noted in a feedback log; a style profile Claude builds from your writing by itself (first after ~150 words) and refines from your decisions; rejected edits not repeated; MCP clients get the profile too |
-| Claude panel | done (unreleased): Review › Claude; start Claude from the window, suggestions and learning on/off, per-document learning, model, profile preview, forget; live, no restart |
+| Claude panel | done (unreleased): Home › Claude; start Claude from the window, suggestions and learning on/off, per-document learning, model, profile preview, forget; live, no restart |
 | Interface languages | the suggestion commands are translated into all 22 of WordCraft's languages |
 
 ## Next
@@ -43,7 +43,7 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 
 ## Progress log
 
-- **2026-10-20 · Claude panel.** Review › Claude: start Claude from the window, switch suggestions
+- **2026-10-20 · Claude panel.** Home › Claude: start Claude from the window, switch suggestions
   and learning on or off (also per document), pick the model, see and forget what it has learned.
   The companion follows the panel live and stops with the window.
 - **2026-10-20 · learning.** Claude works out your style from your own paragraphs (the first profile

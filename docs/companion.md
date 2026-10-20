@@ -23,7 +23,7 @@ login (your subscription). No API key.
    **More info → Run anyway**. Ghostwriter installs beside WordCraft, not over it.
 3. Start **Ghostwriter** from the Start menu or by opening a document. The installer sets
    `WORDCRAFT_CONTROL_PORT=7981`, so every window opens the port the companion uses.
-4. Open the **Claude** panel (Review › **Claude**) and click **Start Claude**. (The portable zip
+4. Open the **Claude** panel (Home › **Claude**) and click **Start Claude**. (The portable zip
    has the same three programs, unzipped anywhere. There, set the port yourself, as in step 3
    below.)
 
@@ -68,7 +68,7 @@ login (your subscription). No API key.
 
 ## The Claude panel
 
-Review › **Claude** (or "Claude" in the search box) opens a panel on the right of the window:
+Home › **Claude** (or "Claude" in the search box) opens a panel on the right of the window:
 
 | | |
 |---|---|
@@ -233,7 +233,7 @@ All code is in new files, except a few hooks, each marked `companion hook`
 - `crates/layout/src/display.rs` (two lines): suggested words on orange, drawn as plain text.
 - `crates/ui-egui/src/suggest.rs` + one call in `crates/ui-egui/src/lib.rs`: the ✓/✗ card.
 - `crates/ui-egui/src/suggest/pane.rs`: the Claude panel and its ribbon button, hooked in with one
-  line each in `lib.rs` (the panel), `ribbon.rs` (Review › Claude) and `icons.rs` (the
+  line each in `lib.rs` (the panel), `ribbon.rs` (Home › Claude) and `icons.rs` (the
   reaper-ghost mascot, pixel art in `pane.rs`), and the `wordcraft-mcp`
   dependency in `crates/ui-egui/Cargo.toml`. Whether it's open is kept by `suggest.panel` in
   `crates/engine/src/cmd/suggest.rs`.

@@ -1213,6 +1213,7 @@ fn home(app: &mut WordApp, ui: &mut Ui) {
     group(ui, "Editor", None, app, |ui, app| {
         big(ui, app, "editor", "Editor", "review.spelling", json!({}), false);
     });
+    crate::suggest::pane::ribbon_group(app, ui); // companion hook
 }
 
 fn insert(app: &mut WordApp, ui: &mut Ui) {
@@ -1977,7 +1978,6 @@ fn zotero(app: &mut WordApp, ui: &mut Ui) {
 }
 
 fn review(app: &mut WordApp, ui: &mut Ui) {
-    crate::suggest::pane::ribbon_group(app, ui); // companion hook
     group(ui, "Proofing", None, app, |ui, app| {
         big(ui, app, "spelling", "Spelling &\nGrammar", "review.spelling", json!({}), false);
         stack(ui, |ui| {

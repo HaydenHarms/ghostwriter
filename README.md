@@ -67,11 +67,11 @@ The portable zip has the same programs without an installer, plus the Claude Cod
 
 ## Write with Claude
 
-Open the **Claude** panel (Review › **Claude**, or type "Claude" in the search box) and click
+Open the **Claude** panel (Home › **Claude**, or type "Claude" in the search box) and click
 **Start Claude**. That's it: Claude reads along as you write and stops when you close the window.
 
 <p align="center">
-  <img src="docs/images/claude-panel.png" alt="Ghostwriter with the Claude panel open on the right: a green dot and 'Claude is reading along', switches for suggestions and for learning your style, sliders for suggestions per paragraph and the pause before suggesting, a model choice, and a box showing what Claude has learned about the writer's voice." width="100%">
+  <img src="docs/images/claude-panel.png" alt="Ghostwriter with the Claude button at the end of the Home tab and the Claude panel open on the right: a green dot and 'Claude is reading along', switches for suggestions and for learning your style, sliders for suggestions per paragraph and the pause before suggesting, a model choice, and a box showing what Claude has learned about the writer's voice." width="100%">
 </p>
 
 The panel is where you steer it, and changes apply at once:
