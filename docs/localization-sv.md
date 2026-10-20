@@ -1,5 +1,7 @@
 # Swedish interface
 
+> **Ghostwriter:** inherited from [WordCraft](https://github.com/storytold/wordcraft). This tracks how the word processor underneath matches Microsoft Word, which WordCraft maintains upstream; Ghostwriter doesn't aim at Word parity. Its goal is Claude's live suggestions: see the [README](../README.md), [ROADMAP.md](../ROADMAP.md) and [companion.md](companion.md).
+
 > **Last reviewed:** 2026-10-13 · **Last updated:** 2026-10-13 · **Change:** minor (Swedish interface catalog and regression checks) · **Target:** WordCraft 0.6.1
 
 Choose **File › Options › Interface language › Svenska**, or follow a Swedish system display

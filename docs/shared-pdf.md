@@ -1,5 +1,7 @@
 # Shared PDF writer
 
+> **Ghostwriter:** inherited from [WordCraft](https://github.com/storytold/wordcraft), the word processor Ghostwriter is built on, and maintained upstream. Ghostwriter's own part, Claude's live suggestions, is in [companion.md](companion.md).
+
 WordCraft uses `craft-pdf` with default features disabled and `write` enabled. Both that dependency
 and the required root Krilla patch use the immutable `storytold/craft-libs` revision
 `c3487320b2d1de657b860b3c8abb44e1f2b32bd8`. Rust 1.95 or newer is required. The revision must be

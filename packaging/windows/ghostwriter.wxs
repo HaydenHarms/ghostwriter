@@ -25,9 +25,9 @@
 
     <Icon Id="GhostwriterIcon.ico" SourceFile="$(var.IconPath)" />
     <Property Id="ARPPRODUCTICON" Value="GhostwriterIcon.ico" />
-    <Property Id="ARPURLINFOABOUT" Value="https://github.com/HaydenHarms/wordcraft" />
-    <Property Id="ARPURLUPDATEINFO" Value="https://github.com/HaydenHarms/wordcraft" />
-    <Property Id="ARPHELPLINK" Value="https://github.com/HaydenHarms/wordcraft/issues" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/HaydenHarms/ghostwriter" />
+    <Property Id="ARPURLUPDATEINFO" Value="https://github.com/HaydenHarms/ghostwriter" />
+    <Property Id="ARPHELPLINK" Value="https://github.com/HaydenHarms/ghostwriter/issues" />
 
     <!-- Installer UI (#198): WixUI_Minimal is welcome + license, progress, then a finish page so
          people can see the install worked. Its dialogs and bitmaps are WiX's own

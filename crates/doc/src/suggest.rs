@@ -10,8 +10,8 @@ use crate::props::Rgb;
 /// The author of every suggestion's revisions.
 pub const AUTHOR: &str = "Claude (suggestion)";
 
-/// The orange behind a suggestion's words.
-pub const FILL: Rgb = Rgb(0xFF, 0xC8, 0x8A);
+/// The orange behind a suggestion's words: light, like a translucent wash, so the text reads through it.
+pub const FILL: Rgb = Rgb(0xFF, 0xE0, 0xC0);
 
 /// Whether revision `rev` (`None`: no revision) is part of a suggestion.
 pub fn is_suggestion(doc: &Document, rev: Option<u32>) -> bool {

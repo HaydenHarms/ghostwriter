@@ -1,5 +1,7 @@
 # Hungarian interface
 
+> **Ghostwriter:** inherited from [WordCraft](https://github.com/storytold/wordcraft). This tracks how the word processor underneath matches Microsoft Word, which WordCraft maintains upstream; Ghostwriter doesn't aim at Word parity. Its goal is Claude's live suggestions: see the [README](../README.md), [ROADMAP.md](../ROADMAP.md) and [companion.md](companion.md).
+
 > **Last reviewed:** 2026-10-11 · **Last updated:** 2026-10-11 · **Change:** minor (Hungarian interface catalog and regression checks) · **Target:** WordCraft 0.5.0
 
 Choose **File › Options › Interface language › Magyar**, or follow a Hungarian system display

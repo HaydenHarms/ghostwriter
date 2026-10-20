@@ -1,5 +1,7 @@
 # Releasing WordCraft
 
+> **Ghostwriter:** this is WordCraft's upstream release process and isn't used here. Ghostwriter is released with `.github/workflows/ghostwriter-release.yml`: see [companion.md › Releasing](companion.md#releasing).
+
 The canonical recipe is [craftrules `release/playbook.md`](https://github.com/storytold/craftrules/blob/main/release/playbook.md);
 this file has the WordCraft specifics.
 

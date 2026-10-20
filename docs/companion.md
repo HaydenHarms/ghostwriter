@@ -1,8 +1,10 @@
 # Ghostwriter: Claude's suggestions in the page
 
-*Ghostwriter is this fork of WordCraft. The companion is its addition, not part of upstream WordCraft.*
+*This is Ghostwriter's main guide. Ghostwriter's goal is live Claude suggestions in the page; the
+word processor underneath is [WordCraft](https://github.com/storytold/wordcraft), which Ghostwriter
+follows from upstream. Everything here is Ghostwriter's addition, not part of upstream WordCraft.*
 
-You write in WordCraft as usual. When you pause, a small program, `wordcraft-companion`, reads the
+You write in Ghostwriter as you would in any word processor. When you pause, a small program, `wordcraft-companion`, reads the
 paragraph you're on, asks Claude for a few edits, and puts them **in the page, in orange**, where
 they would go. The words they replace are hidden, so you read the paragraph as it would be once
 accepted. Hover a suggestion (or put the caret on it) for a card with **✓** (accept), **✗**
@@ -182,8 +184,12 @@ git merge upstream/main
 cargo xtask ci
 ```
 
-A conflict can only be in one of the hook lines above; keep upstream's version of the line and
-put the hook back. `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 14 lines afterwards.
+A code conflict can only be in one of the hook lines above; keep upstream's version of the line
+and put the hook back. Documentation conflicts: keep Ghostwriter's `README.md`, `ROADMAP.md`,
+`docs/roadmap.md`, `AGENTS.md` and `CLAUDE.md` (`git checkout --ours <file>`, then re-apply any
+upstream rule change to the agent files by hand). For the other files in `docs/`, take upstream's
+version and put back the one-paragraph `**Ghostwriter:**` note under the title (and the
+"Ghostwriter additions" section at the end of `docs/architecture.md`). `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 14 lines afterwards.
 
 The Ghostwriter name works the same way: the 13 lines marked `ghostwriter brand`
 (`git grep -n "ghostwriter brand" -- '*.rs'`) set the window title, the About box, the
@@ -194,8 +200,10 @@ again with `cargo xtask version set <version>` before tagging a release.
 
 ## Releasing
 
-1. `cargo xtask version set 1.0.1`, and write `docs/releases/ghostwriter-1.0.1.md`.
-2. Commit, then `git tag v1.0.1 && git push origin main v1.0.1`.
+1. `cargo xtask version set 1.1.0`, write `docs/releases/ghostwriter-1.1.0.md`, and add the
+   release to the progress log in `ROADMAP.md`.
+2. Commit and push, then either `git tag v1.1.0 && git push origin v1.1.0`, or run the workflow by
+   hand on `main` (Actions › Ghostwriter release › Run workflow); it creates the tag.
 3. `.github/workflows/ghostwriter-release.yml` builds the Windows x64 and ARM64 installers
    (`packaging/windows/ghostwriter-package.ps1`, `ghostwriter.wxs`) and publishes
-   "Ghostwriter 1.0.1" with them. Upstream's `release.yml` stays as it is and isn't used.
+   "Ghostwriter 1.1.0" with them. Upstream's `release.yml` stays as it is and isn't used.

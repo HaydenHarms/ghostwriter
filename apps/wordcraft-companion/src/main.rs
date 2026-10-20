@@ -1,4 +1,4 @@
-//! `wordcraft-companion` (fork addition, see `docs/companion.md`): watches the WordCraft window you
+//! `wordcraft-companion` (fork addition, see `docs/companion.md`): watches the Ghostwriter window you
 //! write in and, when you pause, asks Claude (through your Claude Code login) for a few edits to the
 //! paragraph you're on. They appear in the page in orange; click ✓ or ✗.
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
@@ -18,15 +18,16 @@ use crate::claude::Claude;
 use crate::watch::{Context, Settings, Watch};
 
 const USAGE: &str = "\
-wordcraft-companion — Claude's inline suggestions in the WordCraft window you write in
+ghostwriter-companion — Claude's inline suggestions in the Ghostwriter window you write in
 
-Start WordCraft with a control port first: wordcraft --control 7981 (or set WORDCRAFT_CONTROL_PORT).
+The Ghostwriter installer opens control port 7981 in every window. From a source build, start
+it with: wordcraft --control 7981 (or set WORDCRAFT_CONTROL_PORT).
 
 USAGE:
-  wordcraft-companion [options]
+  ghostwriter-companion [options]
 
 OPTIONS:
-  --connect HOST:PORT    the WordCraft window (default 127.0.0.1:7981)
+  --connect HOST:PORT    the Ghostwriter window (default 127.0.0.1:7981)
   --brief FILE           what this piece is for: thesis, audience, tone (read again on every call)
   --style FILE           your style guide (read again on every call)
   --model NAME           Claude model for suggestions (default sonnet)
@@ -170,7 +171,7 @@ fn short(v: &Value) -> String {
 }
 
 fn run(o: Options) -> Result<(), String> {
-    let mut app = Remote::connect(&o.connect).map_err(|e| format!("can't reach WordCraft at {}: {e} (start it with --control)", o.connect))?;
+    let mut app = Remote::connect(&o.connect).map_err(|e| format!("can't reach Ghostwriter at {}: {e} (start it with --control)", o.connect))?;
     if let Some(w) = app.key_warning() {
         return Err(w);
     }
@@ -192,7 +193,7 @@ fn run(o: Options) -> Result<(), String> {
         let ctx = match context(&mut app) {
             Ok(c) => c,
             Err(e) => {
-                log(&format!("WordCraft not answering ({e}); retrying"));
+                log(&format!("Ghostwriter not answering ({e}); retrying"));
                 std::thread::sleep(Duration::from_secs(3));
                 continue;
             }
@@ -232,7 +233,7 @@ fn main() -> ExitCode {
     match run(o) {
         Ok(()) => ExitCode::SUCCESS,
         Err(e) => {
-            eprintln!("wordcraft-companion: {e}");
+            eprintln!("ghostwriter-companion: {e}");
             ExitCode::FAILURE
         }
     }

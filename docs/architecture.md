@@ -1,5 +1,7 @@
 # WordCraft architecture
 
+> **Ghostwriter:** inherited from [WordCraft](https://github.com/storytold/wordcraft), the word processor Ghostwriter is built on, and maintained upstream. Ghostwriter's own part, Claude's live suggestions, is in [companion.md](companion.md).
+
 > **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-10 · **Change:** minor (`proof` is per language: English and Polish; previously major: first committed version; `plan/architecture.md` is local-only) · **Target:** Microsoft Word (Microsoft 365) for Mac 16.113.4
 
 How WordCraft is built today (origin/main `40c5d51`). The longer design notes in
@@ -66,3 +68,18 @@ winit or rfd.
 |---|---|---|
 | 2026-10-10 | minor | `proof`: proofing languages (English, Polish), affix engine, Polish patterns; layout and engine route each run by its language |
 | 2026-10-10 | major | First committed architecture doc, from the crates' sources and `AGENTS.md` |
+
+## Ghostwriter additions
+
+Ghostwriter adds Claude's live suggestions on top of these layers, in new files plus a few marked
+hook lines ([companion.md › How it fits in WordCraft](companion.md#how-it-fits-in-wordcraft)):
+
+| Layer | Where | Job |
+|---|---|---|
+| L1 | `doc/src/suggest.rs` | the suggestion author (*Claude (suggestion)*) and its orange |
+| L2 | `layout` (two hooks) | replaced words left out, suggested words drawn on orange |
+| L4 | `engine/src/cmd/suggest.rs` | `suggest.context`, `add`, `list`, `accept`, `reject`, `withdraw`: tracked changes that never move the caret |
+| L5 | `mcp/src/suggest.rs` | the instructions every MCP client gets on those commands |
+| L6 | `ui-egui/src/suggest.rs`, `i18n/companion.*` | the ✓/✗ card; the command labels in every language |
+| apps | `wordcraft-companion` | the watcher: reads the window over the control port, asks Claude (`claude -p`) after a pause, posts suggestions |
+

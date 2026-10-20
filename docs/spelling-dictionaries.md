@@ -1,5 +1,7 @@
 # Installing spelling dictionaries
 
+> **Ghostwriter:** inherited from [WordCraft](https://github.com/storytold/wordcraft), the word processor Ghostwriter is built on, and maintained upstream. Ghostwriter's own part, Claude's live suggestions, is in [companion.md](companion.md).
+
 > **Last reviewed:** 2026-10-16 · **Last updated:** 2026-10-18 · **Change:** trivial (ISO 8859-1 dictionaries are read, #2824; previously major: first version)
 
 English spelling works out of the box. Polish, Russian, Portuguese, Czech, Italian, Croatian and

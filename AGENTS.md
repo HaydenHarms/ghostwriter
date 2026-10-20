@@ -1,10 +1,14 @@
-# WordCraft — instructions for agents
+# Ghostwriter — instructions for agents
 
-WordCraft is a clean-room, open-source, Rust-native word processor targeting Microsoft Word parity — and going further on speed, openness and agent control. It runs natively on macOS, Windows, Linux and BSD, and on the web via WASM. Siblings with the same conventions: `../photocraft` (Photoshop), `../vectorcraft` (Illustrator), `../filmcraft` (Premiere), `../lightcraft` (Lightroom), `../pdfcraft` (Acrobat), `../effectcraft` (After Effects), `../designcraft` (InDesign). Shared rules and learnings: [`storytold/craftrules`](https://github.com/storytold/craftrules) (`../../craftrules`) — read its `AGENTS.md`.
+Ghostwriter is a word processor where **Claude suggests edits in the page as you write**: orange inline suggestions the writer accepts (✓) or rejects (✗), from a companion that watches the window and from any MCP client. That is the project's goal. It is **not** trying to copy Microsoft Word: the word processor underneath is a fork of [WordCraft](https://github.com/storytold/wordcraft) (a clean-room, Rust-native word processor by the ArtCraft team), and WordCraft's Word parity is upstream's work, merged in from `storytold/wordcraft`.
 
 ## Start every session here
-1. Read `plan/STATUS.md` (current milestone, next task), then the task in `plan/execution-plan.md` and the relevant `plan/architecture.md` section. `plan/` is gitignored (local only); if it's missing, start from `ROADMAP.md`, `docs/gaps.md` and `docs/roadmap.md` (Current focus).
-2. Follow the autonomous operation protocol (`plan/execution-plan.md` §5). Don't stop to ask unless a decision is genuinely the owner's (licensing, publishing, pushing to new remotes, secrets).
+1. Read [`ROADMAP.md`](ROADMAP.md) and [`docs/roadmap.md`](docs/roadmap.md) (Current focus), then [`docs/companion.md`](docs/companion.md): how the suggestions, the companion, the MCP instructions and releases work.
+2. Ghostwriter's own code lives in new files (`*/suggest.rs`, `apps/wordcraft-companion/`, `i18n/companion.*`, `skills/ghostwriter/`, `packaging/windows/ghostwriter*`, `.github/workflows/ghostwriter-release.yml`). Upstream files get only one-line hooks marked `// companion hook` or `// ghostwriter brand`; keep the counts in `docs/companion.md` right. Don't take on Word-parity work here: it belongs upstream.
+3. Suggestions only: Claude never changes the writer's text unless they ask; a suggestion never lands at or moves the caret.
+4. Don't stop to ask unless a decision is genuinely the owner's (licensing, publishing, pushing to new remotes, secrets, signing certificates).
+
+The rules below are inherited from WordCraft and still apply to all code here.
 
 ## Never crash
 People trust WordCraft with their writing; a crash loses their work. **This outranks feature work**: never ship a feature through a panic path, and fix a crash before building on top of it. Standard: [`craftrules/standards/never-crash.md`](https://github.com/storytold/craftrules/blob/main/standards/never-crash.md).
@@ -38,7 +42,7 @@ People trust WordCraft with their writing; a crash loses their work. **This outr
 | L4 | `engine` | Session, undo, **command registry**, Word feature catalog, samples, I/O dispatch |
 | L5 | `mcp` | MCP server (headless or bridged to the app) |
 | L6 | `ui-egui` | Word-style egui front end (swappable) |
-| apps | `apps/wordcraft`, `apps/wordcraft-cli`, `apps/wordcraft-web` | binaries |
+| apps | `apps/wordcraft`, `apps/wordcraft-cli`, `apps/wordcraft-web`, `apps/wordcraft-companion` | binaries (the companion is Ghostwriter's watcher) |
 
 - **Everything is a command.** User-visible behaviour = a `CommandSpec` in `crates/engine/src/cmd/*.rs` (id, label, ribbon location, shortcut, params doc, `enabled`, `run`) + tests. UI-only commands (`ui.*`) live in `crates/ui-egui/src/lib.rs`. The ribbon, shortcuts, command search, CLI, control channel and MCP all dispatch by id. Programmatic calls never open dialogs.
 - **Parity is measured:** `crates/engine/src/catalog.rs` lists Word's ribbon/menu features with command ids. `cargo xtask parity` writes `docs/parity-checklist.md`; a test enforces a floor that only rises. Implement missing ids to raise it.
@@ -62,7 +66,7 @@ Typing, Enter, Backspace, Tab, lists, AutoCorrect and AutoFormat follow Word's o
 - Parallel agents: separate `CARGO_TARGET_DIR` per agent; edit only the crates you own; delete your target dir when done (disk).
 
 ## Roadmap
-Progress docs follow [`craftrules/standards/progress-docs.md`](https://github.com/storytold/craftrules/blob/main/standards/progress-docs.md): `ROADMAP.md` (stage, headline numbers, progress log), `docs/target-app-parity.md` (the assessment), `docs/gaps.md` (ranked work list), `docs/roadmap.md` (milestones, Current focus), `docs/architecture.md`, and the parity checklists `docs/file-format-parity.md`, `docs/layout-parity.md`, `docs/typing-parity.md`, `docs/ui-parity.md`, `docs/hardware-parity.md`, `docs/localization-parity.md`. When work lands, update the gap, the parity doc and the progress log, and bump each touched doc's status line and revision history.
+Ghostwriter's progress docs are [`ROADMAP.md`](ROADMAP.md) (stage, milestones G1–G7, progress log) and [`docs/roadmap.md`](docs/roadmap.md) (Current focus). When Ghostwriter work lands, update them, `docs/companion.md` and, for a release, `docs/releases/ghostwriter-<version>.md`. The other files in `docs/` (parity checklists, gaps, architecture) are WordCraft's, inherited from upstream and kept as upstream has them; only `docs/architecture.md` has a Ghostwriter section.
 
 ## Contributor credits (About window)
 

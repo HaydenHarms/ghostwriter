@@ -1,5 +1,7 @@
 # Control protocol
 
+> **Ghostwriter:** inherited from [WordCraft](https://github.com/storytold/wordcraft), the word processor Ghostwriter is built on, and maintained upstream. Ghostwriter's own part, Claude's live suggestions, is in [companion.md](companion.md).
+
 Start the app with a control port: `wordcraft --control 7981` (or `WORDCRAFT_CONTROL_PORT=7981`).
 A missing or invalid port after `--control` (not 1–65535) prints an error and exits with status 2.
 It listens on `127.0.0.1` only. Send one JSON object per line, with the window's key (see

@@ -1,5 +1,7 @@
 # MCP server
 
+> **Ghostwriter:** the server below is WordCraft's, maintained upstream. Ghostwriter adds the `suggest.*` commands and sends every client instructions for them on connect, so Claude proposes edits as ✓/✗ suggestions instead of changing your text. Setup for Claude Code: `claude mcp add ghostwriter -- ghostwriter-cli mcp --connect 127.0.0.1:7981`; details in [companion.md › Ask Claude Code directly](companion.md#ask-claude-code-directly-mcp).
+
 WordCraft speaks the [Model Context Protocol](https://modelcontextprotocol.io) over stdio, so
 Claude and other agents can write and edit documents.
 

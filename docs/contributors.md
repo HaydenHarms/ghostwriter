@@ -1,5 +1,7 @@
 # Contributors in the About window
 
+> **Ghostwriter:** inherited from [WordCraft](https://github.com/storytold/wordcraft), the word processor Ghostwriter is built on, and maintained upstream. Ghostwriter's own part, Claude's live suggestions, is in [companion.md](companion.md).
+
 **About ▸ Contributors** credits everyone who contributed to WordCraft, and **About ▸ Models** credits
 the AI models named in `Co-Authored-By` trailers. This follows the shared craftrules standard
 [`standards/contributors.md`](https://github.com/storytold/craftrules/blob/main/standards/contributors.md);

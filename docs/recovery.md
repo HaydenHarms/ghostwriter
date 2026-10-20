@@ -1,5 +1,7 @@
 # Local document recovery
 
+> **Ghostwriter:** inherited from [WordCraft](https://github.com/storytold/wordcraft), the word processor Ghostwriter is built on, and maintained upstream. Ghostwriter's own part, Claude's live suggestions, is in [companion.md](companion.md).
+
 Desktop WordCraft periodically keeps a local copy of unsaved work, including new drafts.
 File › Recover lists available copies. The page opens at startup when copies are found.
 Restore opens an unsaved document with no file path. Save As chooses where to keep it.
