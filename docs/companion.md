@@ -162,7 +162,7 @@ cargo xtask ci
 A conflict can only be in one of the hook lines above; keep upstream's version of the line and
 put the hook back. `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 12 lines afterwards.
 
-The Ghostwriter name works the same way: the 12 lines marked `ghostwriter brand`
+The Ghostwriter name works the same way: the 13 lines marked `ghostwriter brand`
 (`git grep -n "ghostwriter brand" -- '*.rs'`) set the window title, the About box, the
 `ProductName` in the Windows program files and the "created by" field in saved DOCX and PDF
 files. Program files, settings and the control-key folder keep WordCraft's names, so Ghostwriter
