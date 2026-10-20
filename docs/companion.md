@@ -233,7 +233,8 @@ All code is in new files, except a few hooks, each marked `companion hook`
 - `crates/layout/src/display.rs` (two lines): suggested words on orange, drawn as plain text.
 - `crates/ui-egui/src/suggest.rs` + one call in `crates/ui-egui/src/lib.rs`: the ✓/✗ card.
 - `crates/ui-egui/src/suggest/pane.rs`: the Claude panel and its ribbon button, hooked in with one
-  line each in `lib.rs` (the panel) and `ribbon.rs` (Review › Claude), and the `wordcraft-mcp`
+  line each in `lib.rs` (the panel), `ribbon.rs` (Review › Claude) and `icons.rs` (the
+  reaper-ghost mascot, pixel art in `pane.rs`), and the `wordcraft-mcp`
   dependency in `crates/ui-egui/Cargo.toml`. Whether it's open is kept by `suggest.panel` in
   `crates/engine/src/cmd/suggest.rs`.
 - `crates/ui-egui/src/i18n/companion.tsv` (+ `companion.rs`, two lines in `i18n/mod.rs`): the
@@ -259,7 +260,7 @@ and put the hook back. Documentation conflicts: keep Ghostwriter's `README.md`, 
 `docs/roadmap.md`, `AGENTS.md` and `CLAUDE.md` (`git checkout --ours <file>`, then re-apply any
 upstream rule change to the agent files by hand). For the other files in `docs/`, take upstream's
 version and put back the one-paragraph `**Ghostwriter:**` note under the title (and the
-"Ghostwriter additions" section at the end of `docs/architecture.md`). `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 17 lines afterwards.
+"Ghostwriter additions" section at the end of `docs/architecture.md`). `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 18 lines afterwards.
 
 The Ghostwriter name works the same way: the 13 lines marked `ghostwriter brand`
 (`git grep -n "ghostwriter brand" -- '*.rs'`) set the window title, the About box, the

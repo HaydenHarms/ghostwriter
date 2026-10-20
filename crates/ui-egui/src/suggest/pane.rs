@@ -17,8 +17,56 @@ use crate::widgets::{big_toggle, group};
 /// The Review tab's Claude group.
 pub fn ribbon_group(app: &mut WordApp, ui: &mut Ui) {
     group(ui, "Claude", None, app, |ui, app| {
-        big_toggle(ui, app, "shape.star", "Claude", "suggest.panel", panel_open());
+        big_toggle(ui, app, "ghostwriter", "Claude", "suggest.panel", panel_open());
     });
+}
+
+/// Ghostwriter's mascot, a little hooded reaper ghost with a scythe, as 16 × 16 pixel art (an
+/// original drawing). `O` outline, `B` body, `L` highlight, `D` the shadow under the hood, `E` eyes,
+/// `S` the scythe's handle, `W` its blade, `H` the hand.
+const MASCOT: [&str; 16] = [
+    "........WWWWWWS.",
+    "...OOOOW...WWWS.",
+    "..OBBBBBO.....S.",
+    ".OBBLLBBBO....S.",
+    ".OBLDDDDBO....S.",
+    "OBBDDDDDDBO...S.",
+    "OBDDEDDEDDBO..S.",
+    "OBDDEDDEDDBO..S.",
+    "OBBDDDDDDBBO.HS.",
+    "OBBBDDDDBBBOHHS.",
+    "OBBBBBBBBBBO..S.",
+    "OBBBBBBBBBBO..S.",
+    "OBBBBBBBBBBO..S.",
+    "OBBOBBBOBBBO..S.",
+    "OBO.OBO.OBO...S.",
+    ".O...O...O......",
+];
+
+/// Paint the `ghostwriter` icon ([`MASCOT`]) into `r`; false for any other icon.
+pub fn icon(p: &egui::Painter, r: egui::Rect, name: &str) -> bool {
+    if name != "ghostwriter" {
+        return false;
+    }
+    let k = (r.width().min(r.height()) / 16.0).floor().max(1.0);
+    let origin = r.center() - egui::vec2(8.0 * k, 8.0 * k);
+    for (y, row) in MASCOT.iter().enumerate() {
+        for (x, ch) in row.chars().enumerate() {
+            let rgb = match ch {
+                'O' => (0x6B, 0x2E, 0x0A),
+                'B' | 'H' => (0xE0, 0x7B, 0x1F),
+                'L' => (0xF8, 0xB0, 0x5C),
+                'D' => (0x2A, 0x12, 0x06),
+                'E' => (0xFF, 0xE0, 0x6A),
+                'S' => (0x8B, 0x5A, 0x2B),
+                'W' => (0xA8, 0xB0, 0xBC),
+                _ => continue,
+            };
+            let at = origin + egui::vec2(x as f32 * k, y as f32 * k);
+            p.rect_filled(egui::Rect::from_min_size(at, egui::vec2(k, k)), 0.0, egui::Color32::from_rgb(rgb.0, rgb.1, rgb.2));
+        }
+    }
+    true
 }
 
 /// The panel, on the right, while open.
@@ -326,6 +374,11 @@ mod tests {
     use wordcraft_engine::cmd::suggest::panel_open;
 
     use crate::{Services, WordApp};
+
+    #[test]
+    fn the_mascot_is_sixteen_square() {
+        assert!(super::MASCOT.iter().all(|row| row.chars().count() == 16));
+    }
 
     #[test]
     fn the_claude_command_opens_and_closes_the_panel() {
