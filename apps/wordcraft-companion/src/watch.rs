@@ -59,7 +59,7 @@ pub fn text_hash(t: &str) -> u64 {
 }
 
 /// Headings and titles get no suggestions.
-fn is_heading(b: &Block) -> bool {
+pub fn is_heading(b: &Block) -> bool {
     b.style.as_deref().is_some_and(|s| {
         let s = s.to_ascii_lowercase();
         s.starts_with("heading") || s.starts_with("title") || s.starts_with("subtitle")
@@ -98,6 +98,11 @@ impl Watch {
 
     pub fn mark(&mut self, text: &str) {
         self.reviewed.insert(text_hash(text));
+    }
+
+    /// Whether the writer has paused (nothing changed for the idle time).
+    pub fn quiet(&self, now: Instant) -> bool {
+        self.last_change.is_none_or(|t| now.duration_since(t) >= self.settings.idle)
     }
 
     /// Take a new look at the document. Returns the paragraph to ask about, if it's time.

@@ -38,6 +38,11 @@
 - **Live, but out of your way.** Suggestions arrive a few seconds after you stop typing, only for
   the paragraphs around your caret that changed. They never move your caret and never land in the
   words you're typing.
+- **Learns how you write.** Every suggestion you accept or reject is noted, and Claude keeps a
+  style profile of your voice and the edits you want or don't. Rejected kinds of edits stop
+  coming back. The profile is a plain file you can read and add your own notes to, and your notes
+  win. Claude's job is to sharpen your prose, not to write it: small edits in your words, never
+  new sentences or ideas of its own.
 - **Held to your brief.** Give it a short brief for the piece (thesis, audience, tone) and a style
   guide in your voice. Claude checks logic, facts, clarity and flow against them before it touches
   taste. Edit either file while you write: they're re-read on every call.
@@ -55,7 +60,7 @@ Windows 10 or 11, x64 or ARM64.
    `/login`). Check that `claude -p "say hi"` answers in a terminal.
 2. Download `ghostwriter-<version>-windows-x64.msi` (or `-arm64`) from the
    [latest release](https://github.com/HaydenHarms/ghostwriter/releases/latest) and run it. The
-   build isn't code-signed yet, so SmartScreen asks first: **More info → Run anyway**.
+   build isn't code-signed, so SmartScreen asks first: **More info → Run anyway**.
 3. Open **Ghostwriter** from the Start menu, or by opening a .docx with it.
 
 The portable zip has the same programs without an installer, plus the Claude Code skill.
@@ -105,15 +110,15 @@ commands (`context`, `add`, `list`, `accept`, `reject`, `withdraw`). They're des
 
 ## Roadmap
 
-Ghostwriter **1.0** is the first working version on Windows. Next, roughly in order:
+Ghostwriter **1.0** is the first working version on Windows; learning your style is next to ship.
+After that, roughly in order:
 
-1. **Signed Windows builds**, so SmartScreen stops warning.
-2. **Start Claude from the window**: a Companion toggle and brief picker in the app, instead of a
-   terminal.
+1. **Start Claude from the window**: a Companion toggle, brief picker and your style profile in
+   the app, instead of a terminal.
+2. **Own settings**, so Ghostwriter and WordCraft can be open side by side.
 3. **macOS and Linux** packages (the code already builds there; only packaging is Windows-only).
 4. **Whole-document passes on request**: structure, argument and consistency across sections,
    not only the paragraph you're on.
-5. **Learning from what you reject**, so the same kind of suggestion doesn't come back.
 
 Details and progress: [ROADMAP.md](ROADMAP.md).
 

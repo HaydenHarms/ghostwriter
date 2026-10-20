@@ -4,6 +4,7 @@
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 
 mod claude;
+mod learn;
 mod prompt;
 mod watch;
 
@@ -15,6 +16,7 @@ use serde_json::{Value, json};
 use wordcraft_mcp::{Backend, Remote};
 
 use crate::claude::Claude;
+use crate::learn::Learner;
 use crate::watch::{Context, Settings, Watch};
 
 const USAGE: &str = "\
@@ -39,6 +41,14 @@ OPTIONS:
   --claude PATH          the claude program (default: claude on the PATH)
   --claude-arg ARG       one more argument for claude -p (repeatable), e.g. --claude-arg=--effort=low
   --once                 review the caret's paragraph now, post, and exit
+
+LEARNING (on by default; see docs/companion.md):
+  --profile DIR          where your style profile and feedback log live
+                         (default: the ghostwriter folder next to Ghostwriter's settings)
+  --learn-every N        update the profile after this many accepts/rejects (default 10)
+  --learn                update the profile now from the open document and the log, and exit
+  --learn-only           learn from your decisions (e.g. on Claude Code's suggestions), suggest nothing
+  --no-learn             neither record decisions nor use the profile
   --dry-run              print suggestions instead of posting them
   --verbose              print Claude's whole reply
 ";
@@ -56,6 +66,11 @@ struct Options {
     dry_run: bool,
     verbose: bool,
     claude: Claude,
+    profile: Option<std::path::PathBuf>,
+    learn: bool,
+    learn_every: usize,
+    learn_now: bool,
+    suggest: bool,
 }
 
 fn parse_args(args: &[String]) -> Result<Options, String> {
@@ -71,6 +86,11 @@ fn parse_args(args: &[String]) -> Result<Options, String> {
         once: false,
         dry_run: false,
         verbose: false,
+        profile: None,
+        learn: true,
+        learn_every: 10,
+        learn_now: false,
+        suggest: true,
         claude: Claude { program: "claude".into(), model: "sonnet".into(), extra: Vec::new(), timeout: Duration::from_secs(180) },
     };
     let mut it = args.iter();
@@ -99,9 +119,17 @@ fn parse_args(args: &[String]) -> Result<Options, String> {
             "--once" => o.once = true,
             "--dry-run" => o.dry_run = true,
             "--verbose" => o.verbose = true,
+            "--profile" => o.profile = Some(value()?.into()),
+            "--learn-every" => o.learn_every = usize::try_from(number(value()?)?.clamp(1, 1000)).unwrap_or(10),
+            "--learn" => o.learn_now = true,
+            "--learn-only" => o.suggest = false,
+            "--no-learn" => o.learn = false,
             "-h" | "--help" => return Err(String::new()),
             _ => return Err(format!("unknown option {a}")),
         }
+    }
+    if !o.learn && (o.learn_now || !o.suggest) {
+        return Err("--no-learn can't go with --learn or --learn-only".into());
     }
     Ok(o)
 }
@@ -127,9 +155,12 @@ fn context(app: &mut Remote) -> Result<Context, String> {
 }
 
 /// Ask about paragraph `target` and post what comes back. Returns how many were posted.
-fn review(app: &mut Remote, o: &Options, watch: &mut Watch, ctx: &Context, target: usize) -> Result<usize, String> {
+fn review(app: &mut Remote, o: &Options, watch: &mut Watch, learner: &mut Option<Learner>, ctx: &Context, target: usize) -> Result<usize, String> {
     let (brief, style) = (read_optional(&o.brief), read_optional(&o.style));
-    let material = prompt::Material { brief: brief.as_deref(), style: style.as_deref(), max: o.max };
+    let profile = learner.as_ref().and_then(|l| l.profile.for_prompt());
+    let decisions = learner.as_ref().map(|l| l.profile.decisions()).unwrap_or_default();
+    let material =
+        prompt::Material { brief: brief.as_deref(), style: style.as_deref(), profile: profile.as_deref(), decisions: &decisions, max: o.max };
     let Some(p) = prompt::build(ctx, target, &material) else { return Ok(0) };
     let preview: String = ctx.block(target).map(|b| b.text.chars().take(60).collect()).unwrap_or_default();
     log(&format!("asking {} about ¶{target}: “{preview}…”", o.claude.model));
@@ -141,7 +172,7 @@ fn review(app: &mut Remote, o: &Options, watch: &mut Watch, ctx: &Context, targe
     let proposals = prompt::parse(&reply)?;
     log(&format!("{} suggestion(s) in {:.1} s", proposals.len(), started.elapsed().as_secs_f32()));
     let mut posted = 0;
-    for pr in proposals.iter().take(o.max) {
+    for pr in proposals.iter().filter(|pr| !prompt::was_rejected(pr, &decisions)).take(o.max) {
         if o.dry_run {
             log(&format!("  {} — {}", pr.params, pr.why));
             continue;
@@ -149,6 +180,9 @@ fn review(app: &mut Remote, o: &Options, watch: &mut Watch, ctx: &Context, targe
         match app.call("engine.execute", json!({"command": "suggest.add", "params": pr.params})) {
             Ok(_) => {
                 posted += 1;
+                if let Some(l) = learner.as_mut() {
+                    l.posted(pr);
+                }
                 log(&format!("  posted {} — {}", short(&pr.params), pr.why));
             }
             // The writer changed that text meanwhile, or the caret is on it: skip it.
@@ -177,15 +211,29 @@ fn run(o: Options) -> Result<(), String> {
     }
     let first = context(&mut app)?;
     let mut watch = Watch::new(Settings { idle: o.idle, min_words: 8, reach: o.reach });
+    let mut learner = if o.learn { Some(Learner::start(&mut app, o.profile.clone(), o.learn_every)?) } else { None };
+    if o.learn_now {
+        if let Some(l) = learner.as_mut() {
+            l.learn(&first, &o.claude, o.verbose, &log)?;
+        }
+        return Ok(());
+    }
     if o.once {
         let target = first.caret.ok_or("the caret isn't in the body")?;
-        review(&mut app, &o, &mut watch, &first, target)?;
+        review(&mut app, &o, &mut watch, &mut learner, &first, target)?;
         return Ok(());
     }
     if !o.review_existing {
         watch.mark_all(&first);
     }
-    log(&format!("watching {} — write; suggestions appear after a {} s pause. Ctrl+C stops.", o.connect, o.idle.as_secs()));
+    if o.suggest {
+        log(&format!("watching {} — write; suggestions appear after a {} s pause. Ctrl+C stops.", o.connect, o.idle.as_secs()));
+    } else {
+        log(&format!("watching {} — learning from what you accept and reject, suggesting nothing. Ctrl+C stops.", o.connect));
+    }
+    if let Some(l) = &learner {
+        log(&format!("your style profile: {}", l.profile.style_path().display()));
+    }
     let mut calls: VecDeque<Instant> = VecDeque::new();
     let mut warned_budget = false;
     loop {
@@ -198,6 +246,9 @@ fn run(o: Options) -> Result<(), String> {
                 continue;
             }
         };
+        if let Some(l) = learner.as_mut() {
+            l.poll(&mut app, &log);
+        }
         let now = Instant::now();
         while calls.front().is_some_and(|t| now.duration_since(*t) > Duration::from_secs(3600)) {
             calls.pop_front();
@@ -210,10 +261,17 @@ fn run(o: Options) -> Result<(), String> {
             continue;
         }
         warned_budget = false;
-        let Some(target) = watch.observe(&ctx, now) else { continue };
-        calls.push_back(now);
-        if let Err(e) = review(&mut app, &o, &mut watch, &ctx, target) {
-            log(&format!("no suggestions this time: {e}"));
+        let target = watch.observe(&ctx, now).filter(|_| o.suggest);
+        if let Some(target) = target {
+            calls.push_back(now);
+            if let Err(e) = review(&mut app, &o, &mut watch, &mut learner, &ctx, target) {
+                log(&format!("no suggestions this time: {e}"));
+            }
+        } else if let Some(l) = learner.as_mut().filter(|l| l.due(now) && watch.quiet(now)) {
+            calls.push_back(now);
+            if let Err(e) = l.learn(&ctx, &o.claude, o.verbose, &log) {
+                log(&format!("couldn't update your style profile: {e}"));
+            }
         }
     }
 }
@@ -258,5 +316,10 @@ mod tests {
         assert!(parse_args(&args(&["--idle", "x"])).is_err());
         assert!(parse_args(&args(&["--nope"])).is_err());
         assert!(parse_args(&args(&["--model"])).is_err());
+        let o = parse_args(&args(&["--learn-only", "--learn-every=3", "--profile", "p"])).unwrap();
+        assert!(!o.suggest && o.learn);
+        assert_eq!(o.learn_every, 3);
+        assert_eq!(o.profile.as_deref(), Some(std::path::Path::new("p")));
+        assert!(parse_args(&args(&["--no-learn", "--learn"])).is_err());
     }
 }

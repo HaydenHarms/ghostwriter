@@ -103,6 +103,34 @@ Section 3 must answer the "induced demand" objection before the conclusion.
   orange.
 - Review › Accept All / Reject All also act on them.
 
+## It learns your style
+
+Ghostwriter is there to make your writing better in your own voice, not to write for you.
+Claude is told to keep to small edits in your words (a tighter phrase, a more precise word,
+grammar, a few connecting words) and never to add sentences, ideas or arguments of its own. It
+also learns from you as you go:
+
+- **Every accept and reject is noted** in `feedback.jsonl`, with Claude's reason and the
+  sentence around it. The companion window shows each one (`noted: you rejected …`).
+- **Rejections stop repeats.** Claude sees your recent rejections and acceptances with every
+  request, and the companion drops a suggestion that repeats one you turned down.
+- **A style profile.** After every 10 decisions (`--learn-every`), when you pause, Claude
+  rewrites the learned part of `style.md` from your decisions and your own paragraphs. It covers
+  your voice, the habits to keep, and the edits you welcome or don't. Every later suggestion is
+  held to it.
+- **The profile is yours to edit.** Open `style.md` and write notes above the line
+  (*"I use fragments on purpose."*, *"Never touch my semicolons."*). Ghostwriter only reads that
+  part, and your notes win over anything it learned. Delete the file to start over.
+
+Both files are in your settings folder: `%APPDATA%\WordCraft\ghostwriter\` on Windows
+(`~/.config/wordcraft/ghostwriter/` on Linux, `~/Library/Application Support/WordCraft/ghostwriter/`
+on macOS). One profile covers every document; `--profile DIR` keeps a separate one, for example
+for fiction. `ghostwriter-companion --learn` updates the profile right away from the open document
+and what's in the log, which is a good first step with a few pages of your own writing open.
+
+Only your accept/reject clicks (✓, ✗, Alt+Shift+Enter, Alt+Shift+Backspace) are learned from;
+Review › Accept All / Reject All isn't a verdict on each one, so it's left out.
+
 ## Options
 
 | Option | Default | |
@@ -119,6 +147,11 @@ Section 3 must answer the "induced demand" objection before the conclusion.
 | `--claude-arg ARG` | | more `claude -p` arguments, e.g. `--claude-arg=--effort=low` |
 | `--once` | | review the caret's paragraph now and exit |
 | `--dry-run`, `--verbose` | | print instead of posting; print Claude's whole reply |
+| `--profile DIR` | `ghostwriter` in your settings folder | where `style.md` and `feedback.jsonl` live |
+| `--learn-every N` | 10 | update the profile after this many decisions |
+| `--learn` | | update the profile now, then exit |
+| `--learn-only` | | note decisions and learn, but suggest nothing (for suggestions from Claude Code) |
+| `--no-learn` | | don't note decisions or use the profile |
 
 Every call counts toward your Claude plan's usage limits. Writing steadily, expect about one call
 per paragraph.
@@ -142,7 +175,9 @@ way, in orange with ✓/✗.
    the third section against my brief in essay.brief.md."*
 
 You don't need the skill: the server sends every client short instructions on the `suggest.*`
-commands when it connects (`crates/mcp/src/suggest.rs`). The skill adds worked examples and
+commands when it connects (`crates/mcp/src/suggest.rs`), with your style profile and your recent
+rejections. To have your verdicts on Claude Code's suggestions learned too, keep
+`ghostwriter-companion --learn-only` running beside it. The skill adds worked examples and
 when to use them. Claude Desktop and other MCP clients use the same server command.
 
 ### The commands
@@ -156,6 +191,7 @@ Any client can run these (the companion uses only these):
 | `suggest.context` | | the body paragraphs as they read (suggestions in), and the caret's paragraph |
 | `suggest.accept` / `suggest.reject` | `{"id"?, "all"?}` | without either: the one at the caret; an undo step |
 | `suggest.withdraw` | `{"id"?, "all"?}` | reject without an undo step (for clients) |
+| `suggest.decisions` | `{"since"?}` | the writer's accepts and rejects in this window since sequence number `since`: `{next, decisions: [{seq, verdict, text, replaces, context, bulk}]}` (what the companion learns from) |
 
 ## How it fits in WordCraft
 
@@ -171,8 +207,9 @@ All code is in new files, except a few hooks, each marked `companion hook`
 - `crates/ui-egui/src/i18n/companion.tsv` (+ `companion.rs`, two lines in `i18n/mod.rs`): the
   command labels in every interface language, apart from the upstream catalogs.
 - `crates/mcp/src/suggest.rs` (+ one line each in `lib.rs` and `server.rs`): the instructions
-  every MCP client gets on the `suggest.*` commands.
-- `apps/wordcraft-companion/`: the watcher. `Cargo.toml` (`default-members`) and
+  every MCP client gets on the `suggest.*` commands, with the writer's profile;
+  `crates/mcp/src/suggest/profile.rs`: the profile and feedback files, shared with the companion.
+- `apps/wordcraft-companion/`: the watcher (`learn.rs`: noting decisions and updating the profile). `Cargo.toml` (`default-members`) and
   `xtask/src/layers.rs` list it.
 
 ### Keeping up with upstream

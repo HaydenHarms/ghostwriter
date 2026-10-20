@@ -8,12 +8,26 @@
 //!
 //! Suggestions live in the top-level paragraphs of the body, one paragraph each.
 
+use std::collections::VecDeque;
+use std::sync::Mutex;
+
 use serde_json::{Value, json};
 use wordcraft_doc::para::OBJ;
 use wordcraft_doc::suggest::{AUTHOR, is_suggestion};
 use wordcraft_doc::{Block, Document, Path, Pos, Revision, RevisionKind, StoryRef};
 
 use crate::{CmdError, CmdResult, CommandSpec, Session};
+
+/// The writer's accepts and rejects in this process, oldest first (at most [`MAX_DECISIONS`]), for
+/// `suggest.decisions`: an assistant learns from them. Withdrawals aren't the writer's, so they
+/// aren't kept.
+static DECISIONS: Mutex<Decisions> = Mutex::new(Decisions { next: 1, list: VecDeque::new() });
+const MAX_DECISIONS: usize = 200;
+
+struct Decisions {
+    next: u64,
+    list: VecDeque<Value>,
+}
 
 /// The longest text a suggestion may quote or add, in bytes.
 const MAX_TEXT: usize = 16 * 1024;
@@ -35,6 +49,9 @@ pub fn specs() -> Vec<CommandSpec> {
             .params(r#"{"id"?: n, "all"?: bool} (without either: the suggestion at the caret)"#),
         CommandSpec::new("suggest.withdraw", "Withdraw Suggestion", "Review › Companion", |s, v| resolve(s, v, None))
             .params(r#"{"id"?: n, "all"?: bool}"#)
+            .pure(),
+        CommandSpec::new("suggest.decisions", "Suggestion Decisions", "Review › Companion", decisions)
+            .params(r#"{"since"?: n} → {"next": n, "decisions": [{"seq", "verdict": "accepted"|"rejected", "text", "replaces", "context", "bulk"}]}"#)
             .pure(),
     ]
 }
@@ -82,12 +99,67 @@ pub fn spans(doc: &Document) -> Vec<Span> {
     out
 }
 
-fn span_json(sp: &Span) -> Value {
-    json!({"id": sp.id, "block": sp.block, "start": sp.start, "end": sp.end, "text": sp.text, "replaces": sp.replaces})
+/// Where byte `at` of body paragraph `block` falls in the paragraph as `suggest.context` reads it
+/// (tracked deletions and objects left out).
+fn reading_offset(doc: &Document, block: usize, at: usize) -> usize {
+    let Some(Block::Para(p)) = doc.body.get(block).map(|b| &**b) else { return 0 };
+    p.run_ranges()
+        .filter(|(_, c)| c.del.is_none())
+        .filter_map(|(r, _)| p.text.get(r.start.min(at)..r.end.min(at)))
+        .flat_map(str::chars)
+        .filter(|c| *c != OBJ)
+        .map(char::len_utf8)
+        .sum()
+}
+
+fn span_json(doc: &Document, sp: &Span) -> Value {
+    json!({"id": sp.id, "block": sp.block, "start": sp.start, "end": sp.end, "text": sp.text, "replaces": sp.replaces,
+        "at": reading_offset(doc, sp.block, sp.start)})
 }
 
 fn list(s: &mut Session, _: &Value) -> CmdResult {
-    Ok(Value::Array(spans(&s.doc).iter().map(span_json).collect()))
+    Ok(Value::Array(spans(&s.doc).iter().map(|sp| span_json(&s.doc, sp)).collect()))
+}
+
+/// The sentence or so around suggestion `sp`, as the paragraph reads with it in (at most about
+/// 160 bytes each side).
+fn around(doc: &Document, sp: &Span) -> String {
+    let Some(Block::Para(p)) = doc.body.get(sp.block).map(|b| &**b) else { return String::new() };
+    let reading: String =
+        p.run_ranges().filter(|(_, c)| c.del.is_none()).filter_map(|(r, _)| p.text.get(r)).flat_map(str::chars).filter(|c| *c != OBJ).collect();
+    let at = reading_offset(doc, sp.block, sp.start).min(reading.len());
+    let end = at.saturating_add(sp.text.len()).min(reading.len());
+    let mut lo = at.saturating_sub(160);
+    while !reading.is_char_boundary(lo) {
+        lo += 1;
+    }
+    let mut hi = end.saturating_add(160).min(reading.len());
+    while !reading.is_char_boundary(hi) {
+        hi -= 1;
+    }
+    reading.get(lo..hi).unwrap_or_default().to_string()
+}
+
+fn record(records: Vec<Value>) {
+    let mut d = DECISIONS.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    for mut r in records {
+        let seq = d.next;
+        d.next = d.next.saturating_add(1);
+        if let Some(o) = r.as_object_mut() {
+            o.insert("seq".into(), json!(seq));
+        }
+        d.list.push_back(r);
+        while d.list.len() > MAX_DECISIONS {
+            d.list.pop_front();
+        }
+    }
+}
+
+fn decisions(_: &mut Session, v: &Value) -> CmdResult {
+    let since = v.get("since").and_then(Value::as_u64).unwrap_or(0);
+    let d = DECISIONS.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    let list: Vec<Value> = d.list.iter().filter(|r| r.get("seq").and_then(Value::as_u64).is_some_and(|q| q >= since)).cloned().collect();
+    Ok(json!({"next": d.next, "decisions": list}))
 }
 
 /// What an assistant reads: each top-level body paragraph as it shows without markup (tracked
@@ -307,6 +379,17 @@ fn resolve(s: &mut Session, v: &Value, accept: Option<bool>) -> CmdResult {
         return Err(CmdError::Failed("no such suggestion".into()));
     }
     let keep_new = accept == Some(true);
+    let bulk = picked.len() > 1;
+    let records: Vec<Value> = match accept {
+        Some(a) => picked
+            .iter()
+            .map(|sp| {
+                json!({"verdict": if a { "accepted" } else { "rejected" }, "text": sp.text, "replaces": sp.replaces,
+                    "context": around(&s.doc, sp), "bulk": bulk})
+            })
+            .collect(),
+        None => Vec::new(),
+    };
     let before = s.doc.clone();
     let sel = s.sel.clone();
     // Last first, so the offsets of the earlier ones still hold.
@@ -320,6 +403,7 @@ fn resolve(s: &mut Session, v: &Value, accept: Option<bool>) -> CmdResult {
     if accept.is_none() {
         s.touch();
     }
+    record(records);
     Ok(json!({"resolved": picked.iter().map(|sp| sp.id).collect::<Vec<_>>()}))
 }
 
@@ -390,6 +474,29 @@ mod tests {
         // Accepting is an undo step; undo brings the suggestion back.
         s.run("edit.undo", &json!({})).unwrap();
         assert_eq!(spans(&s.doc).len(), 1);
+    }
+
+    #[test]
+    fn accepts_and_rejects_are_kept_for_assistants_withdrawals_are_not() {
+        let mut s = session("The state builds them. Markets follow.");
+        let start = s.run("suggest.decisions", &json!({})).unwrap()["next"].as_u64().unwrap();
+        let a = s.run("suggest.add", &json!({"find": "builds", "replace": "constructs"})).unwrap();
+        let b = s.run("suggest.add", &json!({"find": "follow", "replace": "obey"})).unwrap();
+        s.run("suggest.reject", &json!({"id": b["id"]})).unwrap();
+        s.run("suggest.accept", &json!({"id": a["id"]})).unwrap();
+        let c = s.run("suggest.add", &json!({"find": "Markets", "replace": "Prices"})).unwrap();
+        s.run("suggest.withdraw", &json!({"id": c["id"]})).unwrap();
+        let d = s.run("suggest.decisions", &json!({"since": start})).unwrap();
+        // Other tests in this process may record too: look only at this document's words.
+        let mine: Vec<&Value> =
+            d["decisions"].as_array().unwrap().iter().filter(|r| ["obey", "constructs", "Prices"].contains(&r["text"].as_str().unwrap())).collect();
+        assert_eq!(mine.len(), 2, "{d}");
+        assert_eq!(mine[0]["verdict"], "rejected");
+        assert_eq!(mine[0]["replaces"], "follow");
+        assert_eq!(mine[0]["context"], "The state constructs them. Markets obey.");
+        assert_eq!(mine[1]["verdict"], "accepted");
+        assert_eq!(mine[1]["bulk"], false);
+        assert!(d["next"].as_u64().unwrap() > start);
     }
 
     #[test]
