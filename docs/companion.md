@@ -78,7 +78,7 @@ Review › **Claude** (or "Claude" in the search box) opens a panel on the right
 | Model | Fast (Haiku), Balanced (Sonnet), Thorough (Opus) |
 | Learn my style | learning on or off |
 | Learn from this document | off for a document that isn't your writing (remembered by its file, so save it first) |
-| What Claude has learned | the learned part of your style profile; **Open profile** opens `style.md` in a text editor, **Forget my style** deletes the profile and the feedback log, and Claude learns afresh from what you write next |
+| What Claude has learned | the learned part of your style profile; **Open profile** opens `style.md` in a text editor, **Forget my style** (click it twice) deletes the profile and the feedback log, and Claude learns afresh from what you write next |
 
 Changes apply within a second. The panel writes them to `settings.json` in the profile folder,
 which the running companion reads; the companion reports back through `status.json`. What you set
@@ -232,9 +232,10 @@ All code is in new files, except a few hooks, each marked `companion hook`
 - `crates/layout/src/lib.rs` (`HideDeleted::hides`): replaced words are left out of the layout.
 - `crates/layout/src/display.rs` (two lines): suggested words on orange, drawn as plain text.
 - `crates/ui-egui/src/suggest.rs` + one call in `crates/ui-egui/src/lib.rs`: the ✓/✗ card.
-- `crates/ui-egui/src/claude_pane.rs`: the Claude panel and its ribbon button, hooked in with one
-  line each in `lib.rs` (the panel; `suggest.panel`), `ribbon.rs` (Review › Claude) and
-  `icons.rs` (the sparkle), and the `wordcraft-mcp` dependency in `crates/ui-egui/Cargo.toml`.
+- `crates/ui-egui/src/suggest/pane.rs`: the Claude panel and its ribbon button, hooked in with one
+  line each in `lib.rs` (the panel) and `ribbon.rs` (Review › Claude), and the `wordcraft-mcp`
+  dependency in `crates/ui-egui/Cargo.toml`. Whether it's open is kept by `suggest.panel` in
+  `crates/engine/src/cmd/suggest.rs`.
 - `crates/ui-egui/src/i18n/companion.tsv` (+ `companion.rs`, two lines in `i18n/mod.rs`): the
   command labels in every interface language, apart from the upstream catalogs.
 - `crates/mcp/src/suggest.rs` (+ one line each in `lib.rs` and `server.rs`): the instructions
@@ -258,7 +259,7 @@ and put the hook back. Documentation conflicts: keep Ghostwriter's `README.md`, 
 `docs/roadmap.md`, `AGENTS.md` and `CLAUDE.md` (`git checkout --ours <file>`, then re-apply any
 upstream rule change to the agent files by hand). For the other files in `docs/`, take upstream's
 version and put back the one-paragraph `**Ghostwriter:**` note under the title (and the
-"Ghostwriter additions" section at the end of `docs/architecture.md`). `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 20 lines afterwards.
+"Ghostwriter additions" section at the end of `docs/architecture.md`). `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 17 lines afterwards.
 
 The Ghostwriter name works the same way: the 13 lines marked `ghostwriter brand`
 (`git grep -n "ghostwriter brand" -- '*.rs'`) set the window title, the About box, the

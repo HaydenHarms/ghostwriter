@@ -29,6 +29,28 @@ struct Decisions {
     list: VecDeque<Value>,
 }
 
+thread_local! {
+    /// Whether the window's Claude panel is open (`suggest.panel`). Interface state, so it lives
+    /// with the thread that draws the window rather than in the document.
+    static PANEL: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+/// Whether the Claude panel is open.
+pub fn panel_open() -> bool {
+    PANEL.with(std::cell::Cell::get)
+}
+
+/// Open or close the Claude panel.
+pub fn set_panel(open: bool) {
+    PANEL.with(|p| p.set(open));
+}
+
+fn panel(_: &mut Session, v: &Value) -> CmdResult {
+    let open = v.get("value").and_then(Value::as_bool).unwrap_or(!panel_open());
+    set_panel(open);
+    Ok(json!({"open": open}))
+}
+
 /// The longest text a suggestion may quote or add, in bytes.
 const MAX_TEXT: usize = 16 * 1024;
 
@@ -50,11 +72,7 @@ pub fn specs() -> Vec<CommandSpec> {
         CommandSpec::new("suggest.withdraw", "Withdraw Suggestion", "Review › Companion", |s, v| resolve(s, v, None))
             .params(r#"{"id"?: n, "all"?: bool}"#)
             .pure(),
-        // The window opens its Claude panel for this; elsewhere there's no panel.
-        CommandSpec::new("suggest.panel", "Claude", "Review › Claude", |_, _| {
-            Err(CmdError::Failed("the Claude panel is part of the Ghostwriter window".into()))
-        })
-        .pure(),
+        CommandSpec::new("suggest.panel", "Claude", "Review › Claude", panel).params(r#"{"value"?: bool} (without: toggle)"#).pure(),
         CommandSpec::new("suggest.decisions", "Suggestion Decisions", "Review › Companion", decisions)
             .params(r#"{"since"?: n} → {"next": n, "decisions": [{"seq", "verdict": "accepted"|"rejected", "text", "replaces", "context", "bulk"}]}"#)
             .pure(),

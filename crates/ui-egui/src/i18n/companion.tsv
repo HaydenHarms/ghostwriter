@@ -292,8 +292,8 @@ zh-hans	What Claude has learned	Claude 学到的内容
 zh-hans	Nothing yet: Claude builds your profile once you've written a page or so.	暂无：你写满大约一页后，Claude 会建立你的文风档案。
 zh-hans	Open profile	打开档案
 zh-hans	Forget my style	忘记我的文风
-zh-hans	Forget everything Claude has learned about your writing?	要忘记 Claude 学到的关于你写作的一切吗？
-zh-hans	Forget	忘记
+zh-hans	Forget everything Claude has learned about your writing	忘记 Claude 学到的关于你写作的一切
+zh-hans	Click again to forget	再次点击以忘记
 zh-hant	Claude works in the desktop app.	Claude 僅在桌面應用程式中可用。
 zh-hant	Claude isn't running	Claude 未執行
 zh-hant	Claude is suggesting…	Claude 正在提出建議…
@@ -319,8 +319,8 @@ zh-hant	What Claude has learned	Claude 學到的內容
 zh-hant	Nothing yet: Claude builds your profile once you've written a page or so.	尚無：你寫滿大約一頁後，Claude 會建立你的文風檔案。
 zh-hant	Open profile	開啟檔案
 zh-hant	Forget my style	忘記我的文風
-zh-hant	Forget everything Claude has learned about your writing?	要忘記 Claude 學到的關於你寫作的一切嗎？
-zh-hant	Forget	忘記
+zh-hant	Forget everything Claude has learned about your writing	忘記 Claude 學到的關於你寫作的一切
+zh-hant	Click again to forget	再按一次以忘記
 ja	Claude works in the desktop app.	Claude はデスクトップ アプリで動作します。
 ja	Claude isn't running	Claude は実行されていません
 ja	Claude is suggesting…	Claude が提案しています…
@@ -346,8 +346,8 @@ ja	What Claude has learned	Claude が学習したこと
 ja	Nothing yet: Claude builds your profile once you've written a page or so.	まだありません: 1 ページほど書くと、Claude があなたのプロファイルを作成します。
 ja	Open profile	プロファイルを開く
 ja	Forget my style	文体を忘れる
-ja	Forget everything Claude has learned about your writing?	Claude があなたの文章について学習した内容をすべて忘れますか?
-ja	Forget	忘れる
+ja	Forget everything Claude has learned about your writing	Claude があなたの文章について学習した内容をすべて忘れる
+ja	Click again to forget	もう一度クリックすると忘れます
 ko	Claude works in the desktop app.	Claude는 데스크톱 앱에서 작동합니다.
 ko	Claude isn't running	Claude가 실행 중이 아님
 ko	Claude is suggesting…	Claude가 제안하는 중…
@@ -373,8 +373,8 @@ ko	What Claude has learned	Claude가 학습한 내용
 ko	Nothing yet: Claude builds your profile once you've written a page or so.	아직 없음: 한 페이지 정도 쓰면 Claude가 프로필을 만듭니다.
 ko	Open profile	프로필 열기
 ko	Forget my style	내 문체 잊기
-ko	Forget everything Claude has learned about your writing?	Claude가 내 글쓰기에 대해 학습한 내용을 모두 잊을까요?
-ko	Forget	잊기
+ko	Forget everything Claude has learned about your writing	Claude가 내 글쓰기에 대해 학습한 내용을 모두 잊기
+ko	Click again to forget	한 번 더 클릭하면 잊습니다
 uk	Claude works in the desktop app.	Claude працює в настільному застосунку.
 uk	Claude isn't running	Claude не запущено
 uk	Claude is suggesting…	Claude пропонує правки…
@@ -400,8 +400,8 @@ uk	What Claude has learned	Що Claude дізнався
 uk	Nothing yet: Claude builds your profile once you've written a page or so.	Поки нічого: Claude складе ваш профіль, щойно ви напишете приблизно сторінку.
 uk	Open profile	Відкрити профіль
 uk	Forget my style	Забути мій стиль
-uk	Forget everything Claude has learned about your writing?	Забути все, що Claude дізнався про ваше письмо?
-uk	Forget	Забути
+uk	Forget everything Claude has learned about your writing	Забути все, що Claude дізнався про ваше письмо
+uk	Click again to forget	Натисніть ще раз, щоб забути
 es	Claude works in the desktop app.	Claude funciona en la aplicación de escritorio.
 es	Claude isn't running	Claude no se está ejecutando
 es	Claude is suggesting…	Claude está sugiriendo…
@@ -427,8 +427,8 @@ es	What Claude has learned	Lo que Claude ha aprendido
 es	Nothing yet: Claude builds your profile once you've written a page or so.	Nada todavía: Claude crea tu perfil cuando hayas escrito una página más o menos.
 es	Open profile	Abrir perfil
 es	Forget my style	Olvidar mi estilo
-es	Forget everything Claude has learned about your writing?	¿Olvidar todo lo que Claude ha aprendido sobre tu escritura?
-es	Forget	Olvidar
+es	Forget everything Claude has learned about your writing	Olvidar todo lo que Claude ha aprendido sobre tu escritura
+es	Click again to forget	Haz clic de nuevo para olvidar
 pt-br	Claude works in the desktop app.	Claude funciona no aplicativo para desktop.
 pt-br	Claude isn't running	Claude não está em execução
 pt-br	Claude is suggesting…	Claude está sugerindo…
@@ -454,8 +454,8 @@ pt-br	What Claude has learned	O que o Claude aprendeu
 pt-br	Nothing yet: Claude builds your profile once you've written a page or so.	Nada ainda: o Claude cria seu perfil quando você tiver escrito mais ou menos uma página.
 pt-br	Open profile	Abrir perfil
 pt-br	Forget my style	Esquecer meu estilo
-pt-br	Forget everything Claude has learned about your writing?	Esquecer tudo o que o Claude aprendeu sobre sua escrita?
-pt-br	Forget	Esquecer
+pt-br	Forget everything Claude has learned about your writing	Esquecer tudo o que o Claude aprendeu sobre sua escrita
+pt-br	Click again to forget	Clique de novo para esquecer
 sr	Claude works in the desktop app.	Claude ради у апликацији за рачунар.
 sr	Claude isn't running	Claude није покренут
 sr	Claude is suggesting…	Claude предлаже…
@@ -481,8 +481,8 @@ sr	What Claude has learned	Шта је Claude научио
 sr	Nothing yet: Claude builds your profile once you've written a page or so.	Још ништа: Claude прави ваш профил када напишете отприлике страницу.
 sr	Open profile	Отвори профил
 sr	Forget my style	Заборави мој стил
-sr	Forget everything Claude has learned about your writing?	Заборавити све што је Claude научио о вашем писању?
-sr	Forget	Заборави
+sr	Forget everything Claude has learned about your writing	Заборави све што је Claude научио о вашем писању
+sr	Click again to forget	Кликните поново да заборавите
 sr-latn	Claude works in the desktop app.	Claude radi u aplikaciji za računar.
 sr-latn	Claude isn't running	Claude nije pokrenut
 sr-latn	Claude is suggesting…	Claude predlaže…
@@ -508,8 +508,8 @@ sr-latn	What Claude has learned	Šta je Claude naučio
 sr-latn	Nothing yet: Claude builds your profile once you've written a page or so.	Još ništa: Claude pravi vaš profil kada napišete otprilike stranicu.
 sr-latn	Open profile	Otvori profil
 sr-latn	Forget my style	Zaboravi moj stil
-sr-latn	Forget everything Claude has learned about your writing?	Zaboraviti sve što je Claude naučio o vašem pisanju?
-sr-latn	Forget	Zaboravi
+sr-latn	Forget everything Claude has learned about your writing	Zaboravi sve što je Claude naučio o vašem pisanju
+sr-latn	Click again to forget	Kliknite ponovo da zaboravite
 pl	Claude works in the desktop app.	Claude działa w aplikacji komputerowej.
 pl	Claude isn't running	Claude nie jest uruchomiony
 pl	Claude is suggesting…	Claude proponuje…
@@ -535,8 +535,8 @@ pl	What Claude has learned	Czego Claude się nauczył
 pl	Nothing yet: Claude builds your profile once you've written a page or so.	Jeszcze nic: Claude tworzy Twój profil, gdy napiszesz mniej więcej stronę.
 pl	Open profile	Otwórz profil
 pl	Forget my style	Zapomnij mój styl
-pl	Forget everything Claude has learned about your writing?	Zapomnieć wszystko, czego Claude nauczył się o Twoim pisaniu?
-pl	Forget	Zapomnij
+pl	Forget everything Claude has learned about your writing	Zapomnij wszystko, czego Claude nauczył się o Twoim pisaniu
+pl	Click again to forget	Kliknij ponownie, aby zapomnieć
 cs	Claude works in the desktop app.	Claude funguje v desktopové aplikaci.
 cs	Claude isn't running	Claude neběží
 cs	Claude is suggesting…	Claude navrhuje…
@@ -562,8 +562,8 @@ cs	What Claude has learned	Co se Claude naučil
 cs	Nothing yet: Claude builds your profile once you've written a page or so.	Zatím nic: Claude vytvoří váš profil, jakmile napíšete zhruba stránku.
 cs	Open profile	Otevřít profil
 cs	Forget my style	Zapomenout můj styl
-cs	Forget everything Claude has learned about your writing?	Zapomenout vše, co se Claude naučil o vašem psaní?
-cs	Forget	Zapomenout
+cs	Forget everything Claude has learned about your writing	Zapomenout vše, co se Claude naučil o vašem psaní
+cs	Click again to forget	Klikněte znovu pro zapomenutí
 et	Claude works in the desktop app.	Claude töötab töölauarakenduses.
 et	Claude isn't running	Claude ei tööta
 et	Claude is suggesting…	Claude pakub välja…
@@ -589,8 +589,8 @@ et	What Claude has learned	Mida Claude on õppinud
 et	Nothing yet: Claude builds your profile once you've written a page or so.	Veel mitte midagi: Claude loob teie profiili, kui olete umbes lehekülje kirjutanud.
 et	Open profile	Ava profiil
 et	Forget my style	Unusta minu stiil
-et	Forget everything Claude has learned about your writing?	Kas unustada kõik, mida Claude on teie kirjutamise kohta õppinud?
-et	Forget	Unusta
+et	Forget everything Claude has learned about your writing	Unusta kõik, mida Claude on teie kirjutamise kohta õppinud
+et	Click again to forget	Unustamiseks klõpsake uuesti
 de	Claude works in the desktop app.	Claude läuft in der Desktop-App.
 de	Claude isn't running	Claude läuft nicht
 de	Claude is suggesting…	Claude schlägt vor…
@@ -616,8 +616,8 @@ de	What Claude has learned	Was Claude gelernt hat
 de	Nothing yet: Claude builds your profile once you've written a page or so.	Noch nichts: Claude erstellt Ihr Profil, sobald Sie etwa eine Seite geschrieben haben.
 de	Open profile	Profil öffnen
 de	Forget my style	Meinen Stil vergessen
-de	Forget everything Claude has learned about your writing?	Alles vergessen, was Claude über Ihr Schreiben gelernt hat?
-de	Forget	Vergessen
+de	Forget everything Claude has learned about your writing	Alles vergessen, was Claude über Ihr Schreiben gelernt hat
+de	Click again to forget	Zum Vergessen erneut klicken
 ru	Claude works in the desktop app.	Claude работает в настольном приложении.
 ru	Claude isn't running	Claude не запущен
 ru	Claude is suggesting…	Claude предлагает правки…
@@ -643,8 +643,8 @@ ru	What Claude has learned	Что Claude узнал
 ru	Nothing yet: Claude builds your profile once you've written a page or so.	Пока ничего: Claude составит ваш профиль, когда вы напишете примерно страницу.
 ru	Open profile	Открыть профиль
 ru	Forget my style	Забыть мой стиль
-ru	Forget everything Claude has learned about your writing?	Забыть всё, что Claude узнал о вашем письме?
-ru	Forget	Забыть
+ru	Forget everything Claude has learned about your writing	Забыть всё, что Claude узнал о вашем письме
+ru	Click again to forget	Нажмите ещё раз, чтобы забыть
 tr	Claude works in the desktop app.	Claude masaüstü uygulamasında çalışır.
 tr	Claude isn't running	Claude çalışmıyor
 tr	Claude is suggesting…	Claude öneriyor…
@@ -670,8 +670,8 @@ tr	What Claude has learned	Claude'un öğrendikleri
 tr	Nothing yet: Claude builds your profile once you've written a page or so.	Henüz bir şey yok: Claude, yaklaşık bir sayfa yazdığınızda profilinizi oluşturur.
 tr	Open profile	Profili Aç
 tr	Forget my style	Tarzımı Unut
-tr	Forget everything Claude has learned about your writing?	Claude'un yazınız hakkında öğrendiği her şey unutulsun mu?
-tr	Forget	Unut
+tr	Forget everything Claude has learned about your writing	Claude'un yazınız hakkında öğrendiği her şeyi unut
+tr	Click again to forget	Unutmak için tekrar tıklayın
 it	Claude works in the desktop app.	Claude funziona nell'app desktop.
 it	Claude isn't running	Claude non è in esecuzione
 it	Claude is suggesting…	Claude sta suggerendo…
@@ -697,8 +697,8 @@ it	What Claude has learned	Cosa ha imparato Claude
 it	Nothing yet: Claude builds your profile once you've written a page or so.	Ancora niente: Claude crea il tuo profilo quando avrai scritto circa una pagina.
 it	Open profile	Apri profilo
 it	Forget my style	Dimentica il mio stile
-it	Forget everything Claude has learned about your writing?	Dimenticare tutto ciò che Claude ha imparato sulla tua scrittura?
-it	Forget	Dimentica
+it	Forget everything Claude has learned about your writing	Dimentica tutto ciò che Claude ha imparato sulla tua scrittura
+it	Click again to forget	Fai di nuovo clic per dimenticare
 hu	Claude works in the desktop app.	A Claude az asztali alkalmazásban működik.
 hu	Claude isn't running	A Claude nem fut
 hu	Claude is suggesting…	A Claude javasol…
@@ -724,8 +724,8 @@ hu	What Claude has learned	Amit a Claude megtanult
 hu	Nothing yet: Claude builds your profile once you've written a page or so.	Még semmi: a Claude akkor készíti el a profilját, amikor nagyjából egy oldalt megírt.
 hu	Open profile	Profil megnyitása
 hu	Forget my style	Stílusom elfelejtése
-hu	Forget everything Claude has learned about your writing?	Elfelejti mindazt, amit a Claude az írásáról megtanult?
-hu	Forget	Elfelejtés
+hu	Forget everything Claude has learned about your writing	Minden elfelejtése, amit a Claude az írásáról megtanult
+hu	Click again to forget	Kattintson újra az elfelejtéshez
 fr	Claude works in the desktop app.	Claude fonctionne dans l'application de bureau.
 fr	Claude isn't running	Claude n'est pas lancé
 fr	Claude is suggesting…	Claude propose…
@@ -751,8 +751,8 @@ fr	What Claude has learned	Ce que Claude a appris
 fr	Nothing yet: Claude builds your profile once you've written a page or so.	Rien pour l'instant : Claude crée votre profil dès que vous avez écrit environ une page.
 fr	Open profile	Ouvrir le profil
 fr	Forget my style	Oublier mon style
-fr	Forget everything Claude has learned about your writing?	Oublier tout ce que Claude a appris sur votre écriture ?
-fr	Forget	Oublier
+fr	Forget everything Claude has learned about your writing	Oublier tout ce que Claude a appris sur votre écriture
+fr	Click again to forget	Cliquez à nouveau pour oublier
 bg	Claude works in the desktop app.	Claude работи в настолното приложение.
 bg	Claude isn't running	Claude не работи
 bg	Claude is suggesting…	Claude предлага…
@@ -778,8 +778,8 @@ bg	What Claude has learned	Какво е научил Claude
 bg	Nothing yet: Claude builds your profile once you've written a page or so.	Още нищо: Claude създава профила ви, след като напишете около страница.
 bg	Open profile	Отваряне на профила
 bg	Forget my style	Забрави стила ми
-bg	Forget everything Claude has learned about your writing?	Да се забрави ли всичко, което Claude е научил за писането ви?
-bg	Forget	Забрави
+bg	Forget everything Claude has learned about your writing	Забравяне на всичко, което Claude е научил за писането ви
+bg	Click again to forget	Щракнете отново, за да забравите
 vi	Claude works in the desktop app.	Claude hoạt động trong ứng dụng máy tính.
 vi	Claude isn't running	Claude không chạy
 vi	Claude is suggesting…	Claude đang đề xuất…
@@ -805,8 +805,8 @@ vi	What Claude has learned	Điều Claude đã học được
 vi	Nothing yet: Claude builds your profile once you've written a page or so.	Chưa có gì: Claude tạo hồ sơ của bạn khi bạn đã viết khoảng một trang.
 vi	Open profile	Mở hồ sơ
 vi	Forget my style	Quên phong cách của tôi
-vi	Forget everything Claude has learned about your writing?	Quên mọi điều Claude đã học về cách viết của bạn?
-vi	Forget	Quên
+vi	Forget everything Claude has learned about your writing	Quên mọi điều Claude đã học về cách viết của bạn
+vi	Click again to forget	Bấm lần nữa để quên
 sv	Claude works in the desktop app.	Claude fungerar i skrivbordsappen.
 sv	Claude isn't running	Claude körs inte
 sv	Claude is suggesting…	Claude föreslår…
@@ -832,8 +832,8 @@ sv	What Claude has learned	Vad Claude har lärt sig
 sv	Nothing yet: Claude builds your profile once you've written a page or so.	Inget ännu: Claude skapar din profil när du har skrivit ungefär en sida.
 sv	Open profile	Öppna profil
 sv	Forget my style	Glöm min stil
-sv	Forget everything Claude has learned about your writing?	Glömma allt Claude har lärt sig om ditt skrivande?
-sv	Forget	Glöm
+sv	Forget everything Claude has learned about your writing	Glöm allt Claude har lärt sig om ditt skrivande
+sv	Click again to forget	Klicka igen för att glömma
 hr	Claude works in the desktop app.	Claude radi u aplikaciji za računalo.
 hr	Claude isn't running	Claude nije pokrenut
 hr	Claude is suggesting…	Claude predlaže…
@@ -859,5 +859,5 @@ hr	What Claude has learned	Što je Claude naučio
 hr	Nothing yet: Claude builds your profile once you've written a page or so.	Još ništa: Claude izrađuje vaš profil kad napišete otprilike stranicu.
 hr	Open profile	Otvori profil
 hr	Forget my style	Zaboravi moj stil
-hr	Forget everything Claude has learned about your writing?	Zaboraviti sve što je Claude naučio o vašem pisanju?
-hr	Forget	Zaboravi
+hr	Forget everything Claude has learned about your writing	Zaboravi sve što je Claude naučio o vašem pisanju
+hr	Click again to forget	Kliknite ponovno za zaborav

@@ -1,7 +1,9 @@
 //! Companion suggestions on the page (fork addition, see `docs/companion.md`). The layout already
 //! shows a suggestion in place, on orange, with the words it replaces left out. This draws a small
 //! card over the suggestion under the pointer, or else the one at the caret: Accept, Reject, and
-//! the words it replaces.
+//! the words it replaces. The Claude panel is in [`pane`].
+
+pub mod pane;
 
 use egui::{Align2, CornerRadius, Id, Pos2, Rect, Sense, Stroke, Ui, pos2, vec2};
 use serde_json::json;

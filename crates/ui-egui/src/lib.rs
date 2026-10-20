@@ -28,7 +28,6 @@ pub mod backstage;
 pub mod canvas;
 pub mod caret_glide;
 pub mod chrome;
-pub mod claude_pane; // companion hook
 pub mod colors;
 pub mod content_controls;
 pub mod control;
@@ -1459,7 +1458,6 @@ impl WordApp {
     fn ui_command(&mut self, id: &str, p: &Value) -> Option<Result<Value, String>> {
         let s = |k: &str| p.get(k).and_then(Value::as_str);
         Some(Ok(match id {
-            "suggest.panel" => return Some(claude_pane::toggle(p)), // companion hook
             "ui.tab" => {
                 let tab = s("tab").unwrap_or("Home").to_string();
                 if tab == "File" {
@@ -2229,7 +2227,7 @@ impl WordApp {
                 ribbon::show(self, ui);
                 chrome::status_bar(self, ui);
                 panes::show(self, ui);
-                claude_pane::show(self, ui); // companion hook
+                suggest::pane::show(self, ui); // companion hook
             }
             egui::CentralPanel::default().frame(egui::Frame::NONE.fill(t.canvas)).show(ui, |ui| {
                 canvas::show(self, ui);

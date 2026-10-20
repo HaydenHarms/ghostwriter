@@ -1,5 +1,5 @@
 //! The Claude panel (fork addition, see `docs/companion.md`): Review › Claude, or "Claude" in the
-//! command search (`suggest.panel`). It shows whether the companion is running (and starts it),
+//! command search (`suggest.panel`, which keeps whether it's open). It shows whether the companion is running (and starts it),
 //! and sets what it does: suggestions on or off, how many and how soon, the model, learning the
 //! writer's style (also per document), and the style profile itself.
 //!
@@ -7,66 +7,23 @@
 //! (`wordcraft_mcp::suggest::settings`): the panel writes `settings.json`, which the
 //! companion reads about every second, and shows the companion's `status.json`.
 
-use std::cell::Cell;
-
 use egui::{Stroke, Ui};
-use serde_json::{Value, json};
+use wordcraft_engine::cmd::suggest::{panel_open, set_panel};
 
 use crate::WordApp;
 use crate::theme::Tokens;
 use crate::widgets::{big_toggle, group};
 
-thread_local! {
-    /// Whether the panel is open (the UI runs on one thread; tests each get their own).
-    static OPEN: Cell<bool> = const { Cell::new(false) };
-}
-
-pub fn is_open() -> bool {
-    OPEN.with(Cell::get)
-}
-
-/// `suggest.panel`: open or close the panel (`value`, or toggle).
-pub fn toggle(p: &Value) -> Result<Value, String> {
-    let open = p.get("value").and_then(Value::as_bool).unwrap_or(!is_open());
-    OPEN.with(|o| o.set(open));
-    Ok(json!({"open": open}))
-}
-
 /// The Review tab's Claude group.
 pub fn ribbon_group(app: &mut WordApp, ui: &mut Ui) {
     group(ui, "Claude", None, app, |ui, app| {
-        big_toggle(ui, app, "claude", "Claude", "suggest.panel", is_open());
+        big_toggle(ui, app, "shape.star", "Claude", "suggest.panel", panel_open());
     });
-}
-
-/// Paint the `claude` icon (a sparkle in the suggestions' orange) into `r`; false for any other
-/// icon. Drawn in code like the other icons, on the same 20-unit grid.
-pub fn icon(p: &egui::Painter, r: egui::Rect, name: &str) -> bool {
-    if name != "claude" {
-        return false;
-    }
-    let k = r.width().min(r.height()) / 20.0;
-    let at = |x: f32, y: f32| egui::pos2(r.center().x + (x - 10.0) * k, r.center().y + (y - 10.0) * k);
-    let orange = egui::Color32::from_rgb(0xE0, 0x7B, 0x1F);
-    // A four-point star around (cx, cy): each point a triangle, so every shape stays convex.
-    let star = |cx: f32, cy: f32, long: f32, waist: f32, color: egui::Color32| {
-        for (dx, dy) in [(0.0, -1.0), (1.0, 0.0), (0.0, 1.0), (-1.0, 0.0)] {
-            let tip = at(cx + dx * long, cy + dy * long);
-            let side_a = at(cx - dy * waist, cy + dx * waist);
-            let side_b = at(cx + dy * waist, cy - dx * waist);
-            p.add(egui::Shape::convex_polygon(vec![tip, side_a, side_b], color, Stroke::NONE));
-        }
-        let d = [at(cx, cy - waist), at(cx + waist, cy), at(cx, cy + waist), at(cx - waist, cy)];
-        p.add(egui::Shape::convex_polygon(d.to_vec(), color, Stroke::NONE));
-    };
-    star(9.0, 11.0, 7.5, 2.0, orange);
-    star(15.5, 4.5, 3.2, 0.9, orange);
-    true
 }
 
 /// The panel, on the right, while open.
 pub fn show(app: &mut WordApp, ui: &mut Ui) {
-    if !is_open() {
+    if !panel_open() {
         return;
     }
     let t = Tokens::get(ui.ctx());
@@ -76,7 +33,7 @@ pub fn show(app: &mut WordApp, ui: &mut Ui) {
         .frame(egui::Frame::NONE.fill(t.panel).inner_margin(10).stroke(Stroke::new(1.0, t.border)))
         .show(ui, |ui| {
             if crate::panes::header(ui, "Claude") {
-                OPEN.with(|o| o.set(false));
+                set_panel(false);
                 return;
             }
             egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| pane(app, ui));
@@ -105,6 +62,8 @@ mod native {
     const DEFAULT_MAX: u64 = 3;
     const DEFAULT_IDLE: u64 = 4;
     const DEFAULT_MODEL: &str = "sonnet";
+    /// How long "Click again to forget" waits for the second click.
+    const ARM_FOR: std::time::Duration = std::time::Duration::from_secs(4);
 
     /// What the panel shows, from the shared files.
     struct Cache {
@@ -116,8 +75,8 @@ mod native {
     }
 
     thread_local! {
-        /// "Forget my style" asked; waiting for the writer to confirm.
-        static CONFIRM_FORGET: Cell<bool> = const { Cell::new(false) };
+        /// "Forget my style" clicked once: a second click within a few seconds forgets.
+        static ARMED: Cell<Option<std::time::Instant>> = const { Cell::new(None) };
         /// The shared files, read at most about once a second.
         static CACHE: RefCell<Option<Cache>> = const { RefCell::new(None) };
     }
@@ -340,22 +299,19 @@ mod native {
             if ui.add_enabled(!learned.trim().is_empty(), egui::Button::new(tl!("Open profile"))).clicked() {
                 open_profile();
             }
-            if ui.button(tl!("Forget my style")).clicked() {
-                CONFIRM_FORGET.with(|c| c.set(true));
+            // One button: the first click asks, a second within a few seconds forgets.
+            let armed = ARMED.with(Cell::get).filter(|at| at.elapsed() < ARM_FOR);
+            let label = if armed.is_some() { tl!("Click again to forget") } else { tl!("Forget my style") };
+            let text = if armed.is_some() { RichText::new(label).color(t.red) } else { RichText::new(label) };
+            if ui.button(text).on_hover_text(tl!("Forget everything Claude has learned about your writing")).clicked() {
+                if armed.is_some() {
+                    forget();
+                    ARMED.with(|a| a.set(None));
+                } else {
+                    ARMED.with(|a| a.set(Some(std::time::Instant::now())));
+                }
             }
         });
-        if CONFIRM_FORGET.with(Cell::get) {
-            ui.label(tl!("Forget everything Claude has learned about your writing?"));
-            ui.horizontal(|ui| {
-                if ui.button(tl!("Forget")).clicked() {
-                    forget();
-                    CONFIRM_FORGET.with(|c| c.set(false));
-                }
-                if ui.button(tl!("Cancel")).clicked() {
-                    CONFIRM_FORGET.with(|c| c.set(false));
-                }
-            });
-        }
     }
 }
 
@@ -367,20 +323,21 @@ mod tests {
     use serde_json::json;
     use wordcraft_engine::Session;
 
+    use wordcraft_engine::cmd::suggest::panel_open;
+
     use crate::{Services, WordApp};
 
     #[test]
     fn the_claude_command_opens_and_closes_the_panel() {
         let mut a = WordApp::new(Session::new(wordcraft_engine::sample::sample_document()), Services::default());
-        assert!(!super::is_open());
+        assert!(!panel_open());
         assert_eq!(a.run("suggest.panel", json!({})).unwrap(), json!({"open": true}));
-        assert!(super::is_open());
+        assert!(panel_open());
         a.run("suggest.panel", json!({})).unwrap();
-        assert!(!super::is_open());
+        assert!(!panel_open());
         a.run("suggest.panel", json!({"value": true})).unwrap();
         a.run("suggest.panel", json!({"value": true})).unwrap();
-        assert!(super::is_open(), "value sets rather than toggles");
-        // Outside the window there is no panel: the engine refuses.
-        assert!(a.session.run("suggest.panel", &json!({})).is_err());
+        assert!(panel_open(), "value sets rather than toggles");
+        a.run("suggest.panel", json!({"value": false})).unwrap();
     }
 }
