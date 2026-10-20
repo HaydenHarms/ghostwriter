@@ -69,7 +69,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          path: assets
+          path: release-assets
           merge-multiple: true
       - name: Publish
         env:
@@ -83,9 +83,9 @@ jobs:
           fi
           notes="docs/releases/ghostwriter-$version.md"
           [ -f "$notes" ] || { echo "::error::missing $notes"; exit 1; }
-          (cd assets && sha256sum -- * > SHA256SUMS.txt)
+          (cd release-assets && sha256sum -- * > SHA256SUMS.txt)
           if gh release view "$tag" >/dev/null 2>&1; then
-            gh release upload "$tag" --clobber assets/*
+            gh release upload "$tag" --clobber release-assets/*
           else
-            gh release create "$tag" --title "Ghostwriter $version" --notes-file "$notes" --target "$GITHUB_SHA" assets/*
+            gh release create "$tag" --title "Ghostwriter $version" --notes-file "$notes" --target "$GITHUB_SHA" release-assets/*
           fi
