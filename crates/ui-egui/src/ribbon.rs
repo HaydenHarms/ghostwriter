@@ -1977,6 +1977,7 @@ fn zotero(app: &mut WordApp, ui: &mut Ui) {
 }
 
 fn review(app: &mut WordApp, ui: &mut Ui) {
+    crate::claude_pane::ribbon_group(app, ui); // companion hook
     group(ui, "Proofing", None, app, |ui, app| {
         big(ui, app, "spelling", "Spelling &\nGrammar", "review.spelling", json!({}), false);
         stack(ui, |ui| {

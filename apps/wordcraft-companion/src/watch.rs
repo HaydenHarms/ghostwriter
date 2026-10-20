@@ -23,6 +23,8 @@ pub struct Context {
     pub blocks: Vec<Block>,
     /// The body paragraph the caret is in.
     pub caret: Option<usize>,
+    /// The document's file, once saved.
+    pub document: Option<String>,
 }
 
 impl Context {
@@ -44,7 +46,8 @@ impl Context {
             })
             .unwrap_or_default();
         let caret = v.get("caret").and_then(|c| c.get("block")).and_then(Value::as_u64).and_then(|n| usize::try_from(n).ok());
-        Context { blocks, caret }
+        let document = v.get("document").and_then(Value::as_str).map(str::to_string);
+        Context { blocks, caret, document }
     }
 
     pub fn block(&self, index: usize) -> Option<&Block> {
@@ -100,6 +103,11 @@ impl Watch {
         self.reviewed.insert(text_hash(text));
     }
 
+    /// Change how long a pause must be (the Claude panel's setting).
+    pub fn set_idle(&mut self, idle: Duration) {
+        self.settings.idle = idle;
+    }
+
     /// Whether the writer has paused (nothing changed for the idle time).
     pub fn quiet(&self, now: Instant) -> bool {
         self.last_change.is_none_or(|t| now.duration_since(t) >= self.settings.idle)
@@ -147,6 +155,7 @@ mod tests {
                 .map(|(i, t)| Block { index: i, text: (*t).to_string(), style: (i == 0).then(|| "Heading1".to_string()), suggestions: 0 })
                 .collect(),
             caret: Some(caret),
+            document: None,
         }
     }
 

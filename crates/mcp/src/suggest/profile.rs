@@ -52,8 +52,7 @@ impl Decision {
     }
 
     fn to_json(&self) -> Value {
-        let secs = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0);
-        json!({"time": secs, "verdict": if self.accepted { "accepted" } else { "rejected" }, "was": self.was,
+        json!({"time": super::settings::unix_now(), "verdict": if self.accepted { "accepted" } else { "rejected" }, "was": self.was,
             "suggested": self.suggested, "context": self.context, "why": self.why})
     }
 
@@ -152,6 +151,19 @@ impl Profile {
             out.push_str(&learned);
         }
         (!out.trim().is_empty()).then_some(out)
+    }
+
+    /// Forget everything learned: the profile (with the writer's notes), the feedback log and the
+    /// paragraphs learned from.
+    pub fn forget(&self) -> Result<(), String> {
+        for f in [self.style_path(), self.feedback_path(), self.dir.join("learned-paragraphs.txt")] {
+            match std::fs::remove_file(&f) {
+                Ok(()) => {}
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+                Err(e) => return Err(format!("can't delete {}: {e}", f.display())),
+            }
+        }
+        Ok(())
     }
 
     /// Replace Ghostwriter's part of `style.md`, keeping the writer's (a starter for a new file).

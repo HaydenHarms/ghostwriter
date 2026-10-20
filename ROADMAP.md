@@ -1,6 +1,6 @@
 # Ghostwriter roadmap
 
-**Stage: 1.0, Windows** · next: 1.1 (learns your style; start Claude from the window)
+**Stage: 1.0, Windows** · next: 1.1 (learns your style; the Claude panel)
 
 > **Last updated:** 2026-10-20 · **Change:** major (the goal restated as live Claude suggestions; WordCraft's Word-parity roadmap moved to upstream)
 
@@ -25,6 +25,7 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 | Windows | done: x64 and ARM64 installers and portable zips, unsigned |
 | macOS, Linux | builds from source; no packages |
 | Learning your style | done (unreleased): accepts and rejects noted in a feedback log; a style profile Claude builds from your writing by itself (first after ~150 words) and refines from your decisions; rejected edits not repeated; MCP clients get the profile too |
+| Claude panel | done (unreleased): Review › Claude; start Claude from the window, suggestions and learning on/off, per-document learning, model, profile preview, forget; live, no restart |
 | Interface languages | the suggestion commands are translated into all 22 of WordCraft's languages |
 
 ## Next
@@ -32,15 +33,19 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 | # | Milestone | What | Estimate |
 |---|---|---|---|
 | G1 | Signed Windows builds | not planned: Ghostwriter is for the owner and friends, and "Run anyway" is fine | — |
-| G2 | Start Claude from the window | a Companion toggle, brief and style pickers and status in the app instead of a terminal | 8–12 h |
+| G2 | Start Claude from the window | done: the Claude panel | — |
 | G3 | Own settings | separate settings folder and control port from WordCraft, so both can run at once | 3–5 h |
 | G4 | macOS and Linux packages | DMG, AppImage/deb built by the release workflow | 6–10 h |
 | G5 | Whole-document passes | on request: structure, argument and consistency across sections, not only the paragraph at the caret | 8–12 h |
 | G6 | Learning from rejections | done: feedback log, style profile, no repeats | — |
 | G7 | Explain a suggestion | a short reason on the card, from Claude's answer | 3–5 h |
+| G8 | Bigger suggestions on request | buttons in the Claude panel: a transition between sections, a paragraph's missing step, a structure pass; still suggestions to accept or reject | 8–14 h |
 
 ## Progress log
 
+- **2026-10-20 · Claude panel.** Review › Claude: start Claude from the window, switch suggestions
+  and learning on or off (also per document), pick the model, see and forget what it has learned.
+  The companion follows the panel live and stops with the window.
 - **2026-10-20 · learning.** Claude works out your style from your own paragraphs (the first profile
   after about 150 words, refreshed as you write) and from every accept and reject, keeps it in
   `style.md`, and stops repeating rejected edits; no brief or notes needed;

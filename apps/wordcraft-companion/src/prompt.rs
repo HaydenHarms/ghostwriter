@@ -247,6 +247,7 @@ mod tests {
         let ctx = Context {
             blocks: vec![b(0, "Rents", Some("Heading1")), b(1, "First para.", None), b(2, "Target para.", None), b(3, "Next.", None)],
             caret: Some(2),
+            document: None,
         };
         let p = build(&ctx, 2, &Material { brief: Some("Argue that rent is a tax."), style: None, profile: None, decisions: &[], max: 3 }).unwrap();
         assert!(p.contains("## TARGET paragraph\nTarget para."));
@@ -273,7 +274,7 @@ mod tests {
 
     #[test]
     fn the_prompt_holds_the_profile_and_decisions() {
-        let ctx = Context { blocks: vec![Block { index: 0, text: "Target para.".into(), style: None, suggestions: 0 }], caret: None };
+        let ctx = Context { blocks: vec![Block { index: 0, text: "Target para.".into(), style: None, suggestions: 0 }], caret: None, document: None };
         let ds = [dec(false, "utilize", "use"), dec(true, "very big", "huge")];
         let p = build(&ctx, 0, &Material { brief: None, style: None, profile: Some("Writes in short bursts."), decisions: &ds, max: 3 }).unwrap();
         assert!(p.contains("## The writer's style profile\nWrites in short bursts."));

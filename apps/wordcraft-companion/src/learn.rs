@@ -66,33 +66,41 @@ impl Learner {
     pub fn start(app: &mut Remote, dir: Option<PathBuf>, every: usize, words: usize) -> Result<Learner, String> {
         let dir = dir.or_else(Profile::default_dir).ok_or("no settings folder for the style profile; pass --profile DIR")?;
         let profile = Profile::new(dir);
-        let (_, _, from) = profile.style();
-        let pending = profile.decision_count().saturating_sub(from);
         let next = app
             .call("engine.execute", json!({"command": "suggest.decisions", "params": {}}))
             .map_err(|e| format!("this Ghostwriter window can't report decisions ({e}); update Ghostwriter"))?
             .get("next")
             .and_then(Value::as_u64)
             .unwrap_or(0);
-        let seen = std::fs::read_to_string(profile.dir.join("learned-paragraphs.txt"))
+        let mut l = Learner {
+            profile,
+            since: next,
+            pending: 0,
+            every: every.max(1),
+            words: words.max(1),
+            seen: HashSet::new(),
+            decisions: Vec::new(),
+            learned: false,
+            posted: VecDeque::new(),
+            not_before: None,
+        };
+        l.reload();
+        Ok(l)
+    }
+
+    /// Read what's been learned from the profile folder again (after the writer told the Claude
+    /// panel to forget it, say).
+    pub fn reload(&mut self) {
+        let (_, learned, from) = self.profile.style();
+        self.pending = self.profile.decision_count().saturating_sub(from);
+        self.seen = std::fs::read_to_string(self.profile.dir.join("learned-paragraphs.txt"))
             .unwrap_or_default()
             .lines()
             .filter_map(|l| u64::from_str_radix(l.trim(), 16).ok())
             .collect();
-        let decisions = profile.decisions();
-        let learned = !profile.style().1.is_empty();
-        Ok(Learner {
-            profile,
-            since: next,
-            pending,
-            every: every.max(1),
-            words: words.max(1),
-            seen,
-            decisions,
-            learned,
-            posted: VecDeque::new(),
-            not_before: None,
-        })
+        self.decisions = self.profile.decisions();
+        self.learned = !learned.is_empty();
+        self.not_before = None;
     }
 
     /// The paragraphs in `ctx` that are the writer's own writing: body text long enough to show a
@@ -105,6 +113,14 @@ impl Learner {
             .filter(|b| b.suggestions == 0 && !is_heading(b) && b.text.split_whitespace().count() >= MIN_PARAGRAPH)
             .filter(|b| !claude.iter().any(|c| b.text.contains(c)))
             .collect()
+    }
+
+    /// Count the writer's paragraphs in `ctx` as already learned from, without learning from them
+    /// (after "Forget my style": only what they write next should shape the new profile).
+    pub fn pass_over(&mut self, ctx: &Context) {
+        let decisions = self.decisions.clone();
+        let own = Self::own(ctx, &decisions);
+        self.remember(&own);
     }
 
     /// Words of the writer's own writing in `ctx` not learned from yet.
@@ -145,12 +161,13 @@ impl Learner {
             .unwrap_or_default()
     }
 
-    /// Read the writer's new decisions and add them to the feedback log. Returns how many.
-    pub fn poll(&mut self, app: &mut Remote, log: &dyn Fn(&str)) -> usize {
+    /// Read the writer's new decisions and, when `record`, add them to the feedback log. Returns
+    /// how many were added.
+    pub fn poll(&mut self, app: &mut Remote, record: bool, log: &dyn Fn(&str)) -> usize {
         let Ok(v) = app.call("engine.execute", json!({"command": "suggest.decisions", "params": {"since": self.since}})) else { return 0 };
         let mut n = 0;
         for r in v.get("decisions").and_then(Value::as_array).into_iter().flatten() {
-            let Some(mut d) = Decision::from_engine(r) else { continue };
+            let Some(mut d) = Decision::from_engine(r).filter(|_| record) else { continue };
             d.why = self.why(&d);
             match self.profile.record(&d) {
                 Ok(()) => {
@@ -252,6 +269,7 @@ mod tests {
                 para(4, "The baker, who has run the place for thirty years, never once raised the price."),
             ],
             caret: None,
+            document: None,
         };
         let accepted = Decision { accepted: true, was: "never".into(), suggested: "never once".into(), context: String::new(), why: String::new() };
         let own = Learner::own(&ctx, &[accepted]);

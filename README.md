@@ -65,22 +65,22 @@ Windows 10 or 11, x64 or ARM64.
 The portable zip has the same programs without an installer, plus the Claude Code skill.
 `SHA256SUMS.txt` on each release lists a checksum for every file.
 
-## Write with the companion
+## Write with Claude
 
-In a terminal, start the companion beside your open document:
+Open the **Claude** panel (Review › **Claude**, or type "Claude" in the search box) and click
+**Start Claude**. That's it: Claude reads along as you write and stops when you close the window.
 
-```powershell
-ghostwriter-companion
-```
+<p align="center">
+  <img src="docs/images/claude-panel.png" alt="Ghostwriter with the Claude panel open on the right: a green dot and 'Claude is reading along', switches for suggestions and for learning your style, sliders for suggestions per paragraph and the pause before suggesting, a model choice, and a box showing what Claude has learned about the writer's voice." width="100%">
+</p>
 
-That's all it needs. If you'd like suggestions held to a goal for the piece, add
-`--brief my-essay.brief.md`, a few lines like:
+The panel is where you steer it, and changes apply at once:
 
-```markdown
-Thesis: housing scarcity in American cities is a policy choice, not a market failure.
-Audience: Substack readers who follow political economy. Tone: plain-spoken, a little polemical.
-Section 3 must answer the "induced demand" objection before the conclusion.
-```
+- **Suggestions** on or off, how many per paragraph, and how long you pause before Claude looks.
+- **Model**: Fast (lighter on your plan's limits), Balanced, or Thorough.
+- **Learn my style** on or off, and **Learn from this document** off for someone else's writing.
+- **What Claude has learned**: your style profile, with **Open profile** and **Forget my style**.
+- Whether Claude is running, and how many calls it has made this hour.
 
 | | |
 |---|---|
@@ -89,9 +89,9 @@ Section 3 must answer the "induced demand" objection before the conclusion.
 | Undo | Ctrl+Z |
 | All at once | Review › Accept All / Reject All |
 
-`--model haiku` is faster and lighter on your plan's limits and `--model opus` reads more closely.
-`--max`, `--idle` and `--reach` set how many suggestions you get, how soon and how far from the
-caret. The full guide, with every option, is in [docs/companion.md](docs/companion.md).
+You can also run `ghostwriter-companion` in a terminal yourself, for example with
+`--brief my-essay.brief.md` to hold suggestions to a few lines on the piece's thesis and audience.
+The full guide, with every option, is in [docs/companion.md](docs/companion.md).
 
 ## Ask Claude directly
 
@@ -110,14 +110,15 @@ commands (`context`, `add`, `list`, `accept`, `reject`, `withdraw`). They're des
 
 ## Roadmap
 
-Ghostwriter **1.0** is the first working version on Windows; learning your style is next to ship.
+Ghostwriter **1.0** is the first working version on Windows; learning your style and the Claude
+panel are next to ship.
 After that, roughly in order:
 
-1. **Start Claude from the window**: a Companion toggle in the app instead of a terminal.
+1. **Bigger suggestions on request**, from the Claude panel: a transition between two sections,
+   a paragraph that's missing a step, a structure pass over the whole piece, still as suggestions
+   you accept or reject.
 2. **Own settings**, so Ghostwriter and WordCraft can be open side by side.
 3. **macOS and Linux** packages (the code already builds there; only packaging is Windows-only).
-4. **Whole-document passes on request**: structure, argument and consistency across sections,
-   not only the paragraph you're on.
 
 Details and progress: [ROADMAP.md](ROADMAP.md).
 

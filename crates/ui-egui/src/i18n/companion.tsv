@@ -5,6 +5,7 @@ zh-hans	Companion	写作助手
 zh-hans	Add Suggestion	添加建议
 zh-hans	List Suggestions	列出建议
 zh-hans	Suggestion Decisions	建议处理结果
+zh-hans	Claude	Claude
 zh-hans	Suggestion Context	建议上下文
 zh-hans	Accept Suggestion	接受建议
 zh-hans	Reject Suggestion	拒绝建议
@@ -13,6 +14,7 @@ zh-hant	Companion	寫作助手
 zh-hant	Add Suggestion	新增建議
 zh-hant	List Suggestions	列出建議
 zh-hant	Suggestion Decisions	建議處理結果
+zh-hant	Claude	Claude
 zh-hant	Suggestion Context	建議上下文
 zh-hant	Accept Suggestion	接受建議
 zh-hant	Reject Suggestion	拒絕建議
@@ -21,6 +23,7 @@ ja	Companion	コンパニオン
 ja	Add Suggestion	提案を追加
 ja	List Suggestions	提案の一覧
 ja	Suggestion Decisions	提案への対応
+ja	Claude	Claude
 ja	Suggestion Context	提案のコンテキスト
 ja	Accept Suggestion	提案を承諾
 ja	Reject Suggestion	提案を却下
@@ -29,6 +32,7 @@ ko	Companion	도우미
 ko	Add Suggestion	제안 추가
 ko	List Suggestions	제안 목록
 ko	Suggestion Decisions	제안 처리 결과
+ko	Claude	Claude
 ko	Suggestion Context	제안 컨텍스트
 ko	Accept Suggestion	제안 수락
 ko	Reject Suggestion	제안 거부
@@ -37,6 +41,7 @@ uk	Companion	Помічник
 uk	Add Suggestion	Додати пропозицію
 uk	List Suggestions	Список пропозицій
 uk	Suggestion Decisions	Рішення щодо пропозицій
+uk	Claude	Claude
 uk	Suggestion Context	Контекст пропозиції
 uk	Accept Suggestion	Прийняти пропозицію
 uk	Reject Suggestion	Відхилити пропозицію
@@ -45,6 +50,7 @@ es	Companion	Asistente
 es	Add Suggestion	Agregar sugerencia
 es	List Suggestions	Enumerar sugerencias
 es	Suggestion Decisions	Decisiones sobre sugerencias
+es	Claude	Claude
 es	Suggestion Context	Contexto de la sugerencia
 es	Accept Suggestion	Aceptar sugerencia
 es	Reject Suggestion	Rechazar sugerencia
@@ -53,6 +59,7 @@ pt-br	Companion	Assistente
 pt-br	Add Suggestion	Adicionar sugestão
 pt-br	List Suggestions	Listar sugestões
 pt-br	Suggestion Decisions	Decisões sobre sugestões
+pt-br	Claude	Claude
 pt-br	Suggestion Context	Contexto da sugestão
 pt-br	Accept Suggestion	Aceitar sugestão
 pt-br	Reject Suggestion	Rejeitar sugestão
@@ -61,6 +68,7 @@ sr	Companion	Помоћник
 sr	Add Suggestion	Додај предлог
 sr	List Suggestions	Наведи предлоге
 sr	Suggestion Decisions	Одлуке о предлозима
+sr	Claude	Claude
 sr	Suggestion Context	Контекст предлога
 sr	Accept Suggestion	Прихвати предлог
 sr	Reject Suggestion	Одбаци предлог
@@ -69,6 +77,7 @@ sr-latn	Companion	Pomoćnik
 sr-latn	Add Suggestion	Dodaj predlog
 sr-latn	List Suggestions	Navedi predloge
 sr-latn	Suggestion Decisions	Odluke o predlozima
+sr-latn	Claude	Claude
 sr-latn	Suggestion Context	Kontekst predloga
 sr-latn	Accept Suggestion	Prihvati predlog
 sr-latn	Reject Suggestion	Odbaci predlog
@@ -77,6 +86,7 @@ pl	Companion	Asystent
 pl	Add Suggestion	Dodaj sugestię
 pl	List Suggestions	Wyświetl sugestie
 pl	Suggestion Decisions	Decyzje dotyczące sugestii
+pl	Claude	Claude
 pl	Suggestion Context	Kontekst sugestii
 pl	Accept Suggestion	Zaakceptuj sugestię
 pl	Reject Suggestion	Odrzuć sugestię
@@ -85,6 +95,7 @@ cs	Companion	Pomocník
 cs	Add Suggestion	Přidat návrh
 cs	List Suggestions	Seznam návrhů
 cs	Suggestion Decisions	Rozhodnutí o návrzích
+cs	Claude	Claude
 cs	Suggestion Context	Kontext návrhu
 cs	Accept Suggestion	Přijmout návrh
 cs	Reject Suggestion	Odmítnout návrh
@@ -93,6 +104,7 @@ et	Companion	Abiline
 et	Add Suggestion	Lisa soovitus
 et	List Suggestions	Loetle soovitused
 et	Suggestion Decisions	Soovituste otsused
+et	Claude	Claude
 et	Suggestion Context	Soovituse kontekst
 et	Accept Suggestion	Nõustu soovitusega
 et	Reject Suggestion	Keeldu soovitusest
@@ -101,6 +113,7 @@ de	Companion	Begleiter
 de	Add Suggestion	Vorschlag hinzufügen
 de	List Suggestions	Vorschläge auflisten
 de	Suggestion Decisions	Entscheidungen zu Vorschlägen
+de	Claude	Claude
 de	Suggestion Context	Vorschlagskontext
 de	Accept Suggestion	Vorschlag annehmen
 de	Reject Suggestion	Vorschlag ablehnen
@@ -109,6 +122,7 @@ ru	Companion	Помощник
 ru	Add Suggestion	Добавить предложение
 ru	List Suggestions	Список предложений
 ru	Suggestion Decisions	Решения по предложениям
+ru	Claude	Claude
 ru	Suggestion Context	Контекст предложения
 ru	Accept Suggestion	Принять предложение
 ru	Reject Suggestion	Отклонить предложение
@@ -117,6 +131,7 @@ tr	Companion	Yardımcı
 tr	Add Suggestion	Öneri Ekle
 tr	List Suggestions	Önerileri Listele
 tr	Suggestion Decisions	Öneri Kararları
+tr	Claude	Claude
 tr	Suggestion Context	Öneri Bağlamı
 tr	Accept Suggestion	Öneriyi Kabul Et
 tr	Reject Suggestion	Öneriyi Reddet
@@ -125,6 +140,7 @@ it	Companion	Assistente
 it	Add Suggestion	Aggiungi suggerimento
 it	List Suggestions	Elenca suggerimenti
 it	Suggestion Decisions	Decisioni sui suggerimenti
+it	Claude	Claude
 it	Suggestion Context	Contesto del suggerimento
 it	Accept Suggestion	Accetta suggerimento
 it	Reject Suggestion	Rifiuta suggerimento
@@ -133,6 +149,7 @@ hu	Companion	Segítő
 hu	Add Suggestion	Javaslat hozzáadása
 hu	List Suggestions	Javaslatok listája
 hu	Suggestion Decisions	Döntések a javaslatokról
+hu	Claude	Claude
 hu	Suggestion Context	Javaslat környezete
 hu	Accept Suggestion	Javaslat elfogadása
 hu	Reject Suggestion	Javaslat elutasítása
@@ -141,6 +158,7 @@ fr	Companion	Assistant
 fr	Add Suggestion	Ajouter une suggestion
 fr	List Suggestions	Lister les suggestions
 fr	Suggestion Decisions	Décisions sur les suggestions
+fr	Claude	Claude
 fr	Suggestion Context	Contexte de la suggestion
 fr	Accept Suggestion	Accepter la suggestion
 fr	Reject Suggestion	Refuser la suggestion
@@ -149,6 +167,7 @@ bg	Companion	Помощник
 bg	Add Suggestion	Добавяне на предложение
 bg	List Suggestions	Списък с предложения
 bg	Suggestion Decisions	Решения за предложенията
+bg	Claude	Claude
 bg	Suggestion Context	Контекст на предложението
 bg	Accept Suggestion	Приемане на предложението
 bg	Reject Suggestion	Отхвърляне на предложението
@@ -157,6 +176,7 @@ vi	Companion	Trợ lý
 vi	Add Suggestion	Thêm đề xuất
 vi	List Suggestions	Liệt kê đề xuất
 vi	Suggestion Decisions	Quyết định về đề xuất
+vi	Claude	Claude
 vi	Suggestion Context	Ngữ cảnh đề xuất
 vi	Accept Suggestion	Chấp nhận đề xuất
 vi	Reject Suggestion	Từ chối đề xuất
@@ -165,6 +185,7 @@ sv	Companion	Följeslagare
 sv	Add Suggestion	Lägg till förslag
 sv	List Suggestions	Lista förslag
 sv	Suggestion Decisions	Beslut om förslag
+sv	Claude	Claude
 sv	Suggestion Context	Förslagskontext
 sv	Accept Suggestion	Godkänn förslag
 sv	Reject Suggestion	Avvisa förslag
@@ -173,6 +194,7 @@ hr	Companion	Pomoćnik
 hr	Add Suggestion	Dodaj prijedlog
 hr	List Suggestions	Popis prijedloga
 hr	Suggestion Decisions	Odluke o prijedlozima
+hr	Claude	Claude
 hr	Suggestion Context	Kontekst prijedloga
 hr	Accept Suggestion	Prihvati prijedlog
 hr	Reject Suggestion	Odbij prijedlog
@@ -244,3 +266,598 @@ bg	Ghostwriter	Ghostwriter
 vi	Ghostwriter	Ghostwriter
 sv	Ghostwriter	Ghostwriter
 hr	Ghostwriter	Ghostwriter
+# The Claude panel (claude_pane.rs).
+zh-hans	Claude works in the desktop app.	Claude 仅在桌面应用中可用。
+zh-hans	Claude isn't running	Claude 未运行
+zh-hans	Claude is suggesting…	Claude 正在提出建议…
+zh-hans	Claude is learning your style…	Claude 正在学习你的文风…
+zh-hans	Claude is paused	Claude 已暂停
+zh-hans	Claude is reading along	Claude 正在陪你阅读
+zh-hans	Claude stopped	Claude 已停止
+zh-hans	calls to Claude this hour	本小时内调用 Claude 的次数
+zh-hans	Start Claude	启动 Claude
+zh-hans	Run ghostwriter-companion in a terminal to start Claude.	在终端中运行 ghostwriter-companion 以启动 Claude。
+zh-hans	Suggestions	建议
+zh-hans	Suggest edits as I write	写作时提出修改建议
+zh-hans	Suggestions per paragraph	每段建议数
+zh-hans	Pause before suggesting (seconds)	提出建议前的停顿（秒）
+zh-hans	Fast	快速
+zh-hans	Balanced	均衡
+zh-hans	Thorough	细致
+zh-hans	Your style	你的文风
+zh-hans	Learn my style	学习我的文风
+zh-hans	Learn from this document	从此文档学习
+zh-hans	Save the document to choose this.	保存文档后才能选择此项。
+zh-hans	What Claude has learned	Claude 学到的内容
+zh-hans	Nothing yet: Claude builds your profile once you've written a page or so.	暂无：你写满大约一页后，Claude 会建立你的文风档案。
+zh-hans	Open profile	打开档案
+zh-hans	Forget my style	忘记我的文风
+zh-hans	Forget everything Claude has learned about your writing?	要忘记 Claude 学到的关于你写作的一切吗？
+zh-hans	Forget	忘记
+zh-hant	Claude works in the desktop app.	Claude 僅在桌面應用程式中可用。
+zh-hant	Claude isn't running	Claude 未執行
+zh-hant	Claude is suggesting…	Claude 正在提出建議…
+zh-hant	Claude is learning your style…	Claude 正在學習你的文風…
+zh-hant	Claude is paused	Claude 已暫停
+zh-hant	Claude is reading along	Claude 正在陪你閱讀
+zh-hant	Claude stopped	Claude 已停止
+zh-hant	calls to Claude this hour	本小時內呼叫 Claude 的次數
+zh-hant	Start Claude	啟動 Claude
+zh-hant	Run ghostwriter-companion in a terminal to start Claude.	在終端機中執行 ghostwriter-companion 以啟動 Claude。
+zh-hant	Suggestions	建議
+zh-hant	Suggest edits as I write	寫作時提出修改建議
+zh-hant	Suggestions per paragraph	每段建議數
+zh-hant	Pause before suggesting (seconds)	提出建議前的停頓（秒）
+zh-hant	Fast	快速
+zh-hant	Balanced	均衡
+zh-hant	Thorough	細緻
+zh-hant	Your style	你的文風
+zh-hant	Learn my style	學習我的文風
+zh-hant	Learn from this document	從此文件學習
+zh-hant	Save the document to choose this.	儲存文件後才能選擇此項。
+zh-hant	What Claude has learned	Claude 學到的內容
+zh-hant	Nothing yet: Claude builds your profile once you've written a page or so.	尚無：你寫滿大約一頁後，Claude 會建立你的文風檔案。
+zh-hant	Open profile	開啟檔案
+zh-hant	Forget my style	忘記我的文風
+zh-hant	Forget everything Claude has learned about your writing?	要忘記 Claude 學到的關於你寫作的一切嗎？
+zh-hant	Forget	忘記
+ja	Claude works in the desktop app.	Claude はデスクトップ アプリで動作します。
+ja	Claude isn't running	Claude は実行されていません
+ja	Claude is suggesting…	Claude が提案しています…
+ja	Claude is learning your style…	Claude があなたの文体を学習しています…
+ja	Claude is paused	Claude は一時停止中です
+ja	Claude is reading along	Claude が一緒に読んでいます
+ja	Claude stopped	Claude は停止しました
+ja	calls to Claude this hour	この 1 時間の Claude 呼び出し
+ja	Start Claude	Claude を開始
+ja	Run ghostwriter-companion in a terminal to start Claude.	Claude を開始するには、ターミナルで ghostwriter-companion を実行してください。
+ja	Suggestions	提案
+ja	Suggest edits as I write	書いている間に編集を提案する
+ja	Suggestions per paragraph	段落ごとの提案数
+ja	Pause before suggesting (seconds)	提案までの待ち時間 (秒)
+ja	Fast	高速
+ja	Balanced	バランス
+ja	Thorough	じっくり
+ja	Your style	あなたの文体
+ja	Learn my style	文体を学習する
+ja	Learn from this document	この文書から学習する
+ja	Save the document to choose this.	これを選ぶには文書を保存してください。
+ja	What Claude has learned	Claude が学習したこと
+ja	Nothing yet: Claude builds your profile once you've written a page or so.	まだありません: 1 ページほど書くと、Claude があなたのプロファイルを作成します。
+ja	Open profile	プロファイルを開く
+ja	Forget my style	文体を忘れる
+ja	Forget everything Claude has learned about your writing?	Claude があなたの文章について学習した内容をすべて忘れますか?
+ja	Forget	忘れる
+ko	Claude works in the desktop app.	Claude는 데스크톱 앱에서 작동합니다.
+ko	Claude isn't running	Claude가 실행 중이 아님
+ko	Claude is suggesting…	Claude가 제안하는 중…
+ko	Claude is learning your style…	Claude가 문체를 학습하는 중…
+ko	Claude is paused	Claude 일시 중지됨
+ko	Claude is reading along	Claude가 함께 읽는 중
+ko	Claude stopped	Claude 중지됨
+ko	calls to Claude this hour	이번 시간 Claude 호출
+ko	Start Claude	Claude 시작
+ko	Run ghostwriter-companion in a terminal to start Claude.	Claude를 시작하려면 터미널에서 ghostwriter-companion을 실행하세요.
+ko	Suggestions	제안
+ko	Suggest edits as I write	글을 쓰는 동안 편집 제안
+ko	Suggestions per paragraph	단락당 제안 수
+ko	Pause before suggesting (seconds)	제안 전 대기 시간(초)
+ko	Fast	빠름
+ko	Balanced	균형
+ko	Thorough	꼼꼼함
+ko	Your style	내 문체
+ko	Learn my style	내 문체 학습
+ko	Learn from this document	이 문서에서 학습
+ko	Save the document to choose this.	이 옵션을 선택하려면 문서를 저장하세요.
+ko	What Claude has learned	Claude가 학습한 내용
+ko	Nothing yet: Claude builds your profile once you've written a page or so.	아직 없음: 한 페이지 정도 쓰면 Claude가 프로필을 만듭니다.
+ko	Open profile	프로필 열기
+ko	Forget my style	내 문체 잊기
+ko	Forget everything Claude has learned about your writing?	Claude가 내 글쓰기에 대해 학습한 내용을 모두 잊을까요?
+ko	Forget	잊기
+uk	Claude works in the desktop app.	Claude працює в настільному застосунку.
+uk	Claude isn't running	Claude не запущено
+uk	Claude is suggesting…	Claude пропонує правки…
+uk	Claude is learning your style…	Claude вивчає ваш стиль…
+uk	Claude is paused	Claude призупинено
+uk	Claude is reading along	Claude читає разом з вами
+uk	Claude stopped	Claude зупинився
+uk	calls to Claude this hour	звернень до Claude за цю годину
+uk	Start Claude	Запустити Claude
+uk	Run ghostwriter-companion in a terminal to start Claude.	Запустіть ghostwriter-companion у терміналі, щоб запустити Claude.
+uk	Suggestions	Пропозиції
+uk	Suggest edits as I write	Пропонувати правки, поки я пишу
+uk	Suggestions per paragraph	Пропозицій на абзац
+uk	Pause before suggesting (seconds)	Пауза перед пропозиціями (секунди)
+uk	Fast	Швидка
+uk	Balanced	Збалансована
+uk	Thorough	Ретельна
+uk	Your style	Ваш стиль
+uk	Learn my style	Вивчати мій стиль
+uk	Learn from this document	Навчатися з цього документа
+uk	Save the document to choose this.	Збережіть документ, щоб вибрати це.
+uk	What Claude has learned	Що Claude дізнався
+uk	Nothing yet: Claude builds your profile once you've written a page or so.	Поки нічого: Claude складе ваш профіль, щойно ви напишете приблизно сторінку.
+uk	Open profile	Відкрити профіль
+uk	Forget my style	Забути мій стиль
+uk	Forget everything Claude has learned about your writing?	Забути все, що Claude дізнався про ваше письмо?
+uk	Forget	Забути
+es	Claude works in the desktop app.	Claude funciona en la aplicación de escritorio.
+es	Claude isn't running	Claude no se está ejecutando
+es	Claude is suggesting…	Claude está sugiriendo…
+es	Claude is learning your style…	Claude está aprendiendo tu estilo…
+es	Claude is paused	Claude está en pausa
+es	Claude is reading along	Claude está leyendo contigo
+es	Claude stopped	Claude se detuvo
+es	calls to Claude this hour	llamadas a Claude en esta hora
+es	Start Claude	Iniciar Claude
+es	Run ghostwriter-companion in a terminal to start Claude.	Ejecuta ghostwriter-companion en una terminal para iniciar Claude.
+es	Suggestions	Sugerencias
+es	Suggest edits as I write	Sugerir cambios mientras escribo
+es	Suggestions per paragraph	Sugerencias por párrafo
+es	Pause before suggesting (seconds)	Pausa antes de sugerir (segundos)
+es	Fast	Rápido
+es	Balanced	Equilibrado
+es	Thorough	Minucioso
+es	Your style	Tu estilo
+es	Learn my style	Aprender mi estilo
+es	Learn from this document	Aprender de este documento
+es	Save the document to choose this.	Guarda el documento para elegir esto.
+es	What Claude has learned	Lo que Claude ha aprendido
+es	Nothing yet: Claude builds your profile once you've written a page or so.	Nada todavía: Claude crea tu perfil cuando hayas escrito una página más o menos.
+es	Open profile	Abrir perfil
+es	Forget my style	Olvidar mi estilo
+es	Forget everything Claude has learned about your writing?	¿Olvidar todo lo que Claude ha aprendido sobre tu escritura?
+es	Forget	Olvidar
+pt-br	Claude works in the desktop app.	Claude funciona no aplicativo para desktop.
+pt-br	Claude isn't running	Claude não está em execução
+pt-br	Claude is suggesting…	Claude está sugerindo…
+pt-br	Claude is learning your style…	Claude está aprendendo seu estilo…
+pt-br	Claude is paused	Claude está pausado
+pt-br	Claude is reading along	Claude está lendo junto
+pt-br	Claude stopped	Claude parou
+pt-br	calls to Claude this hour	chamadas ao Claude nesta hora
+pt-br	Start Claude	Iniciar o Claude
+pt-br	Run ghostwriter-companion in a terminal to start Claude.	Execute ghostwriter-companion em um terminal para iniciar o Claude.
+pt-br	Suggestions	Sugestões
+pt-br	Suggest edits as I write	Sugerir edições enquanto escrevo
+pt-br	Suggestions per paragraph	Sugestões por parágrafo
+pt-br	Pause before suggesting (seconds)	Pausa antes de sugerir (segundos)
+pt-br	Fast	Rápido
+pt-br	Balanced	Equilibrado
+pt-br	Thorough	Minucioso
+pt-br	Your style	Seu estilo
+pt-br	Learn my style	Aprender meu estilo
+pt-br	Learn from this document	Aprender com este documento
+pt-br	Save the document to choose this.	Salve o documento para escolher isto.
+pt-br	What Claude has learned	O que o Claude aprendeu
+pt-br	Nothing yet: Claude builds your profile once you've written a page or so.	Nada ainda: o Claude cria seu perfil quando você tiver escrito mais ou menos uma página.
+pt-br	Open profile	Abrir perfil
+pt-br	Forget my style	Esquecer meu estilo
+pt-br	Forget everything Claude has learned about your writing?	Esquecer tudo o que o Claude aprendeu sobre sua escrita?
+pt-br	Forget	Esquecer
+sr	Claude works in the desktop app.	Claude ради у апликацији за рачунар.
+sr	Claude isn't running	Claude није покренут
+sr	Claude is suggesting…	Claude предлаже…
+sr	Claude is learning your style…	Claude учи ваш стил…
+sr	Claude is paused	Claude је паузиран
+sr	Claude is reading along	Claude чита са вама
+sr	Claude stopped	Claude је заустављен
+sr	calls to Claude this hour	позива Claude-у овог сата
+sr	Start Claude	Покрени Claude
+sr	Run ghostwriter-companion in a terminal to start Claude.	Покрените ghostwriter-companion у терминалу да бисте покренули Claude.
+sr	Suggestions	Предлози
+sr	Suggest edits as I write	Предлажи измене док пишем
+sr	Suggestions per paragraph	Предлога по пасусу
+sr	Pause before suggesting (seconds)	Пауза пре предлагања (секунде)
+sr	Fast	Брзо
+sr	Balanced	Уравнотежено
+sr	Thorough	Темељно
+sr	Your style	Ваш стил
+sr	Learn my style	Учи мој стил
+sr	Learn from this document	Учи из овог документа
+sr	Save the document to choose this.	Сачувајте документ да бисте ово изабрали.
+sr	What Claude has learned	Шта је Claude научио
+sr	Nothing yet: Claude builds your profile once you've written a page or so.	Још ништа: Claude прави ваш профил када напишете отприлике страницу.
+sr	Open profile	Отвори профил
+sr	Forget my style	Заборави мој стил
+sr	Forget everything Claude has learned about your writing?	Заборавити све што је Claude научио о вашем писању?
+sr	Forget	Заборави
+sr-latn	Claude works in the desktop app.	Claude radi u aplikaciji za računar.
+sr-latn	Claude isn't running	Claude nije pokrenut
+sr-latn	Claude is suggesting…	Claude predlaže…
+sr-latn	Claude is learning your style…	Claude uči vaš stil…
+sr-latn	Claude is paused	Claude je pauziran
+sr-latn	Claude is reading along	Claude čita sa vama
+sr-latn	Claude stopped	Claude je zaustavljen
+sr-latn	calls to Claude this hour	poziva Claude-u ovog sata
+sr-latn	Start Claude	Pokreni Claude
+sr-latn	Run ghostwriter-companion in a terminal to start Claude.	Pokrenite ghostwriter-companion u terminalu da biste pokrenuli Claude.
+sr-latn	Suggestions	Predlozi
+sr-latn	Suggest edits as I write	Predlaži izmene dok pišem
+sr-latn	Suggestions per paragraph	Predloga po pasusu
+sr-latn	Pause before suggesting (seconds)	Pauza pre predlaganja (sekunde)
+sr-latn	Fast	Brzo
+sr-latn	Balanced	Uravnoteženo
+sr-latn	Thorough	Temeljno
+sr-latn	Your style	Vaš stil
+sr-latn	Learn my style	Uči moj stil
+sr-latn	Learn from this document	Uči iz ovog dokumenta
+sr-latn	Save the document to choose this.	Sačuvajte dokument da biste ovo izabrali.
+sr-latn	What Claude has learned	Šta je Claude naučio
+sr-latn	Nothing yet: Claude builds your profile once you've written a page or so.	Još ništa: Claude pravi vaš profil kada napišete otprilike stranicu.
+sr-latn	Open profile	Otvori profil
+sr-latn	Forget my style	Zaboravi moj stil
+sr-latn	Forget everything Claude has learned about your writing?	Zaboraviti sve što je Claude naučio o vašem pisanju?
+sr-latn	Forget	Zaboravi
+pl	Claude works in the desktop app.	Claude działa w aplikacji komputerowej.
+pl	Claude isn't running	Claude nie jest uruchomiony
+pl	Claude is suggesting…	Claude proponuje…
+pl	Claude is learning your style…	Claude uczy się Twojego stylu…
+pl	Claude is paused	Claude jest wstrzymany
+pl	Claude is reading along	Claude czyta razem z Tobą
+pl	Claude stopped	Claude zatrzymał się
+pl	calls to Claude this hour	wywołań Claude w tej godzinie
+pl	Start Claude	Uruchom Claude
+pl	Run ghostwriter-companion in a terminal to start Claude.	Uruchom ghostwriter-companion w terminalu, aby uruchomić Claude.
+pl	Suggestions	Sugestie
+pl	Suggest edits as I write	Proponuj zmiany podczas pisania
+pl	Suggestions per paragraph	Sugestie na akapit
+pl	Pause before suggesting (seconds)	Przerwa przed sugestiami (sekundy)
+pl	Fast	Szybki
+pl	Balanced	Zrównoważony
+pl	Thorough	Dokładny
+pl	Your style	Twój styl
+pl	Learn my style	Ucz się mojego stylu
+pl	Learn from this document	Ucz się z tego dokumentu
+pl	Save the document to choose this.	Zapisz dokument, aby to wybrać.
+pl	What Claude has learned	Czego Claude się nauczył
+pl	Nothing yet: Claude builds your profile once you've written a page or so.	Jeszcze nic: Claude tworzy Twój profil, gdy napiszesz mniej więcej stronę.
+pl	Open profile	Otwórz profil
+pl	Forget my style	Zapomnij mój styl
+pl	Forget everything Claude has learned about your writing?	Zapomnieć wszystko, czego Claude nauczył się o Twoim pisaniu?
+pl	Forget	Zapomnij
+cs	Claude works in the desktop app.	Claude funguje v desktopové aplikaci.
+cs	Claude isn't running	Claude neběží
+cs	Claude is suggesting…	Claude navrhuje…
+cs	Claude is learning your style…	Claude se učí váš styl…
+cs	Claude is paused	Claude je pozastaven
+cs	Claude is reading along	Claude čte s vámi
+cs	Claude stopped	Claude se zastavil
+cs	calls to Claude this hour	volání Claude za tuto hodinu
+cs	Start Claude	Spustit Claude
+cs	Run ghostwriter-companion in a terminal to start Claude.	Spusťte ghostwriter-companion v terminálu a spustíte Claude.
+cs	Suggestions	Návrhy
+cs	Suggest edits as I write	Navrhovat úpravy při psaní
+cs	Suggestions per paragraph	Návrhů na odstavec
+cs	Pause before suggesting (seconds)	Pauza před návrhy (sekundy)
+cs	Fast	Rychlý
+cs	Balanced	Vyvážený
+cs	Thorough	Důkladný
+cs	Your style	Váš styl
+cs	Learn my style	Učit se můj styl
+cs	Learn from this document	Učit se z tohoto dokumentu
+cs	Save the document to choose this.	Chcete-li to zvolit, uložte dokument.
+cs	What Claude has learned	Co se Claude naučil
+cs	Nothing yet: Claude builds your profile once you've written a page or so.	Zatím nic: Claude vytvoří váš profil, jakmile napíšete zhruba stránku.
+cs	Open profile	Otevřít profil
+cs	Forget my style	Zapomenout můj styl
+cs	Forget everything Claude has learned about your writing?	Zapomenout vše, co se Claude naučil o vašem psaní?
+cs	Forget	Zapomenout
+et	Claude works in the desktop app.	Claude töötab töölauarakenduses.
+et	Claude isn't running	Claude ei tööta
+et	Claude is suggesting…	Claude pakub välja…
+et	Claude is learning your style…	Claude õpib teie stiili…
+et	Claude is paused	Claude on peatatud
+et	Claude is reading along	Claude loeb kaasa
+et	Claude stopped	Claude peatus
+et	calls to Claude this hour	Claude'i päringuid selles tunnis
+et	Start Claude	Käivita Claude
+et	Run ghostwriter-companion in a terminal to start Claude.	Claude'i käivitamiseks käivitage terminalis ghostwriter-companion.
+et	Suggestions	Soovitused
+et	Suggest edits as I write	Paku kirjutamise ajal muudatusi
+et	Suggestions per paragraph	Soovitusi lõigu kohta
+et	Pause before suggesting (seconds)	Paus enne soovitamist (sekundid)
+et	Fast	Kiire
+et	Balanced	Tasakaalus
+et	Thorough	Põhjalik
+et	Your style	Teie stiil
+et	Learn my style	Õpi minu stiili
+et	Learn from this document	Õpi sellest dokumendist
+et	Save the document to choose this.	Selle valimiseks salvestage dokument.
+et	What Claude has learned	Mida Claude on õppinud
+et	Nothing yet: Claude builds your profile once you've written a page or so.	Veel mitte midagi: Claude loob teie profiili, kui olete umbes lehekülje kirjutanud.
+et	Open profile	Ava profiil
+et	Forget my style	Unusta minu stiil
+et	Forget everything Claude has learned about your writing?	Kas unustada kõik, mida Claude on teie kirjutamise kohta õppinud?
+et	Forget	Unusta
+de	Claude works in the desktop app.	Claude läuft in der Desktop-App.
+de	Claude isn't running	Claude läuft nicht
+de	Claude is suggesting…	Claude schlägt vor…
+de	Claude is learning your style…	Claude lernt Ihren Stil…
+de	Claude is paused	Claude ist pausiert
+de	Claude is reading along	Claude liest mit
+de	Claude stopped	Claude wurde beendet
+de	calls to Claude this hour	Aufrufe an Claude in dieser Stunde
+de	Start Claude	Claude starten
+de	Run ghostwriter-companion in a terminal to start Claude.	Führen Sie ghostwriter-companion in einem Terminal aus, um Claude zu starten.
+de	Suggestions	Vorschläge
+de	Suggest edits as I write	Beim Schreiben Änderungen vorschlagen
+de	Suggestions per paragraph	Vorschläge pro Absatz
+de	Pause before suggesting (seconds)	Pause vor Vorschlägen (Sekunden)
+de	Fast	Schnell
+de	Balanced	Ausgewogen
+de	Thorough	Gründlich
+de	Your style	Ihr Stil
+de	Learn my style	Meinen Stil lernen
+de	Learn from this document	Aus diesem Dokument lernen
+de	Save the document to choose this.	Speichern Sie das Dokument, um dies zu wählen.
+de	What Claude has learned	Was Claude gelernt hat
+de	Nothing yet: Claude builds your profile once you've written a page or so.	Noch nichts: Claude erstellt Ihr Profil, sobald Sie etwa eine Seite geschrieben haben.
+de	Open profile	Profil öffnen
+de	Forget my style	Meinen Stil vergessen
+de	Forget everything Claude has learned about your writing?	Alles vergessen, was Claude über Ihr Schreiben gelernt hat?
+de	Forget	Vergessen
+ru	Claude works in the desktop app.	Claude работает в настольном приложении.
+ru	Claude isn't running	Claude не запущен
+ru	Claude is suggesting…	Claude предлагает правки…
+ru	Claude is learning your style…	Claude изучает ваш стиль…
+ru	Claude is paused	Claude приостановлен
+ru	Claude is reading along	Claude читает вместе с вами
+ru	Claude stopped	Claude остановлен
+ru	calls to Claude this hour	обращений к Claude за этот час
+ru	Start Claude	Запустить Claude
+ru	Run ghostwriter-companion in a terminal to start Claude.	Запустите ghostwriter-companion в терминале, чтобы запустить Claude.
+ru	Suggestions	Предложения
+ru	Suggest edits as I write	Предлагать правки, пока я пишу
+ru	Suggestions per paragraph	Предложений на абзац
+ru	Pause before suggesting (seconds)	Пауза перед предложениями (секунды)
+ru	Fast	Быстрая
+ru	Balanced	Сбалансированная
+ru	Thorough	Тщательная
+ru	Your style	Ваш стиль
+ru	Learn my style	Изучать мой стиль
+ru	Learn from this document	Учиться на этом документе
+ru	Save the document to choose this.	Сохраните документ, чтобы выбрать это.
+ru	What Claude has learned	Что Claude узнал
+ru	Nothing yet: Claude builds your profile once you've written a page or so.	Пока ничего: Claude составит ваш профиль, когда вы напишете примерно страницу.
+ru	Open profile	Открыть профиль
+ru	Forget my style	Забыть мой стиль
+ru	Forget everything Claude has learned about your writing?	Забыть всё, что Claude узнал о вашем письме?
+ru	Forget	Забыть
+tr	Claude works in the desktop app.	Claude masaüstü uygulamasında çalışır.
+tr	Claude isn't running	Claude çalışmıyor
+tr	Claude is suggesting…	Claude öneriyor…
+tr	Claude is learning your style…	Claude yazım tarzınızı öğreniyor…
+tr	Claude is paused	Claude duraklatıldı
+tr	Claude is reading along	Claude sizinle birlikte okuyor
+tr	Claude stopped	Claude durdu
+tr	calls to Claude this hour	bu saatteki Claude çağrıları
+tr	Start Claude	Claude'u Başlat
+tr	Run ghostwriter-companion in a terminal to start Claude.	Claude'u başlatmak için bir terminalde ghostwriter-companion çalıştırın.
+tr	Suggestions	Öneriler
+tr	Suggest edits as I write	Yazarken düzenleme öner
+tr	Suggestions per paragraph	Paragraf başına öneri
+tr	Pause before suggesting (seconds)	Öneriden önce bekleme (saniye)
+tr	Fast	Hızlı
+tr	Balanced	Dengeli
+tr	Thorough	Titiz
+tr	Your style	Yazım tarzınız
+tr	Learn my style	Tarzımı öğren
+tr	Learn from this document	Bu belgeden öğren
+tr	Save the document to choose this.	Bunu seçmek için belgeyi kaydedin.
+tr	What Claude has learned	Claude'un öğrendikleri
+tr	Nothing yet: Claude builds your profile once you've written a page or so.	Henüz bir şey yok: Claude, yaklaşık bir sayfa yazdığınızda profilinizi oluşturur.
+tr	Open profile	Profili Aç
+tr	Forget my style	Tarzımı Unut
+tr	Forget everything Claude has learned about your writing?	Claude'un yazınız hakkında öğrendiği her şey unutulsun mu?
+tr	Forget	Unut
+it	Claude works in the desktop app.	Claude funziona nell'app desktop.
+it	Claude isn't running	Claude non è in esecuzione
+it	Claude is suggesting…	Claude sta suggerendo…
+it	Claude is learning your style…	Claude sta imparando il tuo stile…
+it	Claude is paused	Claude è in pausa
+it	Claude is reading along	Claude legge con te
+it	Claude stopped	Claude si è fermato
+it	calls to Claude this hour	chiamate a Claude in quest'ora
+it	Start Claude	Avvia Claude
+it	Run ghostwriter-companion in a terminal to start Claude.	Esegui ghostwriter-companion in un terminale per avviare Claude.
+it	Suggestions	Suggerimenti
+it	Suggest edits as I write	Suggerisci modifiche mentre scrivo
+it	Suggestions per paragraph	Suggerimenti per paragrafo
+it	Pause before suggesting (seconds)	Pausa prima dei suggerimenti (secondi)
+it	Fast	Veloce
+it	Balanced	Bilanciato
+it	Thorough	Accurato
+it	Your style	Il tuo stile
+it	Learn my style	Impara il mio stile
+it	Learn from this document	Impara da questo documento
+it	Save the document to choose this.	Salva il documento per scegliere questa opzione.
+it	What Claude has learned	Cosa ha imparato Claude
+it	Nothing yet: Claude builds your profile once you've written a page or so.	Ancora niente: Claude crea il tuo profilo quando avrai scritto circa una pagina.
+it	Open profile	Apri profilo
+it	Forget my style	Dimentica il mio stile
+it	Forget everything Claude has learned about your writing?	Dimenticare tutto ciò che Claude ha imparato sulla tua scrittura?
+it	Forget	Dimentica
+hu	Claude works in the desktop app.	A Claude az asztali alkalmazásban működik.
+hu	Claude isn't running	A Claude nem fut
+hu	Claude is suggesting…	A Claude javasol…
+hu	Claude is learning your style…	A Claude tanulja a stílusát…
+hu	Claude is paused	A Claude szünetel
+hu	Claude is reading along	A Claude együtt olvas Önnel
+hu	Claude stopped	A Claude leállt
+hu	calls to Claude this hour	Claude-hívás ebben az órában
+hu	Start Claude	Claude indítása
+hu	Run ghostwriter-companion in a terminal to start Claude.	A Claude indításához futtassa a ghostwriter-companion programot egy terminálban.
+hu	Suggestions	Javaslatok
+hu	Suggest edits as I write	Szerkesztések javaslása írás közben
+hu	Suggestions per paragraph	Javaslatok bekezdésenként
+hu	Pause before suggesting (seconds)	Szünet a javaslatok előtt (másodperc)
+hu	Fast	Gyors
+hu	Balanced	Kiegyensúlyozott
+hu	Thorough	Alapos
+hu	Your style	Az Ön stílusa
+hu	Learn my style	Stílusom tanulása
+hu	Learn from this document	Tanulás ebből a dokumentumból
+hu	Save the document to choose this.	Ennek kiválasztásához mentse a dokumentumot.
+hu	What Claude has learned	Amit a Claude megtanult
+hu	Nothing yet: Claude builds your profile once you've written a page or so.	Még semmi: a Claude akkor készíti el a profilját, amikor nagyjából egy oldalt megírt.
+hu	Open profile	Profil megnyitása
+hu	Forget my style	Stílusom elfelejtése
+hu	Forget everything Claude has learned about your writing?	Elfelejti mindazt, amit a Claude az írásáról megtanult?
+hu	Forget	Elfelejtés
+fr	Claude works in the desktop app.	Claude fonctionne dans l'application de bureau.
+fr	Claude isn't running	Claude n'est pas lancé
+fr	Claude is suggesting…	Claude propose…
+fr	Claude is learning your style…	Claude apprend votre style…
+fr	Claude is paused	Claude est en pause
+fr	Claude is reading along	Claude lit avec vous
+fr	Claude stopped	Claude s'est arrêté
+fr	calls to Claude this hour	appels à Claude cette heure-ci
+fr	Start Claude	Lancer Claude
+fr	Run ghostwriter-companion in a terminal to start Claude.	Exécutez ghostwriter-companion dans un terminal pour lancer Claude.
+fr	Suggestions	Suggestions
+fr	Suggest edits as I write	Proposer des modifications pendant que j'écris
+fr	Suggestions per paragraph	Suggestions par paragraphe
+fr	Pause before suggesting (seconds)	Pause avant de proposer (secondes)
+fr	Fast	Rapide
+fr	Balanced	Équilibré
+fr	Thorough	Approfondi
+fr	Your style	Votre style
+fr	Learn my style	Apprendre mon style
+fr	Learn from this document	Apprendre de ce document
+fr	Save the document to choose this.	Enregistrez le document pour choisir cette option.
+fr	What Claude has learned	Ce que Claude a appris
+fr	Nothing yet: Claude builds your profile once you've written a page or so.	Rien pour l'instant : Claude crée votre profil dès que vous avez écrit environ une page.
+fr	Open profile	Ouvrir le profil
+fr	Forget my style	Oublier mon style
+fr	Forget everything Claude has learned about your writing?	Oublier tout ce que Claude a appris sur votre écriture ?
+fr	Forget	Oublier
+bg	Claude works in the desktop app.	Claude работи в настолното приложение.
+bg	Claude isn't running	Claude не работи
+bg	Claude is suggesting…	Claude предлага…
+bg	Claude is learning your style…	Claude изучава стила ви…
+bg	Claude is paused	Claude е на пауза
+bg	Claude is reading along	Claude чете заедно с вас
+bg	Claude stopped	Claude спря
+bg	calls to Claude this hour	обръщения към Claude този час
+bg	Start Claude	Стартиране на Claude
+bg	Run ghostwriter-companion in a terminal to start Claude.	Изпълнете ghostwriter-companion в терминал, за да стартирате Claude.
+bg	Suggestions	Предложения
+bg	Suggest edits as I write	Предлагай редакции, докато пиша
+bg	Suggestions per paragraph	Предложения на абзац
+bg	Pause before suggesting (seconds)	Пауза преди предложения (секунди)
+bg	Fast	Бърз
+bg	Balanced	Балансиран
+bg	Thorough	Задълбочен
+bg	Your style	Вашият стил
+bg	Learn my style	Учи стила ми
+bg	Learn from this document	Учи от този документ
+bg	Save the document to choose this.	Запишете документа, за да изберете това.
+bg	What Claude has learned	Какво е научил Claude
+bg	Nothing yet: Claude builds your profile once you've written a page or so.	Още нищо: Claude създава профила ви, след като напишете около страница.
+bg	Open profile	Отваряне на профила
+bg	Forget my style	Забрави стила ми
+bg	Forget everything Claude has learned about your writing?	Да се забрави ли всичко, което Claude е научил за писането ви?
+bg	Forget	Забрави
+vi	Claude works in the desktop app.	Claude hoạt động trong ứng dụng máy tính.
+vi	Claude isn't running	Claude không chạy
+vi	Claude is suggesting…	Claude đang đề xuất…
+vi	Claude is learning your style…	Claude đang học phong cách của bạn…
+vi	Claude is paused	Claude đang tạm dừng
+vi	Claude is reading along	Claude đang đọc cùng bạn
+vi	Claude stopped	Claude đã dừng
+vi	calls to Claude this hour	lượt gọi Claude trong giờ này
+vi	Start Claude	Khởi động Claude
+vi	Run ghostwriter-companion in a terminal to start Claude.	Chạy ghostwriter-companion trong terminal để khởi động Claude.
+vi	Suggestions	Đề xuất
+vi	Suggest edits as I write	Đề xuất chỉnh sửa khi tôi viết
+vi	Suggestions per paragraph	Số đề xuất mỗi đoạn
+vi	Pause before suggesting (seconds)	Tạm dừng trước khi đề xuất (giây)
+vi	Fast	Nhanh
+vi	Balanced	Cân bằng
+vi	Thorough	Kỹ lưỡng
+vi	Your style	Phong cách của bạn
+vi	Learn my style	Học phong cách của tôi
+vi	Learn from this document	Học từ tài liệu này
+vi	Save the document to choose this.	Lưu tài liệu để chọn mục này.
+vi	What Claude has learned	Điều Claude đã học được
+vi	Nothing yet: Claude builds your profile once you've written a page or so.	Chưa có gì: Claude tạo hồ sơ của bạn khi bạn đã viết khoảng một trang.
+vi	Open profile	Mở hồ sơ
+vi	Forget my style	Quên phong cách của tôi
+vi	Forget everything Claude has learned about your writing?	Quên mọi điều Claude đã học về cách viết của bạn?
+vi	Forget	Quên
+sv	Claude works in the desktop app.	Claude fungerar i skrivbordsappen.
+sv	Claude isn't running	Claude körs inte
+sv	Claude is suggesting…	Claude föreslår…
+sv	Claude is learning your style…	Claude lär sig din stil…
+sv	Claude is paused	Claude är pausad
+sv	Claude is reading along	Claude läser med
+sv	Claude stopped	Claude stoppades
+sv	calls to Claude this hour	anrop till Claude den här timmen
+sv	Start Claude	Starta Claude
+sv	Run ghostwriter-companion in a terminal to start Claude.	Kör ghostwriter-companion i en terminal för att starta Claude.
+sv	Suggestions	Förslag
+sv	Suggest edits as I write	Föreslå ändringar medan jag skriver
+sv	Suggestions per paragraph	Förslag per stycke
+sv	Pause before suggesting (seconds)	Paus innan förslag (sekunder)
+sv	Fast	Snabb
+sv	Balanced	Balanserad
+sv	Thorough	Grundlig
+sv	Your style	Din stil
+sv	Learn my style	Lär dig min stil
+sv	Learn from this document	Lär av det här dokumentet
+sv	Save the document to choose this.	Spara dokumentet för att välja detta.
+sv	What Claude has learned	Vad Claude har lärt sig
+sv	Nothing yet: Claude builds your profile once you've written a page or so.	Inget ännu: Claude skapar din profil när du har skrivit ungefär en sida.
+sv	Open profile	Öppna profil
+sv	Forget my style	Glöm min stil
+sv	Forget everything Claude has learned about your writing?	Glömma allt Claude har lärt sig om ditt skrivande?
+sv	Forget	Glöm
+hr	Claude works in the desktop app.	Claude radi u aplikaciji za računalo.
+hr	Claude isn't running	Claude nije pokrenut
+hr	Claude is suggesting…	Claude predlaže…
+hr	Claude is learning your style…	Claude uči vaš stil…
+hr	Claude is paused	Claude je pauziran
+hr	Claude is reading along	Claude čita s vama
+hr	Claude stopped	Claude se zaustavio
+hr	calls to Claude this hour	poziva Claudeu ovaj sat
+hr	Start Claude	Pokreni Claude
+hr	Run ghostwriter-companion in a terminal to start Claude.	Pokrenite ghostwriter-companion u terminalu da biste pokrenuli Claude.
+hr	Suggestions	Prijedlozi
+hr	Suggest edits as I write	Predlaži izmjene dok pišem
+hr	Suggestions per paragraph	Prijedloga po odlomku
+hr	Pause before suggesting (seconds)	Stanka prije prijedloga (sekunde)
+hr	Fast	Brzo
+hr	Balanced	Uravnoteženo
+hr	Thorough	Temeljito
+hr	Your style	Vaš stil
+hr	Learn my style	Uči moj stil
+hr	Learn from this document	Uči iz ovog dokumenta
+hr	Save the document to choose this.	Spremite dokument da biste odabrali ovo.
+hr	What Claude has learned	Što je Claude naučio
+hr	Nothing yet: Claude builds your profile once you've written a page or so.	Još ništa: Claude izrađuje vaš profil kad napišete otprilike stranicu.
+hr	Open profile	Otvori profil
+hr	Forget my style	Zaboravi moj stil
+hr	Forget everything Claude has learned about your writing?	Zaboraviti sve što je Claude naučio o vašem pisanju?
+hr	Forget	Zaboravi

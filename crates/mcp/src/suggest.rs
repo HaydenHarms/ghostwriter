@@ -3,6 +3,7 @@
 //! about the writer ([`profile`]).
 
 pub mod profile;
+pub mod settings;
 
 use profile::Profile;
 

@@ -23,15 +23,12 @@ login (your subscription). No API key.
    **More info → Run anyway**. Ghostwriter installs beside WordCraft, not over it.
 3. Start **Ghostwriter** from the Start menu or by opening a document. The installer sets
    `WORDCRAFT_CONTROL_PORT=7981`, so every window opens the port the companion uses.
-4. In a terminal, start the companion:
+4. Open the **Claude** panel (Review › **Claude**) and click **Start Claude**. (The portable zip
+   has the same three programs, unzipped anywhere. There, set the port yourself, as in step 3
+   below.)
 
-   ```powershell
-   ghostwriter-companion
-   ```
-
-   If the command isn't found, open a new terminal, or run it from
-   `C:\Program Files\Ghostwriter\`. (The portable zip has the same three programs, unzipped
-   anywhere. There, set the port yourself, as in step 3 below.)
+   Or start it in a terminal yourself, `ghostwriter-companion`, to pass options (below). If the
+   command isn't found, open a new terminal, or run it from `C:\Program Files\Ghostwriter\`.
 
 ## Build from source (Windows)
 
@@ -68,6 +65,25 @@ login (your subscription). No API key.
 
    It prints what it asks and what it posts; Ctrl+C stops it. It finds the window's key by
    itself (`%APPDATA%\WordCraft\control-key.local-7981`).
+
+## The Claude panel
+
+Review › **Claude** (or "Claude" in the search box) opens a panel on the right of the window:
+
+| | |
+|---|---|
+| Status | whether Claude is running, suggesting or learning, and its calls this hour. **Start Claude** starts the companion for this window (it stops when the window closes; its output goes to `companion.log` in the profile folder). |
+| Suggest edits as I write | suggestions on or off. Off, Claude still learns your style. |
+| Suggestions per paragraph, Pause before suggesting | `--max` and `--idle` |
+| Model | Fast (Haiku), Balanced (Sonnet), Thorough (Opus) |
+| Learn my style | learning on or off |
+| Learn from this document | off for a document that isn't your writing (remembered by its file, so save it first) |
+| What Claude has learned | the learned part of your style profile; **Open profile** opens `style.md` in a text editor, **Forget my style** deletes the profile and the feedback log, and Claude learns afresh from what you write next |
+
+Changes apply within a second. The panel writes them to `settings.json` in the profile folder,
+which the running companion reads; the companion reports back through `status.json`. What you set
+in the panel wins over the companion's command-line options; anything you never touched there
+keeps the option's value.
 
 ## A brief, if you want one
 
@@ -163,6 +179,7 @@ separate one (say, for fiction). If you open someone else's document, start the 
 | `--learn` | | update the profile now from the open document, then exit |
 | `--learn-only` | | note decisions and learn, but suggest nothing (for suggestions from Claude Code) |
 | `--no-learn` | | don't note decisions or use the profile |
+| `--exit-with-app` | | stop when the window closes (what **Start Claude** uses) |
 
 Every call counts toward your Claude plan's usage limits. Writing steadily, expect about one call
 per paragraph.
@@ -215,11 +232,15 @@ All code is in new files, except a few hooks, each marked `companion hook`
 - `crates/layout/src/lib.rs` (`HideDeleted::hides`): replaced words are left out of the layout.
 - `crates/layout/src/display.rs` (two lines): suggested words on orange, drawn as plain text.
 - `crates/ui-egui/src/suggest.rs` + one call in `crates/ui-egui/src/lib.rs`: the ✓/✗ card.
+- `crates/ui-egui/src/claude_pane.rs`: the Claude panel and its ribbon button, hooked in with one
+  line each in `lib.rs` (the panel; `suggest.panel`), `ribbon.rs` (Review › Claude) and
+  `icons.rs` (the sparkle), and the `wordcraft-mcp` dependency in `crates/ui-egui/Cargo.toml`.
 - `crates/ui-egui/src/i18n/companion.tsv` (+ `companion.rs`, two lines in `i18n/mod.rs`): the
   command labels in every interface language, apart from the upstream catalogs.
 - `crates/mcp/src/suggest.rs` (+ one line each in `lib.rs` and `server.rs`): the instructions
   every MCP client gets on the `suggest.*` commands, with the writer's profile;
-  `crates/mcp/src/suggest/profile.rs`: the profile and feedback files, shared with the companion.
+  `crates/mcp/src/suggest/profile.rs` and `settings.rs`: the profile, feedback, panel settings
+  and status files, shared by the companion and the Claude panel.
 - `apps/wordcraft-companion/`: the watcher (`learn.rs`: noting decisions and updating the profile). `Cargo.toml` (`default-members`) and
   `xtask/src/layers.rs` list it.
 
@@ -237,7 +258,7 @@ and put the hook back. Documentation conflicts: keep Ghostwriter's `README.md`, 
 `docs/roadmap.md`, `AGENTS.md` and `CLAUDE.md` (`git checkout --ours <file>`, then re-apply any
 upstream rule change to the agent files by hand). For the other files in `docs/`, take upstream's
 version and put back the one-paragraph `**Ghostwriter:**` note under the title (and the
-"Ghostwriter additions" section at the end of `docs/architecture.md`). `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 14 lines afterwards.
+"Ghostwriter additions" section at the end of `docs/architecture.md`). `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 20 lines afterwards.
 
 The Ghostwriter name works the same way: the 13 lines marked `ghostwriter brand`
 (`git grep -n "ghostwriter brand" -- '*.rs'`) set the window title, the About box, the

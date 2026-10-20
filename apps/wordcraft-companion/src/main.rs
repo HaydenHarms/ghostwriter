@@ -12,7 +12,12 @@ use std::collections::VecDeque;
 use std::process::ExitCode;
 use std::time::{Duration, Instant};
 
+use std::path::PathBuf;
+use std::sync::Mutex;
+
 use serde_json::{Value, json};
+use wordcraft_mcp::suggest::profile::Profile;
+use wordcraft_mcp::suggest::settings;
 use wordcraft_mcp::{Backend, Remote};
 
 use crate::claude::Claude;
@@ -51,10 +56,15 @@ LEARNING YOUR STYLE (on by default, nothing to set up; see docs/companion.md):
   --learn                update the profile now from the open document and the log, and exit
   --learn-only           learn from your decisions (e.g. on Claude Code's suggestions), suggest nothing
   --no-learn             neither record decisions nor use the profile
+
+The Claude panel in Ghostwriter (Review › Claude) changes these while the companion runs; what
+you set there wins over the options above.
+  --exit-with-app        stop when the Ghostwriter window closes (the panel's Start button uses it)
   --dry-run              print suggestions instead of posting them
   --verbose              print Claude's whole reply
 ";
 
+#[derive(Clone)]
 struct Options {
     connect: String,
     brief: Option<String>,
@@ -74,6 +84,7 @@ struct Options {
     learn_words: usize,
     learn_now: bool,
     suggest: bool,
+    exit_with_app: bool,
 }
 
 fn parse_args(args: &[String]) -> Result<Options, String> {
@@ -95,6 +106,7 @@ fn parse_args(args: &[String]) -> Result<Options, String> {
         learn_words: 400,
         learn_now: false,
         suggest: true,
+        exit_with_app: false,
         claude: Claude { program: "claude".into(), model: "sonnet".into(), extra: Vec::new(), timeout: Duration::from_secs(180) },
     };
     let mut it = args.iter();
@@ -129,6 +141,7 @@ fn parse_args(args: &[String]) -> Result<Options, String> {
             "--learn" => o.learn_now = true,
             "--learn-only" => o.suggest = false,
             "--no-learn" => o.learn = false,
+            "--exit-with-app" => o.exit_with_app = true,
             "-h" | "--help" => return Err(String::new()),
             _ => return Err(format!("unknown option {a}")),
         }
@@ -150,9 +163,74 @@ fn read_optional(path: &Option<String>) -> Option<String> {
     }
 }
 
+/// The last line logged, for the Claude panel's status.
+static LAST_LOG: Mutex<String> = Mutex::new(String::new());
+
 fn log(msg: &str) {
     let secs = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0);
     println!("[{:02}:{:02}:{:02}] {msg}", (secs / 3600) % 24, (secs / 60) % 60, secs % 60);
+    *LAST_LOG.lock().unwrap_or_else(std::sync::PoisonError::into_inner) = msg.to_string();
+}
+
+fn last_log() -> String {
+    LAST_LOG.lock().unwrap_or_else(std::sync::PoisonError::into_inner).clone()
+}
+
+/// The profile folder: `--profile`, or the default.
+fn profile_dir(o: &Options) -> Option<PathBuf> {
+    o.profile.clone().or_else(Profile::default_dir)
+}
+
+/// What the companion does right now: the command line's choices with the Claude panel's on top.
+struct Live {
+    suggest: bool,
+    learn: bool,
+    /// Don't learn from the open document (the panel's per-document switch).
+    skipped: bool,
+    /// The panel's "Forget my style" count.
+    forget: u64,
+}
+
+/// Apply the Claude panel's settings (`settings.json`) over `base` (the command line's).
+fn apply(o: &mut Options, base: &Options, dir: Option<&std::path::Path>, document: Option<&str>) -> Live {
+    let s = dir.map(settings::read).unwrap_or_default();
+    let flag = |k: &str, d: bool| s.get(k).and_then(Value::as_bool).unwrap_or(d);
+    let num = |k: &str| s.get(k).and_then(Value::as_u64);
+    o.max = num("max").map_or(base.max, |n| usize::try_from(n.clamp(1, 10)).unwrap_or(base.max));
+    o.idle = num("idle").map_or(base.idle, |n| Duration::from_secs(n.clamp(1, 120)));
+    o.claude.model = s
+        .get("model")
+        .and_then(Value::as_str)
+        .filter(|m| settings::MODELS.iter().any(|(id, _)| id == m))
+        .map_or_else(|| base.claude.model.clone(), str::to_string);
+    let skipped = document.is_some_and(|d| settings::skipped(&s).iter().any(|p| p == d));
+    Live { suggest: flag("suggest", base.suggest), learn: flag("learn", base.learn), skipped, forget: num("forget").unwrap_or(0) }
+}
+
+/// Report to the Claude panel (`status.json`). `busy`: what Claude is doing right now.
+fn report(dir: Option<&std::path::Path>, live: &Live, o: &Options, calls: usize, document: Option<&str>, busy: Option<&str>) {
+    let Some(dir) = dir else { return };
+    let mut m = serde_json::Map::new();
+    m.insert("pid".into(), json!(std::process::id()));
+    m.insert("suggest".into(), json!(live.suggest));
+    m.insert("learn".into(), json!(live.learn));
+    m.insert("skipped".into(), json!(live.skipped));
+    m.insert("busy".into(), json!(busy));
+    m.insert("model".into(), json!(o.claude.model));
+    m.insert("callsThisHour".into(), json!(calls));
+    m.insert("maxPerHour".into(), json!(o.max_per_hour));
+    m.insert("document".into(), json!(document));
+    m.insert("message".into(), json!(last_log()));
+    let _ = settings::write_status(dir, m);
+}
+
+/// Tell the Claude panel the companion stopped, and why.
+fn report_stopped(dir: Option<&std::path::Path>, why: &str) {
+    let Some(dir) = dir else { return };
+    let mut m = serde_json::Map::new();
+    m.insert("stopped".into(), json!(true));
+    m.insert("message".into(), json!(why));
+    let _ = settings::write_status(dir, m);
 }
 
 fn context(app: &mut Remote) -> Result<Context, String> {
@@ -209,14 +287,22 @@ fn short(v: &Value) -> String {
     if s.chars().count() > 90 { format!("{}…", s.chars().take(90).collect::<String>()) } else { s }
 }
 
-fn run(o: Options) -> Result<(), String> {
+fn run(base: Options) -> Result<(), String> {
+    let mut o = base.clone();
+    let dir = profile_dir(&base);
     let mut app = Remote::connect(&o.connect).map_err(|e| format!("can't reach Ghostwriter at {}: {e} (start it with --control)", o.connect))?;
     if let Some(w) = app.key_warning() {
         return Err(w);
     }
     let first = context(&mut app)?;
+    let mut live = apply(&mut o, &base, dir.as_deref(), first.document.as_deref());
     let mut watch = Watch::new(Settings { idle: o.idle, min_words: 8, reach: o.reach });
-    let mut learner = if o.learn { Some(Learner::start(&mut app, o.profile.clone(), o.learn_every, o.learn_words)?) } else { None };
+    // Always ready to learn, so the panel can switch learning on; it only records while on.
+    let mut learner = match Learner::start(&mut app, o.profile.clone(), o.learn_every, o.learn_words) {
+        Ok(l) => Some(l),
+        Err(e) if base.learn => return Err(e),
+        Err(_) => None,
+    };
     if o.learn_now {
         if let Some(l) = learner.as_mut() {
             l.learn(&first, &o.claude, o.verbose, &log)?;
@@ -225,38 +311,64 @@ fn run(o: Options) -> Result<(), String> {
     }
     if o.once {
         let target = first.caret.ok_or("the caret isn't in the body")?;
-        review(&mut app, &o, &mut watch, &mut learner, &first, target)?;
+        let mut l = learner.filter(|_| live.learn);
+        review(&mut app, &o, &mut watch, &mut l, &first, target)?;
         return Ok(());
     }
     if !o.review_existing {
         watch.mark_all(&first);
     }
-    if o.suggest {
-        log(&format!("watching {} — write; suggestions appear after a {} s pause. Ctrl+C stops.", o.connect, o.idle.as_secs()));
-    } else {
-        log(&format!("watching {} — learning from what you accept and reject, suggesting nothing. Ctrl+C stops.", o.connect));
-    }
+    log(&format!(
+        "watching {} — suggestions after a pause, learning your style; the Claude panel (Review › Claude) sets both. Ctrl+C stops.",
+        o.connect
+    ));
     if let Some(l) = &learner {
         log(&format!("your style profile: {}", l.profile.style_path().display()));
     }
     let mut calls: VecDeque<Instant> = VecDeque::new();
     let mut warned_budget = false;
+    let mut unreachable_since: Option<Instant> = None;
+    let mut last_report: Option<Instant> = None;
     loop {
         std::thread::sleep(Duration::from_millis(800));
         let ctx = match context(&mut app) {
-            Ok(c) => c,
+            Ok(c) => {
+                unreachable_since = None;
+                c
+            }
             Err(e) => {
+                let since = *unreachable_since.get_or_insert_with(Instant::now);
+                if o.exit_with_app && since.elapsed() > Duration::from_secs(10) {
+                    log("the Ghostwriter window closed; stopping");
+                    report_stopped(dir.as_deref(), "the Ghostwriter window closed");
+                    return Ok(());
+                }
                 log(&format!("Ghostwriter not answering ({e}); retrying"));
                 std::thread::sleep(Duration::from_secs(3));
                 continue;
             }
         };
+        let forget = live.forget;
+        live = apply(&mut o, &base, dir.as_deref(), ctx.document.as_deref());
+        watch.set_idle(o.idle);
+        if live.forget != forget
+            && let Some(l) = learner.as_mut()
+        {
+            l.reload();
+            l.pass_over(&ctx);
+            log("forgot your style, as the Claude panel asked; learning afresh from what you write next");
+        }
+        let learning = live.learn && !live.skipped;
         if let Some(l) = learner.as_mut() {
-            l.poll(&mut app, &log);
+            l.poll(&mut app, learning, &log);
         }
         let now = Instant::now();
         while calls.front().is_some_and(|t| now.duration_since(*t) > Duration::from_secs(3600)) {
             calls.pop_front();
+        }
+        if last_report.is_none_or(|t| now.duration_since(t) >= Duration::from_secs(2)) {
+            report(dir.as_deref(), &live, &o, calls.len(), ctx.document.as_deref(), None);
+            last_report = Some(now);
         }
         if calls.len() >= o.max_per_hour {
             if !warned_budget {
@@ -266,17 +378,24 @@ fn run(o: Options) -> Result<(), String> {
             continue;
         }
         warned_budget = false;
-        let target = watch.observe(&ctx, now).filter(|_| o.suggest);
+        let target = watch.observe(&ctx, now).filter(|_| live.suggest);
         if let Some(target) = target {
             calls.push_back(now);
-            if let Err(e) = review(&mut app, &o, &mut watch, &mut learner, &ctx, target) {
+            report(dir.as_deref(), &live, &o, calls.len(), ctx.document.as_deref(), Some("suggesting"));
+            let mut l = learner.take().filter(|_| live.learn);
+            let r = review(&mut app, &o, &mut watch, &mut l, &ctx, target);
+            learner = l.or(learner);
+            if let Err(e) = r {
                 log(&format!("no suggestions this time: {e}"));
             }
-        } else if let Some(l) = learner.as_mut().filter(|l| watch.quiet(now) && l.due(&ctx, now)) {
+            last_report = None;
+        } else if let Some(l) = learner.as_mut().filter(|l| learning && watch.quiet(now) && l.due(&ctx, now)) {
             calls.push_back(now);
+            report(dir.as_deref(), &live, &o, calls.len(), ctx.document.as_deref(), Some("learning"));
             if let Err(e) = l.learn(&ctx, &o.claude, o.verbose, &log) {
                 log(&format!("couldn't update your style profile: {e}"));
             }
+            last_report = None;
         }
     }
 }
@@ -293,9 +412,11 @@ fn main() -> ExitCode {
             return if e.is_empty() { ExitCode::SUCCESS } else { ExitCode::from(2) };
         }
     };
+    let dir = profile_dir(&o);
     match run(o) {
         Ok(()) => ExitCode::SUCCESS,
         Err(e) => {
+            report_stopped(dir.as_deref(), &e);
             eprintln!("ghostwriter-companion: {e}");
             ExitCode::FAILURE
         }

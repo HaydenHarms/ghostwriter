@@ -50,6 +50,11 @@ pub fn specs() -> Vec<CommandSpec> {
         CommandSpec::new("suggest.withdraw", "Withdraw Suggestion", "Review › Companion", |s, v| resolve(s, v, None))
             .params(r#"{"id"?: n, "all"?: bool}"#)
             .pure(),
+        // The window opens its Claude panel for this; elsewhere there's no panel.
+        CommandSpec::new("suggest.panel", "Claude", "Review › Claude", |_, _| {
+            Err(CmdError::Failed("the Claude panel is part of the Ghostwriter window".into()))
+        })
+        .pure(),
         CommandSpec::new("suggest.decisions", "Suggestion Decisions", "Review › Companion", decisions)
             .params(r#"{"since"?: n} → {"next": n, "decisions": [{"seq", "verdict": "accepted"|"rejected", "text", "replaces", "context", "bulk"}]}"#)
             .pure(),
@@ -186,7 +191,8 @@ fn context(s: &mut Session, _: &Value) -> CmdResult {
         .collect();
     let f = &s.sel.focus;
     let caret = (f.story == StoryRef::Body && f.path.0.len() == 1).then(|| json!({"block": f.path.0.first(), "off": f.off}));
-    Ok(json!({"blocks": blocks, "caret": caret}))
+    let document = s.path.as_ref().map(|p| p.display().to_string());
+    Ok(json!({"blocks": blocks, "caret": caret, "document": document}))
 }
 
 fn text_param<'a>(v: &'a Value, key: &str) -> Result<Option<&'a str>, CmdError> {

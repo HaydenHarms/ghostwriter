@@ -6,6 +6,7 @@ use std::path::PathBuf;
 use std::process::{Command, Stdio};
 use std::time::{Duration, Instant};
 
+#[derive(Clone)]
 pub struct Claude {
     /// The `claude` program.
     pub program: String,
@@ -40,6 +41,13 @@ impl Claude {
             Command::new(&self.program)
         };
         c.args(self.args()).current_dir(Self::workdir()).stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::piped());
+        #[cfg(windows)]
+        {
+            use std::os::windows::process::CommandExt;
+            // CREATE_NO_WINDOW: started from the Claude panel the companion has no console, and
+            // Windows would open a console window for every call otherwise.
+            c.creation_flags(0x0800_0000);
+        }
         c
     }
 
