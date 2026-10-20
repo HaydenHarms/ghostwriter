@@ -23,10 +23,10 @@ login (your subscription). No API key.
    **More info → Run anyway**. Ghostwriter installs beside WordCraft, not over it.
 3. Start **Ghostwriter** from the Start menu or by opening a document. The installer sets
    `WORDCRAFT_CONTROL_PORT=7981`, so every window opens the port the companion uses.
-4. In a terminal, start the companion with a brief for the piece:
+4. In a terminal, start the companion:
 
    ```powershell
-   ghostwriter-companion --brief my-essay.brief.md
+   ghostwriter-companion
    ```
 
    If the command isn't found, open a new terminal, or run it from
@@ -60,20 +60,21 @@ login (your subscription). No API key.
    ```
 
    (Only one WordCraft window at a time can use port 7981.)
-4. **Start the companion** in a terminal, with a brief for the piece:
+4. **Start the companion** in a terminal:
 
    ```powershell
-   .\target\release\wordcraft-companion.exe --brief my-essay.brief.md
+   .\target\release\wordcraft-companion.exe
    ```
 
    It prints what it asks and what it posts; Ctrl+C stops it. It finds the window's key by
    itself (`%APPDATA%\WordCraft\control-key.local-7981`).
 
-## The brief and your style
+## A brief, if you want one
 
-`--brief FILE` is a short note on the piece: thesis, audience, tone, what each section must do.
-`--style FILE` is a style guide in your voice (sentence habits, words you avoid, how you cite).
-Both are read again on every call, so edit them while you write.
+You don't need to tell Ghostwriter anything: it learns your style from your writing (below).
+If you'd like suggestions held to a goal for this piece, `--brief FILE` points at a few lines on
+it: thesis, audience, what each section must do. (`--style FILE` takes a style guide too, for
+house rules you'd rather spell out.) Both are read again on every call, so edit them as you go.
 
 ```markdown
 Thesis: housing scarcity in American cities is a policy choice, not a market failure.
@@ -107,29 +108,38 @@ Section 3 must answer the "induced demand" objection before the conclusion.
 
 Ghostwriter is there to make your writing better in your own voice, not to write for you.
 Claude is told to keep to small edits in your words (a tighter phrase, a more precise word,
-grammar, a few connecting words) and never to add sentences, ideas or arguments of its own. It
-also learns from you as you go:
+grammar, a few connecting words) and never to add sentences, ideas or arguments of its own.
 
-- **Every accept and reject is noted** in `feedback.jsonl`, with Claude's reason and the
-  sentence around it. The companion window shows each one (`noted: you rejected …`).
-- **Rejections stop repeats.** Claude sees your recent rejections and acceptances with every
-  request, and the companion drops a suggestion that repeats one you turned down.
-- **A style profile.** After every 10 decisions (`--learn-every`), when you pause, Claude
-  rewrites the learned part of `style.md` from your decisions and your own paragraphs. It covers
-  your voice, the habits to keep, and the edits you welcome or don't. Every later suggestion is
-  held to it.
-- **The profile is yours to edit.** Open `style.md` and write notes above the line
-  (*"I use fragments on purpose."*, *"Never touch my semicolons."*). Ghostwriter only reads that
-  part, and your notes win over anything it learned. Delete the file to start over.
+You never have to describe how you write. Claude works it out:
 
-Both files are in your settings folder: `%APPDATA%\WordCraft\ghostwriter\` on Windows
+- **From your writing.** Once the open document has a page or so of your own paragraphs (about
+  150 words), Claude reads them and writes a **style profile**: your sentence rhythm, diction,
+  punctuation habits, how you argue and cite, and the habits it shouldn't "fix". From then on it
+  refreshes the profile after every 400 or so new words (`--learn-words`) and at most every
+  10 minutes, so it follows you across documents. Paragraphs with a suggestion waiting, or with
+  words of Claude's you accepted, don't count as yours.
+- **From your verdicts.** Every ✓ and ✗ is noted, with Claude's reason and the sentence around it.
+  Claude sees your recent rejections and acceptances with every request, the companion drops a
+  suggestion that repeats one you turned down, and every 10 decisions (`--learn-every`) the
+  profile is refreshed with what you welcome and what you don't. Accept All and Reject All aren't
+  a verdict on each one, so they're left out.
+
+Every later suggestion is held to the profile. The companion window shows what it notes and when
+the profile changes (`noted: you rejected …`, `updated your style profile`).
+
+The files are in your settings folder, `%APPDATA%\WordCraft\ghostwriter\` on Windows
 (`~/.config/wordcraft/ghostwriter/` on Linux, `~/Library/Application Support/WordCraft/ghostwriter/`
-on macOS). One profile covers every document; `--profile DIR` keeps a separate one, for example
-for fiction. `ghostwriter-companion --learn` updates the profile right away from the open document
-and what's in the log, which is a good first step with a few pages of your own writing open.
+on macOS):
 
-Only your accept/reject clicks (✓, ✗, Alt+Shift+Enter, Alt+Shift+Backspace) are learned from;
-Review › Accept All / Reject All isn't a verdict on each one, so it's left out.
+| File | |
+|---|---|
+| `style.md` | the profile. Read it any time. If you ever want to, add a note above its line (*"never touch my semicolons"*): Ghostwriter only reads that part, and your notes win. |
+| `feedback.jsonl` | every accept and reject |
+| `learned-paragraphs.txt` | fingerprints of paragraphs already learned from, so they aren't sent again |
+
+Delete the folder to start over. One profile covers everything you write; `--profile DIR` keeps a
+separate one (say, for fiction). If you open someone else's document, start the companion with
+`--no-learn` so their writing doesn't shape your profile.
 
 ## Options
 
@@ -149,7 +159,8 @@ Review › Accept All / Reject All isn't a verdict on each one, so it's left out
 | `--dry-run`, `--verbose` | | print instead of posting; print Claude's whole reply |
 | `--profile DIR` | `ghostwriter` in your settings folder | where `style.md` and `feedback.jsonl` live |
 | `--learn-every N` | 10 | update the profile after this many decisions |
-| `--learn` | | update the profile now, then exit |
+| `--learn-words N` | 400 | … or after this many words of new writing (the first profile: 150) |
+| `--learn` | | update the profile now from the open document, then exit |
 | `--learn-only` | | note decisions and learn, but suggest nothing (for suggestions from Claude Code) |
 | `--no-learn` | | don't note decisions or use the profile |
 
@@ -172,7 +183,7 @@ way, in orange with ✓/✗.
 2. Optionally, install the skill so Claude knows when to reach for it: copy
    [`skills/ghostwriter/`](../skills/ghostwriter/SKILL.md) to `%USERPROFILE%\.claude\skills\ghostwriter\`.
 3. Start `claude` and ask, for example: *"Read my open Ghostwriter document and suggest edits to
-   the third section against my brief in essay.brief.md."*
+   the third section."*
 
 You don't need the skill: the server sends every client short instructions on the `suggest.*`
 commands when it connects (`crates/mcp/src/suggest.rs`), with your style profile and your recent

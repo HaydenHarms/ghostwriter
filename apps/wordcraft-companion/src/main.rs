@@ -30,8 +30,8 @@ USAGE:
 
 OPTIONS:
   --connect HOST:PORT    the Ghostwriter window (default 127.0.0.1:7981)
-  --brief FILE           what this piece is for: thesis, audience, tone (read again on every call)
-  --style FILE           your style guide (read again on every call)
+  --brief FILE           optional: what this piece is for (thesis, audience); re-read on every call
+  --style FILE           optional: house rules to spell out (your style is learned anyway)
   --model NAME           Claude model for suggestions (default sonnet)
   --idle SECONDS         pause before asking (default 4)
   --max N                suggestions per paragraph at most (default 3)
@@ -42,10 +42,12 @@ OPTIONS:
   --claude-arg ARG       one more argument for claude -p (repeatable), e.g. --claude-arg=--effort=low
   --once                 review the caret's paragraph now, post, and exit
 
-LEARNING (on by default; see docs/companion.md):
+LEARNING YOUR STYLE (on by default, nothing to set up; see docs/companion.md):
   --profile DIR          where your style profile and feedback log live
                          (default: the ghostwriter folder next to Ghostwriter's settings)
   --learn-every N        update the profile after this many accepts/rejects (default 10)
+  --learn-words N        … or after this many words of new writing (default 400; the
+                         first profile comes after 150)
   --learn                update the profile now from the open document and the log, and exit
   --learn-only           learn from your decisions (e.g. on Claude Code's suggestions), suggest nothing
   --no-learn             neither record decisions nor use the profile
@@ -69,6 +71,7 @@ struct Options {
     profile: Option<std::path::PathBuf>,
     learn: bool,
     learn_every: usize,
+    learn_words: usize,
     learn_now: bool,
     suggest: bool,
 }
@@ -89,6 +92,7 @@ fn parse_args(args: &[String]) -> Result<Options, String> {
         profile: None,
         learn: true,
         learn_every: 10,
+        learn_words: 400,
         learn_now: false,
         suggest: true,
         claude: Claude { program: "claude".into(), model: "sonnet".into(), extra: Vec::new(), timeout: Duration::from_secs(180) },
@@ -121,6 +125,7 @@ fn parse_args(args: &[String]) -> Result<Options, String> {
             "--verbose" => o.verbose = true,
             "--profile" => o.profile = Some(value()?.into()),
             "--learn-every" => o.learn_every = usize::try_from(number(value()?)?.clamp(1, 1000)).unwrap_or(10),
+            "--learn-words" => o.learn_words = usize::try_from(number(value()?)?.clamp(50, 100_000)).unwrap_or(400),
             "--learn" => o.learn_now = true,
             "--learn-only" => o.suggest = false,
             "--no-learn" => o.learn = false,
@@ -211,7 +216,7 @@ fn run(o: Options) -> Result<(), String> {
     }
     let first = context(&mut app)?;
     let mut watch = Watch::new(Settings { idle: o.idle, min_words: 8, reach: o.reach });
-    let mut learner = if o.learn { Some(Learner::start(&mut app, o.profile.clone(), o.learn_every)?) } else { None };
+    let mut learner = if o.learn { Some(Learner::start(&mut app, o.profile.clone(), o.learn_every, o.learn_words)?) } else { None };
     if o.learn_now {
         if let Some(l) = learner.as_mut() {
             l.learn(&first, &o.claude, o.verbose, &log)?;
@@ -267,7 +272,7 @@ fn run(o: Options) -> Result<(), String> {
             if let Err(e) = review(&mut app, &o, &mut watch, &mut learner, &ctx, target) {
                 log(&format!("no suggestions this time: {e}"));
             }
-        } else if let Some(l) = learner.as_mut().filter(|l| l.due(now) && watch.quiet(now)) {
+        } else if let Some(l) = learner.as_mut().filter(|l| watch.quiet(now) && l.due(&ctx, now)) {
             calls.push_back(now);
             if let Err(e) = l.learn(&ctx, &o.claude, o.verbose, &log) {
                 log(&format!("couldn't update your style profile: {e}"));

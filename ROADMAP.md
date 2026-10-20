@@ -24,7 +24,7 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 | Saved files | done: suggestions are tracked changes by *Claude (suggestion)*; Word reads them |
 | Windows | done: x64 and ARM64 installers and portable zips, unsigned |
 | macOS, Linux | builds from source; no packages |
-| Learning your style | done (unreleased): accepts and rejects noted in a feedback log; a style profile Claude rewrites from them and your paragraphs, with your own notes on top; rejected edits not repeated; MCP clients get the profile too |
+| Learning your style | done (unreleased): accepts and rejects noted in a feedback log; a style profile Claude builds from your writing by itself (first after ~150 words) and refines from your decisions; rejected edits not repeated; MCP clients get the profile too |
 | Interface languages | the suggestion commands are translated into all 22 of WordCraft's languages |
 
 ## Next
@@ -41,8 +41,9 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 
 ## Progress log
 
-- **2026-10-20 · learning.** The companion notes every accept and reject, keeps a style profile
-  (`style.md`) Claude updates from them and your paragraphs, and stops repeating rejected edits;
+- **2026-10-20 · learning.** Claude works out your style from your own paragraphs (the first profile
+  after about 150 words, refreshed as you write) and from every accept and reject, keeps it in
+  `style.md`, and stops repeating rejected edits; no brief or notes needed;
   Claude is told to sharpen your prose, never write it. MCP clients get the profile too.
 - **2026-10-20 · 1.0.1.** The MCP server tells every client how to suggest; Claude Code skill in
   `skills/ghostwriter/`; documentation rewritten around Ghostwriter's goal.

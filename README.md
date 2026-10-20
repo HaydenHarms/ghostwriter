@@ -38,14 +38,13 @@
 - **Live, but out of your way.** Suggestions arrive a few seconds after you stop typing, only for
   the paragraphs around your caret that changed. They never move your caret and never land in the
   words you're typing.
-- **Learns how you write.** Every suggestion you accept or reject is noted, and Claude keeps a
-  style profile of your voice and the edits you want or don't. Rejected kinds of edits stop
-  coming back. The profile is a plain file you can read and add your own notes to, and your notes
-  win. Claude's job is to sharpen your prose, not to write it: small edits in your words, never
+- **Picks up your style by itself.** You don't describe your voice. Claude reads what you write
+  and builds a style profile from it once there's a page or so, then keeps refining it as you
+  write more and as you accept and reject its suggestions. Kinds of edits you reject stop coming
+  back. Claude's job is to sharpen your prose, not to write it: small edits in your words, never
   new sentences or ideas of its own.
-- **Held to your brief.** Give it a short brief for the piece (thesis, audience, tone) and a style
-  guide in your voice. Claude checks logic, facts, clarity and flow against them before it touches
-  taste. Edit either file while you write: they're re-read on every call.
+- **A brief if you want one.** Optionally, point it at a few lines on the piece (thesis,
+  audience) and Claude holds its suggestions to them too.
 - **Your Claude subscription, no API key.** Claude runs through Claude Code (`claude -p`) on your
   own login.
 - **Plain tracked changes underneath.** A suggestion is a tracked change by
@@ -71,10 +70,11 @@ The portable zip has the same programs without an installer, plus the Claude Cod
 In a terminal, start the companion beside your open document:
 
 ```powershell
-ghostwriter-companion --brief my-essay.brief.md --style my-voice.md
+ghostwriter-companion
 ```
 
-A brief is a few lines:
+That's all it needs. If you'd like suggestions held to a goal for the piece, add
+`--brief my-essay.brief.md`, a few lines like:
 
 ```markdown
 Thesis: housing scarcity in American cities is a policy choice, not a market failure.
@@ -113,8 +113,7 @@ commands (`context`, `add`, `list`, `accept`, `reject`, `withdraw`). They're des
 Ghostwriter **1.0** is the first working version on Windows; learning your style is next to ship.
 After that, roughly in order:
 
-1. **Start Claude from the window**: a Companion toggle, brief picker and your style profile in
-   the app, instead of a terminal.
+1. **Start Claude from the window**: a Companion toggle in the app instead of a terminal.
 2. **Own settings**, so Ghostwriter and WordCraft can be open side by side.
 3. **macOS and Linux** packages (the code already builds there; only packaging is Windows-only).
 4. **Whole-document passes on request**: structure, argument and consistency across sections,
@@ -142,7 +141,7 @@ git clone https://github.com/HaydenHarms/ghostwriter
 cd ghostwriter
 cargo build --release -p wordcraft -p wordcraft-cli -p wordcraft-companion
 .\target\release\wordcraft.exe --control 7981 my-essay.docx
-.\target\release\wordcraft-companion.exe --brief my-essay.brief.md
+.\target\release\wordcraft-companion.exe
 ```
 
 From source the programs keep WordCraft's file names. The release packaging renames them to

@@ -160,15 +160,15 @@ pub fn was_rejected(pr: &Proposal, decisions: &[Decision]) -> bool {
     })
 }
 
-const DISTILL: &str = r#"You keep a style profile for a writer who uses an AI editor that suggests small edits while they write. The editor's job is to help them write better in their own voice, never to write for them. From the writer's own paragraphs and their decisions on the editor's suggestions, write the profile the editor reads before every suggestion.
+const DISTILL: &str = r#"You keep a style profile for a writer who uses an AI editor that suggests small edits while they write. The editor's job is to help them write better in their own voice, never to write for them. The writer won't describe their style; you work it out. From their own paragraphs (the main evidence) and their decisions on the editor's suggestions (when there are any), write the profile the editor reads before every suggestion.
 
 Describe, concretely and with short examples from their text:
 - Voice: sentence length and rhythm, diction, register, punctuation habits, how they argue, cite and transition.
 - Habits to keep: choices that look deliberate, which the editor must not "fix".
-- Edits they welcome: the kinds of suggestions they accepted.
-- Edits to avoid: the kinds they rejected, generalised (not just the instances).
+- Edits they welcome: the kinds of suggestions they accepted (or, before any, what their writing would gain from).
+- Edits to avoid: the kinds they rejected, generalised (not just the instances), and changes that would flatten their voice.
 
-Update the previous profile rather than starting over: keep what still holds, correct what the new evidence contradicts. Don't repeat the writer's own notes, and never contradict them: they win. Under 350 words, Markdown with the four headings above, no preamble. Reply with the profile only."#;
+Update the previous profile rather than starting over: keep what still holds, correct what the new evidence contradicts. Describe the writer, not the topic of these paragraphs. Don't repeat the writer's own notes, and never contradict them: they win. Under 350 words, Markdown with the four headings above, no preamble. Reply with the profile only."#;
 
 /// The prompt that asks Claude to update the learned profile.
 pub fn distill(own_notes: &str, previous: &str, decisions: &[Decision], samples: &[&Block]) -> String {
