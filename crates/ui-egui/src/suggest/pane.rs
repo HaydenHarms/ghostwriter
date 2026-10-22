@@ -72,6 +72,10 @@ pub fn icon(p: &egui::Painter, r: egui::Rect, name: &str) -> bool {
 /// The panel, on the right, while open (and the Thesaurus pane beside it).
 pub fn show(app: &mut WordApp, ui: &mut Ui) {
     super::thesaurus::show(app, ui);
+    // Alt+Shift+S or "Ask Claude for Edits" (`suggest.ask`), with the panel open or not.
+    if let Some(kind) = wordcraft_engine::cmd::suggest::take_ask() {
+        pass_ask(app, &kind);
+    }
     if !panel_open() {
         return;
     }
@@ -92,6 +96,11 @@ pub fn show(app: &mut WordApp, ui: &mut Ui) {
 #[cfg(target_arch = "wasm32")]
 fn pane(_: &mut WordApp, ui: &mut Ui) {
     ui.label(tl!("Claude works in the desktop app."));
+}
+
+#[cfg(target_arch = "wasm32")]
+fn pass_ask(app: &mut WordApp, _: &str) {
+    app.status(tl!("Claude works in the desktop app."));
 }
 
 #[cfg(not(target_arch = "wasm32"))]
@@ -281,6 +290,7 @@ mod native {
             let n = |k: &str| a.get(k).and_then(Value::as_u64).unwrap_or(0);
             let line = match a.get("error").and_then(Value::as_str) {
                 Some(e) => e.to_string(),
+                None if a.get("kind").and_then(Value::as_str) == Some("learn") => tl!("Your style profile is updated.").to_string(),
                 None if n("suggestions") == 0 && n("notes") == 0 => tl!("Nothing to suggest here.").to_string(),
                 None => {
                     let mut parts = Vec::new();
@@ -330,6 +340,25 @@ mod native {
         }
     }
 
+    /// Pass `suggest.ask` (Alt+Shift+S) on to the companion as a request; without a running
+    /// companion, open the panel so the writer can start it.
+    pub(super) fn pass_ask(app: &mut WordApp, kind: &str) {
+        let running = cached(true, |c| c.status.clone()).flatten().is_some_and(|(st, age)| age < settings::STALE && st.get("stopped").is_none());
+        if !running {
+            wordcraft_engine::cmd::suggest::set_panel(true);
+            app.status(tl!("Start Claude in the Claude panel first."));
+            return;
+        }
+        let Some(d) = dir() else { return };
+        let block = if matches!(kind, "structure" | "learn") { None } else { caret_block(app) };
+        let path = app.session.path.as_ref().map(|p| p.display().to_string());
+        match settings::ask(&d, kind, block, path.as_deref()) {
+            Ok(_) => app.status(tl!("Asked Claude. Its answer appears in a moment.")),
+            Err(e) => log::warn!("Claude panel: {e}"),
+        }
+        cached(true, |_| ());
+    }
+
     pub(super) fn pane(app: &mut WordApp, ui: &mut Ui) {
         let t = Tokens::get(ui.ctx());
         ui.ctx().request_repaint_after(std::time::Duration::from_secs(1));
@@ -349,8 +378,8 @@ mod native {
                 Some("suggesting") => (t.orange, tl!("Claude is suggesting…")),
                 Some("learning") => (t.orange, tl!("Claude is learning your style…")),
                 Some(_) => (t.orange, tl!("Claude is working on your request…")),
-                _ if !flag("suggest") && !flag("learn") => (t.text_disabled, tl!("Claude is paused")),
-                _ => (t.green, tl!("Claude is reading along")),
+                _ if s.get("live").and_then(Value::as_bool) == Some(true) => (t.green, tl!("Claude is reading along")),
+                _ => (t.green, tl!("Claude is ready: it suggests only when you ask")),
             },
             None if status.as_ref().is_some_and(|(st, _)| st.get("stopped").is_some()) => (t.red, tl!("Claude stopped")),
             None => (t.text_disabled, tl!("Claude isn't running")),
@@ -392,16 +421,24 @@ mod native {
 
         // Suggestions.
         section(ui, "Suggestions");
-        let mut on = flag("suggest");
-        if ui.checkbox(&mut on, tl!("Suggest edits as I write")).changed() {
-            set("suggest", json!(on));
+        ui.label(tl!("Suggestions per paragraph"));
+        let mut max = num("max", DEFAULT_MAX).clamp(1, 5);
+        if ui.add(egui::Slider::new(&mut max, 1..=5)).changed() {
+            set("max", json!(max));
         }
+        // Off unless turned on: live suggestions call Claude every time the writer pauses.
+        let mut on = s.get("live").and_then(Value::as_bool).unwrap_or(false);
+        if ui.checkbox(&mut on, tl!("Suggest edits as I write")).changed() {
+            set("live", json!(on));
+        }
+        ui.label(
+            RichText::new(tl!(
+                "Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S."
+            ))
+            .font(regular(12.0))
+            .color(t.text_dim),
+        );
         ui.add_enabled_ui(on, |ui| {
-            ui.label(tl!("Suggestions per paragraph"));
-            let mut max = num("max", DEFAULT_MAX).clamp(1, 5);
-            if ui.add(egui::Slider::new(&mut max, 1..=5)).changed() {
-                set("max", json!(max));
-            }
             ui.label(tl!("Pause before suggesting (seconds)"));
             let mut idle = num("idle", DEFAULT_IDLE).clamp(2, 20);
             if ui.add(egui::Slider::new(&mut idle, 2..=20)).changed() {
@@ -446,17 +483,28 @@ mod native {
         egui::Frame::NONE.fill(t.canvas).inner_margin(8).corner_radius(4).show(ui, |ui| {
             ui.set_width(ui.available_width());
             if learned.trim().is_empty() {
-                ui.label(
-                    RichText::new(tl!("Nothing yet: Claude builds your profile once you've written a page or so."))
-                        .font(regular(12.0))
-                        .color(t.text_dim),
-                );
+                ui.label(RichText::new(tl!("Nothing yet: write a page or so, then click Update my style.")).font(regular(12.0)).color(t.text_dim));
             } else {
                 egui::ScrollArea::vertical().id_salt("claude_learned").max_height(220.0).show(ui, |ui| {
                     ui.label(RichText::new(learned.trim()).font(regular(12.0)));
                 });
             }
         });
+        ui.add_space(4.0);
+        // The profile is rewritten only on request (or by itself in live mode).
+        let busy = running.is_none()
+            || request > running.and_then(|(st, _)| st.get("answer")).and_then(|a| a.get("id")).and_then(Value::as_u64).unwrap_or(0);
+        if ui
+            .add_enabled(learn && !busy, egui::Button::new(tl!("Update my style")).min_size(egui::vec2(ui.available_width(), 0.0)))
+            .on_hover_text(tl!("Claude updates your style profile from your writing and your accepts and rejects, only when you click this."))
+            .clicked()
+            && let Some(d) = dir()
+        {
+            if let Err(e) = settings::ask(&d, "learn", None, path.as_deref()) {
+                log::warn!("Claude panel: {e}");
+            }
+            cached(true, |_| ());
+        }
         ui.add_space(4.0);
         ui.horizontal(|ui| {
             if ui.add_enabled(!learned.trim().is_empty(), egui::Button::new(tl!("Open profile"))).clicked() {
@@ -479,7 +527,7 @@ mod native {
 }
 
 #[cfg(not(target_arch = "wasm32"))]
-use native::pane;
+use native::{pane, pass_ask};
 
 #[cfg(test)]
 mod tests {

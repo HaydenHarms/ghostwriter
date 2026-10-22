@@ -13,7 +13,8 @@ use serde_json::{Map, Value, json};
 pub const MODELS: [(&str, &str); 3] = [("haiku", "Fast"), ("sonnet", "Balanced"), ("opus", "Thorough")];
 
 /// What the panel's "Ask Claude" buttons ask for: (request kind, button label, tooltip).
-pub const ASKS: [(&str, &str, &str); 3] = [
+pub const ASKS: [(&str, &str, &str); 4] = [
+    ("edits", "Suggest edits", "A few edits to the paragraph you're in (Alt+Shift+S)"),
     ("transition", "Suggest a transition", "A sentence linking the paragraph you're in to the one before it"),
     ("gap", "Suggest a missing step", "A sentence where this paragraph's reasoning jumps"),
     ("structure", "Review structure", "Notes on the order and flow of the whole piece, and small fixes"),

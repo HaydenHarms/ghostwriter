@@ -7,8 +7,11 @@ milestones toward Word parity are in
 [upstream's docs/roadmap.md](https://github.com/storytold/wordcraft/blob/main/docs/roadmap.md);
 Ghostwriter picks them up by merging upstream, not by working on them here.
 
-## Current focus (toward 1.3)
+## Current focus (toward 1.4)
 
+0. **On request only** (1.3.0): Claude is called only when the writer asks (Suggest edits,
+   Alt+Shift+S, Update my style); live suggestions are opt-in. Next is seeing whether on-request
+   edits are enough, or a cheaper live mode (Haiku, longer pause) is wanted.
 1. **Learning your style** (G6) and **the Claude panel** (G2): released in 1.1.0. Next is trying
    them on real writing and tuning the prompts, the learning thresholds and the profile's length.
 2. **Ask Claude** (G8): released in 1.2.0 (transition, missing step, structure review with notes). Next is

@@ -4,9 +4,12 @@
 word processor underneath is [WordCraft](https://github.com/storytold/wordcraft), which Ghostwriter
 follows from upstream. Everything here is Ghostwriter's addition, not part of upstream WordCraft.*
 
-You write in Ghostwriter as you would in any word processor. When you pause, a small program, `wordcraft-companion`, reads the
-paragraph you're on, asks Claude for a few edits, and puts them **in the page, in orange**, where
-they would go. The words they replace are hidden, so you read the paragraph as it would be once
+You write in Ghostwriter as you would in any word processor. When you want Claude's help, click
+**Suggest edits** in the Claude panel or press **Alt+Shift+S**: a small program,
+`wordcraft-companion`, reads the paragraph you're on, asks Claude for a few edits, and puts them
+**in the page, in orange**, where they would go. Claude is called only when you ask, so writing
+doesn't use your Claude plan; **Suggest edits as I write** in the panel turns on live suggestions
+after every pause instead. The words they replace are hidden, so you read the paragraph as it would be once
 accepted. Hover a suggestion (or put the caret on it) for a card with **✓** (accept), **✗**
 (reject) and the words it replaces. Keep typing the whole time; suggestions never move your caret
 and never land in what you're typing.
@@ -72,13 +75,14 @@ Home › **Claude** (or "Claude" in the search box) opens a panel on the right o
 
 | | |
 |---|---|
-| Status | whether Claude is running, suggesting or learning, and its calls this hour. **Start Claude** starts the companion for this window (it stops when the window closes; its output goes to `companion.log` in the profile folder). |
-| Suggest edits as I write | suggestions on or off. Off, Claude still learns your style. |
-| Suggestions per paragraph, Pause before suggesting | `--max` and `--idle` |
+| Status | whether Claude is running, working on a request, and its calls this hour. **Start Claude** starts the companion for this window (it stops when the window closes; its output goes to `companion.log` in the profile folder). Running, it calls Claude only when you ask. |
+| Suggestions per paragraph | `--max` |
+| Suggest edits as I write | live suggestions, off by default: Claude is asked after every pause (`--idle`, the slider below it) and keeps your style profile up to date by itself. That uses your Claude plan all the time; off, nothing is sent while you write. (`--live` on the command line) |
 | Model | Fast (Haiku), Balanced (Sonnet), Thorough (Opus) |
-| Learn my style | learning on or off |
+| Learn my style | whether your accepts and rejects are noted and your profile is used |
 | Learn from this document | off for a document that isn't your writing (remembered by its file, so save it first) |
-| What Claude has learned | the learned part of your style profile; **Open profile** opens `style.md` in a text editor, **Forget my style** (click it twice) deletes the profile and the feedback log, and Claude learns afresh from what you write next |
+| Update my style | asks Claude to rewrite your style profile from the open document and your accepts and rejects; the only way it changes unless live suggestions are on |
+| What Claude has learned | the learned part of your style profile; **Open profile** opens `style.md` in a text editor, **Forget my style** (click it twice) deletes the profile and the feedback log |
 
 Changes apply within a second. The panel writes them to `settings.json` in the profile folder,
 which the running companion reads; the companion reports back through `status.json`. What you set
@@ -87,11 +91,14 @@ keeps the option's value.
 
 ### Ask Claude
 
-Under the status line, three buttons ask Claude for something bigger than a live suggestion. They
-work on request only, while Claude is running, and count toward its calls this hour.
+Under the status line, four buttons ask Claude for help. They work while Claude is running and
+count toward its calls this hour. **Alt+Shift+S** (or "Ask Claude for Edits" in the search box) is
+**Suggest edits**, with the panel open or not; `suggest.ask {"kind": "transition" | "gap" |
+"structure" | "learn"}` asks for the others.
 
 | | |
 |---|---|
+| **Suggest edits** | up to `--max` (3) small edits to the paragraph the caret is in: a tighter phrase, a more precise word, grammar, a few connecting words |
 | **Suggest a transition** | one sentence (about 30 words at most) linking the paragraph the caret is in to the one before it, as a suggestion at its start (or at the end of the paragraph before) |
 | **Suggest a missing step** | up to two sentences where the caret's paragraph skips a step in its reasoning, each placed where the step belongs |
 | **Review structure** | **Claude's notes** in the panel on order, flow, repetition and sections to move, merge or cut (up to 6, each tied to a paragraph: click one to go there; **Clear notes** removes them), plus up to 4 small in-place fixes as suggestions |
@@ -135,13 +142,13 @@ Section 3 must answer the "induced demand" objection before the conclusion.
 | Undo an accept or reject | Ctrl+Z, as for any edit |
 | Accept or reject them all | `suggest.accept {"all": true}` / `suggest.reject {"all": true}` (command search, CLI or MCP) |
 
-- Suggestions arrive a few seconds after you stop typing (`--idle`, default 4 s, plus Claude's
-  answer time, typically 5–10 s). Only paragraphs near the caret (`--reach`, default 2) that
-  changed since Claude last saw them are looked at; headings and short paragraphs are skipped.
-- A paragraph gets at most `--max` (3) suggestions per round and no new round while it has
-  suggestions waiting, so accept or reject them to get more.
-- Ctrl+Z can take back a suggestion that arrived after the step you undo. The companion doesn't
-  ask again about text it has seen; type a little more to trigger a new round.
+- Suggestions arrive Claude's answer time after you ask (typically 5–10 s). A paragraph gets at
+  most `--max` (3) suggestions per request.
+- With live suggestions on, they arrive a few seconds after you stop typing (`--idle`, default
+  4 s). Only paragraphs near the caret (`--reach`, default 2) that changed since Claude last saw
+  them are looked at; headings and short paragraphs are skipped, and there's no new round while a
+  paragraph has suggestions waiting.
+- Ctrl+Z can take back a suggestion that arrived after the step you undo.
 - Suggestions are tracked changes by the author **Claude (suggestion)**. Saving keeps them, so
   they come back when you reopen the file; Word shows them as ordinary tracked changes. Accept or
   reject them before you export or paste into Substack. A PDF export shows them as accepted, in
@@ -156,17 +163,18 @@ grammar, a few connecting words) and never to add sentences, ideas or arguments 
 
 You never have to describe how you write. Claude works it out:
 
-- **From your writing.** Once the open document has a page or so of your own paragraphs (about
-  150 words), Claude reads them and writes a **style profile**: your sentence rhythm, diction,
-  punctuation habits, how you argue and cite, and the habits it shouldn't "fix". From then on it
-  refreshes the profile after every 400 or so new words (`--learn-words`) and at most every
-  10 minutes, so it follows you across documents. Paragraphs with a suggestion waiting, or with
-  words of Claude's you accepted, don't count as yours.
-- **From your verdicts.** Every ✓ and ✗ is noted, with Claude's reason and the sentence around it.
-  Claude sees your recent rejections and acceptances with every request, the companion drops a
-  suggestion that repeats one you turned down, and every 10 decisions (`--learn-every`) the
-  profile is refreshed with what you welcome and what you don't. Accept All and Reject All aren't
-  a verdict on each one, so they're left out.
+- **From your writing.** Click **Update my style** in the Claude panel once the open document has
+  a page or so of your own paragraphs: Claude reads them and writes a **style profile**: your
+  sentence rhythm, diction, punctuation habits, how you argue and cite, and the habits it
+  shouldn't "fix". Click it again now and then, so it follows you across documents. Paragraphs
+  with a suggestion waiting, or with words of Claude's you accepted, don't count as yours. (With
+  live suggestions on, it does this by itself: the first profile after about 150 words, then after
+  every 400 or so new words, `--learn-words`, at most every 10 minutes.)
+- **From your verdicts.** Every ✓ and ✗ is noted, with Claude's reason and the sentence around it,
+  without calling Claude. Claude sees your recent rejections and acceptances with every request,
+  the companion drops a suggestion that repeats one you turned down, and **Update my style** folds
+  them into the profile (live: every 10 decisions, `--learn-every`). Accept All and Reject All
+  aren't a verdict on each one, so they're left out.
 
 Every later suggestion is held to the profile. The companion window shows what it notes and when
 the profile changes (`noted: you rejected …`, `updated your style profile`).
@@ -189,10 +197,11 @@ separate one (say, for fiction). If you open someone else's document, start the 
 
 | Option | Default | |
 |---|---|---|
-| `--connect HOST:PORT` | `127.0.0.1:7981` | the window to watch |
+| `--connect HOST:PORT` | `127.0.0.1:7981` | the window to work with |
+| `--live` | off | live suggestions after every pause, and style updates by itself (the panel's **Suggest edits as I write**) |
 | `--brief FILE`, `--style FILE` | | see above |
 | `--model NAME` | `sonnet` | `haiku` is faster and lighter on your plan's limits, `opus` reads closer |
-| `--idle SECONDS` | 4 | pause before asking |
+| `--idle SECONDS` | 4 | live: pause before asking |
 | `--max N` | 3 | suggestions per paragraph |
 | `--reach N` | 2 | paragraphs around the caret to consider |
 | `--review-existing` | off | also review the text that was there at start (any paragraph) |
@@ -202,8 +211,8 @@ separate one (say, for fiction). If you open someone else's document, start the 
 | `--once` | | review the caret's paragraph now and exit |
 | `--dry-run`, `--verbose` | | print instead of posting; print Claude's whole reply |
 | `--profile DIR` | `ghostwriter` in your settings folder | where `style.md` and `feedback.jsonl` live |
-| `--learn-every N` | 10 | update the profile after this many decisions |
-| `--learn-words N` | 400 | … or after this many words of new writing (the first profile: 150) |
+| `--learn-every N` | 10 | live: update the profile after this many decisions |
+| `--learn-words N` | 400 | live: … or after this many words of new writing (the first profile: 150) |
 | `--learn` | | update the profile now from the open document, then exit |
 | `--learn-only` | | note decisions and learn, but suggest nothing (for suggestions from Claude Code) |
 | `--no-learn` | | don't note decisions or use the profile |
@@ -248,6 +257,7 @@ Any client can run these (the companion uses only these):
 | `suggest.accept` / `suggest.reject` | `{"id"?, "all"?}` | without either: the one at the caret; an undo step |
 | `suggest.withdraw` | `{"id"?, "all"?}` | reject without an undo step (for clients) |
 | `suggest.decisions` | `{"since"?}` | the writer's accepts and rejects in this window since sequence number `since`: `{next, decisions: [{seq, verdict, text, replaces, context, bulk}]}` (what the companion learns from) |
+| `suggest.ask` | `{"kind"?}` | **Alt+Shift+S**: ask Claude now, through the window and the companion: `edits` (default, the caret's paragraph), `transition`, `gap`, `structure` or `learn` (update the style profile) |
 
 ## How it fits in WordCraft
 

@@ -1,12 +1,12 @@
 <h1 align="center">Ghostwriter</h1>
 
 <p align="center">
-  <b>A word processor where Claude suggests edits in the page as you write.</b>
+  <b>A word processor where Claude suggests edits in the page, when you ask.</b>
 </p>
 
 <p align="center">
-  You keep typing. When you pause, Claude reads the paragraph you're on and puts a few edits
-  right where they would go, in orange. Hover one and click <b>✓</b> or <b>✗</b>. You stay the
+  Press Alt+Shift+S (or click Suggest edits) and Claude reads the paragraph you're on and puts a
+  few edits right where they would go, in orange. Hover one and click <b>✓</b> or <b>✗</b>. You stay the
   author: nothing changes unless you accept it.
 </p>
 
@@ -35,12 +35,13 @@
 - **Suggestions, not rewrites.** Claude never edits your text directly. Each suggestion shows in
   the page as the paragraph would read once accepted, with the words it would replace hidden. Hover
   it, or put the caret on it, to see what it replaces.
-- **Live, but out of your way.** Suggestions arrive a few seconds after you stop typing, only for
-  the paragraphs around your caret that changed. They never move your caret and never land in the
-  words you're typing.
+- **On request, so it doesn't eat your plan.** Claude is called only when you ask: Suggest edits
+  (Alt+Shift+S), the other Ask Claude buttons, or Update my style. Live suggestions after every
+  pause are there if you want them (Suggest edits as I write). Suggestions never move your caret
+  and never land in the words you're typing.
 - **Picks up your style by itself.** You don't describe your voice. Claude reads what you write
-  and builds a style profile from it once there's a page or so, then keeps refining it as you
-  write more and as you accept and reject its suggestions. Kinds of edits you reject stop coming
+  and builds a style profile from it when you click Update my style, folding in what you accept
+  and reject. Kinds of edits you reject stop coming
   back. Claude's job is to sharpen your prose, not to write it: small edits in your words, never
   new sentences or ideas of its own.
 - **A brief if you want one.** Optionally, point it at a few lines on the piece (thesis,
@@ -68,7 +69,8 @@ The portable zip has the same programs without an installer, plus the Claude Cod
 ## Write with Claude
 
 Open the **Claude** panel (Home › **Claude**, or type "Claude" in the search box) and click
-**Start Claude**. That's it: Claude reads along as you write and stops when you close the window.
+**Start Claude**. Then press **Alt+Shift+S** whenever you want edits to the paragraph you're in.
+Claude does nothing on its own in between, and stops when you close the window.
 
 <p align="center">
   <img src="docs/images/claude-panel.png" alt="Ghostwriter with the Claude button at the end of the Home tab and the Claude panel open on the right: a green dot and 'Claude is reading along', switches for suggestions and for learning your style, sliders for suggestions per paragraph and the pause before suggesting, a model choice, and a box showing what Claude has learned about the writer's voice." width="100%">
@@ -76,10 +78,11 @@ Open the **Claude** panel (Home › **Claude**, or type "Claude" in the search b
 
 The panel is where you steer it, and changes apply at once:
 
-- **Suggestions** on or off, how many per paragraph, and how long you pause before Claude looks.
+- **Suggestions**: how many per paragraph, and live suggestions after every pause (off unless you
+  turn them on, since they use your plan all the time).
 - **Model**: Fast (lighter on your plan's limits), Balanced, or Thorough.
 - **Learn my style** on or off, and **Learn from this document** off for someone else's writing.
-- **Ask Claude**, on request: **Suggest a transition** into the paragraph you're in, **Suggest a
+- **Ask Claude**, on request: **Suggest edits** to the paragraph you're in (Alt+Shift+S), **Suggest a transition** into the paragraph you're in, **Suggest a
   missing step** where its reasoning jumps, or **Review structure** for notes on the whole piece's
   order and flow (click a note to jump to its paragraph). What Claude adds still arrives as
   suggestions.
@@ -114,7 +117,7 @@ commands (`context`, `add`, `list`, `accept`, `reject`, `withdraw`). They're des
 
 ## Roadmap
 
-Ghostwriter **1.2** runs on Windows, with the Claude panel, style learning and Ask Claude.
+Ghostwriter **1.3** runs on Windows, with the Claude panel, style learning and Ask Claude.
 After that, roughly in order:
 
 1. **Own settings**, so Ghostwriter and WordCraft can be open side by side.

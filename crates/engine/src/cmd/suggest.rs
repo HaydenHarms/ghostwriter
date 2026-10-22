@@ -33,6 +33,27 @@ thread_local! {
     /// Whether the window's Claude panel is open (`suggest.panel`). Interface state, so it lives
     /// with the thread that draws the window rather than in the document.
     static PANEL: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+    /// What the writer last asked Claude for (`suggest.ask`), until the window passes it on to
+    /// the companion.
+    static ASK: std::cell::RefCell<Option<String>> = const { std::cell::RefCell::new(None) };
+}
+
+/// What `suggest.ask` can ask for: the Claude panel's buttons.
+pub const ASK_KINDS: [&str; 5] = ["edits", "transition", "gap", "structure", "learn"];
+
+/// The writer's last `suggest.ask`, taken (the window hands it to the companion).
+pub fn take_ask() -> Option<String> {
+    ASK.with(|a| a.borrow_mut().take())
+}
+
+/// Ask Claude for something now: Claude is called only when the writer asks.
+fn ask(_: &mut Session, v: &Value) -> CmdResult {
+    let kind = v.get("kind").and_then(Value::as_str).unwrap_or("edits");
+    if !ASK_KINDS.contains(&kind) {
+        return Err(CmdError::Params(format!("kind must be one of {}", ASK_KINDS.join(", "))));
+    }
+    ASK.with(|a| *a.borrow_mut() = Some(kind.to_string()));
+    Ok(json!({"asked": kind}))
 }
 
 /// Whether the Claude panel is open.
@@ -73,6 +94,10 @@ pub fn specs() -> Vec<CommandSpec> {
             .params(r#"{"id"?: n, "all"?: bool}"#)
             .pure(),
         CommandSpec::new("suggest.panel", "Claude", "Home › Ghostwriter", panel).params(r#"{"value"?: bool} (without: toggle)"#).pure(),
+        CommandSpec::new("suggest.ask", "Ask Claude for Edits", "Home › Ghostwriter", ask)
+            .key("Alt+Shift+S")
+            .params(r#"{"kind"?: "edits" (default: edits to the caret's paragraph) | "transition" | "gap" | "structure" | "learn" (update the style profile)} — the window passes it to the companion, which asks Claude"#)
+            .pure(),
         CommandSpec::new("suggest.decisions", "Suggestion Decisions", "Review › Companion", decisions)
             .params(r#"{"since"?: n} → {"next": n, "decisions": [{"seq", "verdict": "accepted"|"rejected", "text", "replaces", "context", "bulk"}]}"#)
             .pure(),
@@ -636,5 +661,19 @@ mod tests {
         let sp = spans(&back);
         assert_eq!(sp.len(), 1);
         assert_eq!(sp[0].text, "constructs");
+    }
+
+    #[test]
+    fn asking_claude_waits_for_the_window_and_checks_the_kind() {
+        let mut s = session("The state builds them.");
+        assert!(take_ask().is_none());
+        assert_eq!(s.run("suggest.ask", &json!({})).unwrap(), json!({"asked": "edits"}));
+        assert_eq!(take_ask().as_deref(), Some("edits"));
+        assert!(take_ask().is_none(), "taken once");
+        s.run("suggest.ask", &json!({"kind": "learn"})).unwrap();
+        assert_eq!(take_ask().as_deref(), Some("learn"));
+        assert!(s.run("suggest.ask", &json!({"kind": "rewrite everything"})).is_err());
+        assert!(take_ask().is_none());
+        assert_eq!(s.registry.get("suggest.ask").map(|c| c.shortcut), Some("Alt+Shift+S"));
     }
 }

@@ -1,8 +1,8 @@
 # Ghostwriter roadmap
 
-**Stage: 1.2, Windows** · next: tuning on real writing; own settings (G3)
+**Stage: 1.3, Windows** · next: tuning on real writing; own settings (G3)
 
-> **Last updated:** 2026-10-21 · **Change:** minor (a real thesaurus, released in 1.2.1)
+> **Last updated:** 2026-10-22 · **Change:** major (Claude is asked only on request; released in 1.3.0)
 
 Ghostwriter's goal is **Claude suggesting edits in the page while you write**, with the writer
 always in charge: suggestions, never silent rewrites. It isn't trying to copy Microsoft Word. The
@@ -12,19 +12,19 @@ parity is tracked upstream, in WordCraft's own
 in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (see
 [docs/companion.md](docs/companion.md#keeping-up-with-upstream)).
 
-## What works today (1.2.1)
+## What works today (1.3.0)
 
 | Area | State |
 |---|---|
 | Suggestions in the page | done: orange inline text, replaced words hidden, ✓/✗ card on hover or at the caret, keyboard accept/reject, undo |
-| Live companion | done: watches the window, asks Claude after a pause, only paragraphs near the caret that changed, never at the caret |
+| Companion | done: asks Claude only on request (Suggest edits, Alt+Shift+S); live suggestions after a pause are opt-in |
 | Brief and style guide | done: re-read on every call |
 | Claude on your subscription | done: `claude -p` through Claude Code, no API key |
 | Ask Claude directly | done: MCP server with built-in instructions, Claude Code skill |
 | Saved files | done: suggestions are tracked changes by *Claude (suggestion)*; Word reads them |
 | Windows | done: x64 and ARM64 installers and portable zips, unsigned |
 | macOS, Linux | builds from source; no packages |
-| Learning your style | done: accepts and rejects noted in a feedback log; a style profile Claude builds from your writing by itself (first after ~150 words) and refines from your decisions; rejected edits not repeated; MCP clients get the profile too |
+| Learning your style | done: accepts and rejects noted in a feedback log; a style profile Claude builds from your writing when you click Update my style (by itself in live mode) and refines from your decisions; rejected edits not repeated; MCP clients get the profile too |
 | Claude panel | done: Home › Claude; start Claude from the window, suggestions and learning on/off, per-document learning, model, profile preview, forget; live, no restart |
 | Ask Claude | done: panel buttons for a transition, a missing step and a structure review; notes in the panel, click to jump |
 | Thesaurus | done: Review › Thesaurus (Shift+F7) opens a pane from Open English WordNet 2024 (about 150,000 words); synonyms come in the word’s own form and case, click to swap |
@@ -45,6 +45,8 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 
 ## Progress log
 
+- **2026-10-22 · 1.3.0.** Claude only on request: Suggest edits (Alt+Shift+S) and Update my style;
+  live suggestions and background style updates are opt-in (they used the Claude plan all the time).
 - **2026-10-21 · 1.2.1.** A real thesaurus: the Thesaurus pane and Open English WordNet 2024 replace
   upstream’s 29-word list, whose button showed nothing.
 - **2026-10-20 · 1.2.0.** Ask Claude (transition, missing step, structure review), released.

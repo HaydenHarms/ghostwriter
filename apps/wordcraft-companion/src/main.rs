@@ -33,12 +33,18 @@ it with: wordcraft --control 7981 (or set WORDCRAFT_CONTROL_PORT).
 USAGE:
   ghostwriter-companion [options]
 
+Claude is asked only when you ask: the Claude panel's buttons (Suggest edits, Ask Claude,
+Update my style) or Alt+Shift+S in the page. Nothing is sent to Claude while you just write,
+unless you turn on live suggestions (--live, or Suggest edits as I write in the panel).
+
 OPTIONS:
   --connect HOST:PORT    the Ghostwriter window (default 127.0.0.1:7981)
+  --live                 also suggest by itself whenever you pause, and keep your style profile
+                         up to date by itself (uses your Claude plan all the time)
   --brief FILE           optional: what this piece is for (thesis, audience); re-read on every call
   --style FILE           optional: house rules to spell out (your style is learned anyway)
   --model NAME           Claude model for suggestions (default sonnet)
-  --idle SECONDS         pause before asking (default 4)
+  --idle SECONDS         live: pause before asking (default 4)
   --max N                suggestions per paragraph at most (default 3)
   --reach N              look only this many paragraphs around the caret (default 2)
   --review-existing      also review text that was there when the companion started
@@ -47,11 +53,13 @@ OPTIONS:
   --claude-arg ARG       one more argument for claude -p (repeatable), e.g. --claude-arg=--effort=low
   --once                 review the caret's paragraph now, post, and exit
 
-LEARNING YOUR STYLE (on by default, nothing to set up; see docs/companion.md):
+LEARNING YOUR STYLE (on by default, nothing to set up; see docs/companion.md). Your accepts and
+rejects are noted as you go (no Claude call); the profile is rewritten when you click Update my
+style, or by itself with --live:
   --profile DIR          where your style profile and feedback log live
                          (default: the ghostwriter folder next to Ghostwriter's settings)
-  --learn-every N        update the profile after this many accepts/rejects (default 10)
-  --learn-words N        … or after this many words of new writing (default 400; the
+  --learn-every N        live: update the profile after this many accepts/rejects (default 10)
+  --learn-words N        live: … or after this many words of new writing (default 400; the
                          first profile comes after 150)
   --learn                update the profile now from the open document and the log, and exit
   --learn-only           learn from your decisions (e.g. on Claude Code's suggestions), suggest nothing
@@ -83,6 +91,7 @@ struct Options {
     learn_every: usize,
     learn_words: usize,
     learn_now: bool,
+    /// Live: suggest (and learn) by itself after a pause. Off: only when asked.
     suggest: bool,
     exit_with_app: bool,
 }
@@ -105,10 +114,11 @@ fn parse_args(args: &[String]) -> Result<Options, String> {
         learn_every: 10,
         learn_words: 400,
         learn_now: false,
-        suggest: true,
+        suggest: false,
         exit_with_app: false,
         claude: Claude { program: "claude".into(), model: "sonnet".into(), extra: Vec::new(), timeout: Duration::from_secs(180) },
     };
+    let mut learn_only = false;
     let mut it = args.iter();
     while let Some(a) = it.next() {
         let (flag, inline) = match a.split_once('=') {
@@ -139,15 +149,19 @@ fn parse_args(args: &[String]) -> Result<Options, String> {
             "--learn-every" => o.learn_every = usize::try_from(number(value()?)?.clamp(1, 1000)).unwrap_or(10),
             "--learn-words" => o.learn_words = usize::try_from(number(value()?)?.clamp(50, 100_000)).unwrap_or(400),
             "--learn" => o.learn_now = true,
-            "--learn-only" => o.suggest = false,
+            "--live" => o.suggest = true,
+            "--learn-only" => learn_only = true,
             "--no-learn" => o.learn = false,
             "--exit-with-app" => o.exit_with_app = true,
             "-h" | "--help" => return Err(String::new()),
             _ => return Err(format!("unknown option {a}")),
         }
     }
-    if !o.learn && (o.learn_now || !o.suggest) {
+    if !o.learn && (o.learn_now || learn_only) {
         return Err("--no-learn can't go with --learn or --learn-only".into());
+    }
+    if learn_only {
+        o.suggest = false;
     }
     Ok(o)
 }
@@ -204,7 +218,9 @@ fn apply(o: &mut Options, base: &Options, dir: Option<&std::path::Path>, documen
         .filter(|m| settings::MODELS.iter().any(|(id, _)| id == m))
         .map_or_else(|| base.claude.model.clone(), str::to_string);
     let skipped = document.is_some_and(|d| settings::skipped(&s).iter().any(|p| p == d));
-    Live { suggest: flag("suggest", base.suggest), learn: flag("learn", base.learn), skipped, forget: num("forget").unwrap_or(0) }
+    // "live", not the old "suggest": a panel set up before suggestions became on-request-only had
+    // "suggest" on, and that must not quietly keep calling Claude.
+    Live { suggest: flag("live", base.suggest), learn: flag("learn", base.learn), skipped, forget: num("forget").unwrap_or(0) }
 }
 
 /// Report to the Claude panel (`status.json`). `busy`: what Claude is doing right now.
@@ -395,7 +411,7 @@ fn run(base: Options) -> Result<(), String> {
         watch.mark_all(&first);
     }
     log(&format!(
-        "watching {} — suggestions after a pause, learning your style; the Claude panel (Home › Claude) sets both. Ctrl+C stops.",
+        "connected to {} — Claude is asked only when you ask (Suggest edits, Alt+Shift+S), unless live suggestions are on in the Claude panel. Ctrl+C stops.",
         o.connect
     ));
     if let Some(l) = &learner {
@@ -459,10 +475,28 @@ fn run(base: Options) -> Result<(), String> {
                 Err(format!("reached {} calls this hour; ask again later", o.max_per_hour))
             } else {
                 calls.push_back(now);
-                report(Some(d), &live, &o, calls.len(), ctx.document.as_deref(), Some(r.kind.as_str()), &last_answer);
-                let mut l = learner.take().filter(|_| live.learn);
-                let result = answer(&mut app, &o, &mut l, &ctx, &r, d);
-                learner = l.or(learner);
+                let busy = match r.kind.as_str() {
+                    "edits" => "suggesting",
+                    "learn" => "learning",
+                    k => k,
+                };
+                report(Some(d), &live, &o, calls.len(), ctx.document.as_deref(), Some(busy), &last_answer);
+                let mut l = if live.learn { learner.take() } else { None };
+                let result = match r.kind.as_str() {
+                    "edits" => match r.block.or(ctx.caret) {
+                        Some(target) => review(&mut app, &o, &mut watch, &mut l, &ctx, target).map(|n| (n, 0)),
+                        None => Err("put the caret in a paragraph with some writing first".to_string()),
+                    },
+                    "learn" => match l.as_mut() {
+                        _ if live.skipped => Err("this document is set not to teach Claude your style".to_string()),
+                        Some(learner) => learner.learn(&ctx, &o.claude, o.verbose, &log).map(|()| (0, 0)),
+                        None => Err("turn on Learn my style first".to_string()),
+                    },
+                    _ => answer(&mut app, &o, &mut l, &ctx, &r, d),
+                };
+                if l.is_some() {
+                    learner = l;
+                }
                 result
             };
             last_answer = match result {
@@ -488,14 +522,17 @@ fn run(base: Options) -> Result<(), String> {
         if let Some(target) = target {
             calls.push_back(now);
             report(dir.as_deref(), &live, &o, calls.len(), ctx.document.as_deref(), Some("suggesting"), &last_answer);
-            let mut l = learner.take().filter(|_| live.learn);
+            let mut l = if live.learn { learner.take() } else { None };
             let r = review(&mut app, &o, &mut watch, &mut l, &ctx, target);
-            learner = l.or(learner);
+            if l.is_some() {
+                learner = l;
+            }
             if let Err(e) = r {
                 log(&format!("no suggestions this time: {e}"));
             }
             last_report = None;
-        } else if let Some(l) = learner.as_mut().filter(|l| learning && watch.quiet(now) && l.due(&ctx, now)) {
+        } else if let Some(l) = learner.as_mut().filter(|l| live.suggest && learning && watch.quiet(now) && l.due(&ctx, now)) {
+            // Only in live mode: otherwise the profile is updated when the writer asks.
             calls.push_back(now);
             report(dir.as_deref(), &live, &o, calls.len(), ctx.document.as_deref(), Some("learning"), &last_answer);
             if let Err(e) = l.learn(&ctx, &o.claude, o.verbose, &log) {
@@ -553,5 +590,23 @@ mod tests {
         assert_eq!(o.learn_every, 3);
         assert_eq!(o.profile.as_deref(), Some(std::path::Path::new("p")));
         assert!(parse_args(&args(&["--no-learn", "--learn"])).is_err());
+    }
+
+    #[test]
+    fn claude_is_asked_only_on_request_unless_live() {
+        let o = parse_args(&args(&[])).unwrap();
+        assert!(!o.suggest, "on request by default");
+        assert!(parse_args(&args(&["--live"])).unwrap().suggest);
+        assert!(parse_args(&args(&["--no-learn"])).is_ok());
+        assert!(!parse_args(&args(&["--live", "--learn-only"])).unwrap().suggest);
+        // A panel saved before this change has "suggest": true; only "live" turns live mode on.
+        let dir = std::env::temp_dir().join(format!("gw-live-{}", std::process::id()));
+        let _ = std::fs::create_dir_all(&dir);
+        let mut opts = o.clone();
+        settings::set(&dir, "suggest", json!(true)).unwrap();
+        assert!(!apply(&mut opts, &o, Some(&dir), None).suggest);
+        settings::set(&dir, "live", json!(true)).unwrap();
+        assert!(apply(&mut opts, &o, Some(&dir), None).suggest);
+        let _ = std::fs::remove_dir_all(&dir);
     }
 }

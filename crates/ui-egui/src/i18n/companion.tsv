@@ -1479,3 +1479,246 @@ zh-hant	adverb	副詞
 zh-hant	Antonyms	反義字
 zh-hant	Synonyms from Open English WordNet 2024 (CC BY 4.0).	同義字來自 Open English WordNet 2024 (CC BY 4.0)。
 zh-hant	The word has changed in the text. Look it up again.	文字中的字詞已變更。請重新查詢。
+# On-request suggestions (Suggest edits, Alt+Shift+S, Update my style).
+bg	Suggest edits	Предложи редакции
+bg	A few edits to the paragraph you're in (Alt+Shift+S)	Няколко редакции на абзаца, в който сте (Alt+Shift+S)
+bg	Ask Claude for Edits	Поискай редакции от Claude
+bg	Claude is ready: it suggests only when you ask	Claude е готов: предлага само когато поискате
+bg	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Използва вашия план за Claude при всяка пауза. Когато е изключено, Claude се пита само когато щракнете бутон по-горе или натиснете Alt+Shift+S.
+bg	Update my style	Обнови стила ми
+bg	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude обновява профила на стила ви от писането ви и от приетите и отхвърлените предложения, само когато щракнете тук.
+bg	Your style profile is updated.	Профилът на стила ви е обновен.
+bg	Start Claude in the Claude panel first.	Първо стартирайте Claude от панела Claude.
+bg	Asked Claude. Its answer appears in a moment.	Claude е попитан. Отговорът ще се появи след малко.
+bg	Nothing yet: write a page or so, then click Update my style.	Още няма нищо: напишете около страница, после щракнете „Обнови стила ми“.
+cs	Suggest edits	Navrhnout úpravy
+cs	A few edits to the paragraph you're in (Alt+Shift+S)	Několik úprav odstavce, ve kterém jste (Alt+Shift+S)
+cs	Ask Claude for Edits	Požádat Clauda o úpravy
+cs	Claude is ready: it suggests only when you ask	Claude je připraven: navrhuje jen tehdy, když požádáte
+cs	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Při každé pauze čerpá z vašeho plánu Claude. Když je vypnuto, Claude se ptá jen po klepnutí na tlačítko výše nebo po stisknutí Alt+Shift+S.
+cs	Update my style	Aktualizovat můj styl
+cs	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude aktualizuje profil vašeho stylu z vašeho psaní a z přijatých a odmítnutých návrhů, jen když na toto klepnete.
+cs	Your style profile is updated.	Profil vašeho stylu je aktualizován.
+cs	Start Claude in the Claude panel first.	Nejprve spusťte Clauda v panelu Claude.
+cs	Asked Claude. Its answer appears in a moment.	Claude byl požádán. Odpověď se objeví za chvíli.
+cs	Nothing yet: write a page or so, then click Update my style.	Zatím nic: napište zhruba stránku a pak klepněte na Aktualizovat můj styl.
+de	Suggest edits	Änderungen vorschlagen
+de	A few edits to the paragraph you're in (Alt+Shift+S)	Ein paar Änderungen am Absatz, in dem Sie sind (Alt+Umschalt+S)
+de	Ask Claude for Edits	Claude um Änderungen bitten
+de	Claude is ready: it suggests only when you ask	Claude ist bereit: Vorschläge nur, wenn Sie fragen
+de	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Verbraucht bei jeder Pause Ihren Claude-Tarif. Aus: Claude wird nur gefragt, wenn Sie oben auf eine Schaltfläche klicken oder Alt+Umschalt+S drücken.
+de	Update my style	Meinen Stil aktualisieren
+de	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude aktualisiert Ihr Stilprofil aus Ihren Texten und Ihren angenommenen und abgelehnten Vorschlägen, nur wenn Sie hier klicken.
+de	Your style profile is updated.	Ihr Stilprofil ist aktualisiert.
+de	Start Claude in the Claude panel first.	Starten Sie zuerst Claude im Claude-Bereich.
+de	Asked Claude. Its answer appears in a moment.	Claude wurde gefragt. Die Antwort erscheint gleich.
+de	Nothing yet: write a page or so, then click Update my style.	Noch nichts: Schreiben Sie etwa eine Seite und klicken Sie dann auf „Meinen Stil aktualisieren“.
+es	Suggest edits	Sugerir cambios
+es	A few edits to the paragraph you're in (Alt+Shift+S)	Algunos cambios en el párrafo en el que está (Alt+Mayús+S)
+es	Ask Claude for Edits	Pedir cambios a Claude
+es	Claude is ready: it suggests only when you ask	Claude está listo: solo sugiere cuando usted lo pide
+es	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Usa su plan de Claude cada vez que hace una pausa. Desactivado, solo se pregunta a Claude cuando hace clic en un botón de arriba o pulsa Alt+Mayús+S.
+es	Update my style	Actualizar mi estilo
+es	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude actualiza su perfil de estilo a partir de lo que escribe y de lo que acepta y rechaza, solo cuando hace clic aquí.
+es	Your style profile is updated.	Su perfil de estilo está actualizado.
+es	Start Claude in the Claude panel first.	Primero inicie Claude en el panel Claude.
+es	Asked Claude. Its answer appears in a moment.	Se ha preguntado a Claude. La respuesta aparecerá en un momento.
+es	Nothing yet: write a page or so, then click Update my style.	Nada todavía: escriba una página o así y luego haga clic en Actualizar mi estilo.
+et	Suggest edits	Soovita muudatusi
+et	A few edits to the paragraph you're in (Alt+Shift+S)	Mõni muudatus lõigus, kus te olete (Alt+Shift+S)
+et	Ask Claude for Edits	Palu Claude'ilt muudatusi
+et	Claude is ready: it suggests only when you ask	Claude on valmis: soovitab ainult siis, kui palute
+et	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Kasutab teie Claude'i paketti iga pausi ajal. Väljas olekus küsitakse Claude'ilt ainult siis, kui klõpsate ülal nuppu või vajutate Alt+Shift+S.
+et	Update my style	Uuenda minu stiili
+et	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude uuendab teie stiiliprofiili teie kirjutise ning vastu võetud ja tagasi lükatud soovituste põhjal ainult siis, kui seda klõpsate.
+et	Your style profile is updated.	Teie stiiliprofiil on uuendatud.
+et	Start Claude in the Claude panel first.	Käivitage esmalt Claude Claude'i paanil.
+et	Asked Claude. Its answer appears in a moment.	Claude'ilt küsiti. Vastus ilmub kohe.
+et	Nothing yet: write a page or so, then click Update my style.	Veel pole midagi: kirjutage umbes lehekülg ja klõpsake siis „Uuenda minu stiili“.
+fr	Suggest edits	Suggérer des modifications
+fr	A few edits to the paragraph you're in (Alt+Shift+S)	Quelques modifications du paragraphe où vous êtes (Alt+Maj+S)
+fr	Ask Claude for Edits	Demander des modifications à Claude
+fr	Claude is ready: it suggests only when you ask	Claude est prêt : il ne suggère que lorsque vous le demandez
+fr	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Utilise votre forfait Claude à chaque pause. Désactivé, Claude n’est sollicité que lorsque vous cliquez sur un bouton ci-dessus ou appuyez sur Alt+Maj+S.
+fr	Update my style	Mettre à jour mon style
+fr	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude met à jour votre profil de style à partir de vos textes et de vos acceptations et refus, uniquement quand vous cliquez ici.
+fr	Your style profile is updated.	Votre profil de style est à jour.
+fr	Start Claude in the Claude panel first.	Démarrez d’abord Claude dans le volet Claude.
+fr	Asked Claude. Its answer appears in a moment.	Claude a été sollicité. Sa réponse arrive dans un instant.
+fr	Nothing yet: write a page or so, then click Update my style.	Rien pour l’instant : écrivez environ une page, puis cliquez sur Mettre à jour mon style.
+hr	Suggest edits	Predloži izmjene
+hr	A few edits to the paragraph you're in (Alt+Shift+S)	Nekoliko izmjena odlomka u kojem ste (Alt+Shift+S)
+hr	Ask Claude for Edits	Zatraži izmjene od Claudea
+hr	Claude is ready: it suggests only when you ask	Claude je spreman: predlaže samo kad zatražite
+hr	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Troši vaš Claude plan pri svakoj stanci. Kad je isključeno, Claude se pita samo kad kliknete gumb iznad ili pritisnete Alt+Shift+S.
+hr	Update my style	Ažuriraj moj stil
+hr	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude ažurira profil vašeg stila iz vašeg pisanja te prihvaćenih i odbijenih prijedloga, samo kad kliknete ovo.
+hr	Your style profile is updated.	Profil vašeg stila je ažuriran.
+hr	Start Claude in the Claude panel first.	Najprije pokrenite Claudea u ploči Claude.
+hr	Asked Claude. Its answer appears in a moment.	Claude je upitan. Odgovor stiže za trenutak.
+hr	Nothing yet: write a page or so, then click Update my style.	Još ništa: napišite otprilike stranicu, a zatim kliknite Ažuriraj moj stil.
+hu	Suggest edits	Módosítások javaslása
+hu	A few edits to the paragraph you're in (Alt+Shift+S)	Néhány módosítás abban a bekezdésben, ahol tart (Alt+Shift+S)
+hu	Ask Claude for Edits	Módosítások kérése Claude-tól
+hu	Claude is ready: it suggests only when you ask	Claude készen áll: csak akkor javasol, ha kéri
+hu	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Minden szünetnél a Claude-előfizetését használja. Kikapcsolva Claude-ot csak akkor kérdezi, ha a fenti gombok egyikére kattint vagy megnyomja az Alt+Shift+S billentyűket.
+hu	Update my style	Stílusom frissítése
+hu	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude az írásai, valamint az elfogadott és elutasított javaslatai alapján frissíti a stílusprofilját, csak ha erre kattint.
+hu	Your style profile is updated.	A stílusprofilja frissült.
+hu	Start Claude in the Claude panel first.	Előbb indítsa el Claude-ot a Claude panelen.
+hu	Asked Claude. Its answer appears in a moment.	Claude megkérdezve. A válasz hamarosan megjelenik.
+hu	Nothing yet: write a page or so, then click Update my style.	Még semmi: írjon körülbelül egy oldalt, majd kattintson a Stílusom frissítése gombra.
+it	Suggest edits	Suggerisci modifiche
+it	A few edits to the paragraph you're in (Alt+Shift+S)	Alcune modifiche al paragrafo in cui si trova (Alt+Maiusc+S)
+it	Ask Claude for Edits	Chiedi modifiche a Claude
+it	Claude is ready: it suggests only when you ask	Claude è pronto: suggerisce solo quando lo chiede
+it	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Usa il piano Claude a ogni pausa. Disattivato, Claude viene interpellato solo quando si fa clic su un pulsante qui sopra o si preme Alt+Maiusc+S.
+it	Update my style	Aggiorna il mio stile
+it	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude aggiorna il profilo di stile dalla scrittura e dai suggerimenti accettati e rifiutati, solo quando si fa clic qui.
+it	Your style profile is updated.	Il profilo di stile è aggiornato.
+it	Start Claude in the Claude panel first.	Avviare prima Claude nel pannello Claude.
+it	Asked Claude. Its answer appears in a moment.	Claude è stato interpellato. La risposta arriva tra un momento.
+it	Nothing yet: write a page or so, then click Update my style.	Ancora niente: scrivere circa una pagina, poi fare clic su Aggiorna il mio stile.
+ja	Suggest edits	修正を提案
+ja	A few edits to the paragraph you're in (Alt+Shift+S)	カーソルのある段落への修正をいくつか (Alt+Shift+S)
+ja	Ask Claude for Edits	Claude に修正を依頼
+ja	Claude is ready: it suggests only when you ask	Claude は準備完了: 依頼したときだけ提案します
+ja	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	一時停止するたびに Claude プランを使用します。オフのときは、上のボタンをクリックするか Alt+Shift+S を押したときだけ Claude に依頼します。
+ja	Update my style	スタイルを更新
+ja	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	クリックしたときだけ、Claude が文章と採用・却下した提案からスタイル プロファイルを更新します。
+ja	Your style profile is updated.	スタイル プロファイルを更新しました。
+ja	Start Claude in the Claude panel first.	まず Claude パネルで Claude を起動してください。
+ja	Asked Claude. Its answer appears in a moment.	Claude に依頼しました。まもなく回答が表示されます。
+ja	Nothing yet: write a page or so, then click Update my style.	まだありません: 1 ページほど書いてから [スタイルを更新] をクリックしてください。
+ko	Suggest edits	수정 제안
+ko	A few edits to the paragraph you're in (Alt+Shift+S)	현재 단락에 대한 몇 가지 수정 (Alt+Shift+S)
+ko	Ask Claude for Edits	Claude에게 수정 요청
+ko	Claude is ready: it suggests only when you ask	Claude 준비됨: 요청할 때만 제안합니다
+ko	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	잠시 멈출 때마다 Claude 요금제를 사용합니다. 끄면 위의 단추를 클릭하거나 Alt+Shift+S를 누를 때만 Claude에게 요청합니다.
+ko	Update my style	내 스타일 업데이트
+ko	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	이 단추를 클릭할 때만 Claude가 글과 수락·거부한 제안을 바탕으로 스타일 프로필을 업데이트합니다.
+ko	Your style profile is updated.	스타일 프로필이 업데이트되었습니다.
+ko	Start Claude in the Claude panel first.	먼저 Claude 패널에서 Claude를 시작하세요.
+ko	Asked Claude. Its answer appears in a moment.	Claude에게 요청했습니다. 곧 답변이 표시됩니다.
+ko	Nothing yet: write a page or so, then click Update my style.	아직 없음: 한 페이지 정도 쓴 다음 내 스타일 업데이트를 클릭하세요.
+pl	Suggest edits	Zaproponuj zmiany
+pl	A few edits to the paragraph you're in (Alt+Shift+S)	Kilka zmian w akapicie, w którym jesteś (Alt+Shift+S)
+pl	Ask Claude for Edits	Poproś Claude o zmiany
+pl	Claude is ready: it suggests only when you ask	Claude jest gotowy: proponuje tylko na prośbę
+pl	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Przy każdej przerwie korzysta z Twojego planu Claude. Wyłączone: Claude jest pytany tylko po kliknięciu przycisku powyżej lub naciśnięciu Alt+Shift+S.
+pl	Update my style	Zaktualizuj mój styl
+pl	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude aktualizuje profil Twojego stylu na podstawie Twojego tekstu oraz przyjętych i odrzuconych propozycji, tylko po kliknięciu tego przycisku.
+pl	Your style profile is updated.	Profil Twojego stylu jest zaktualizowany.
+pl	Start Claude in the Claude panel first.	Najpierw uruchom Claude w panelu Claude.
+pl	Asked Claude. Its answer appears in a moment.	Zapytano Claude. Odpowiedź pojawi się za chwilę.
+pl	Nothing yet: write a page or so, then click Update my style.	Jeszcze nic: napisz mniej więcej stronę, a potem kliknij Zaktualizuj mój styl.
+pt-br	Suggest edits	Sugerir edições
+pt-br	A few edits to the paragraph you're in (Alt+Shift+S)	Algumas edições no parágrafo em que você está (Alt+Shift+S)
+pt-br	Ask Claude for Edits	Pedir edições ao Claude
+pt-br	Claude is ready: it suggests only when you ask	Claude está pronto: só sugere quando você pede
+pt-br	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Usa seu plano do Claude a cada pausa. Desligado, o Claude só é consultado quando você clica em um botão acima ou pressiona Alt+Shift+S.
+pt-br	Update my style	Atualizar meu estilo
+pt-br	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	O Claude atualiza seu perfil de estilo a partir do que você escreve e do que aceita e rejeita, só quando você clica aqui.
+pt-br	Your style profile is updated.	Seu perfil de estilo foi atualizado.
+pt-br	Start Claude in the Claude panel first.	Primeiro inicie o Claude no painel Claude.
+pt-br	Asked Claude. Its answer appears in a moment.	O Claude foi consultado. A resposta aparece em instantes.
+pt-br	Nothing yet: write a page or so, then click Update my style.	Nada ainda: escreva cerca de uma página e clique em Atualizar meu estilo.
+ru	Suggest edits	Предложить правки
+ru	A few edits to the paragraph you're in (Alt+Shift+S)	Несколько правок для абзаца, в котором вы находитесь (Alt+Shift+S)
+ru	Ask Claude for Edits	Попросить у Claude правки
+ru	Claude is ready: it suggests only when you ask	Claude готов: предлагает правки, только когда вы просите
+ru	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Расходует ваш тариф Claude при каждой паузе. Если выключено, Claude спрашивают, только когда вы нажимаете кнопку выше или Alt+Shift+S.
+ru	Update my style	Обновить мой стиль
+ru	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude обновляет профиль вашего стиля по вашему тексту и принятым и отклонённым правкам, только когда вы нажимаете эту кнопку.
+ru	Your style profile is updated.	Профиль вашего стиля обновлён.
+ru	Start Claude in the Claude panel first.	Сначала запустите Claude на панели Claude.
+ru	Asked Claude. Its answer appears in a moment.	Запрос отправлен Claude. Ответ появится через мгновение.
+ru	Nothing yet: write a page or so, then click Update my style.	Пока ничего: напишите примерно страницу, затем нажмите «Обновить мой стиль».
+sr	Suggest edits	Предложи измене
+sr	A few edits to the paragraph you're in (Alt+Shift+S)	Неколико измена пасуса у коме сте (Alt+Shift+S)
+sr	Ask Claude for Edits	Затражи измене од Claude-а
+sr	Claude is ready: it suggests only when you ask	Claude је спреман: предлаже само када затражите
+sr	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Троши ваш Claude план при свакој паузи. Када је искључено, Claude се пита само када кликнете дугме изнад или притиснете Alt+Shift+S.
+sr	Update my style	Ажурирај мој стил
+sr	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude ажурира профил вашег стила на основу вашег писања и прихваћених и одбијених предлога, само када кликнете ово.
+sr	Your style profile is updated.	Профил вашег стила је ажуриран.
+sr	Start Claude in the Claude panel first.	Прво покрените Claude у окну Claude.
+sr	Asked Claude. Its answer appears in a moment.	Claude је упитан. Одговор стиже за тренутак.
+sr	Nothing yet: write a page or so, then click Update my style.	Још ништа: напишите отприлике страницу, а затим кликните „Ажурирај мој стил”.
+sr-latn	Suggest edits	Predloži izmene
+sr-latn	A few edits to the paragraph you're in (Alt+Shift+S)	Nekoliko izmena pasusa u kome ste (Alt+Shift+S)
+sr-latn	Ask Claude for Edits	Zatraži izmene od Claude-a
+sr-latn	Claude is ready: it suggests only when you ask	Claude je spreman: predlaže samo kada zatražite
+sr-latn	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Troši vaš Claude plan pri svakoj pauzi. Kada je isključeno, Claude se pita samo kada kliknete dugme iznad ili pritisnete Alt+Shift+S.
+sr-latn	Update my style	Ažuriraj moj stil
+sr-latn	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude ažurira profil vašeg stila na osnovu vašeg pisanja i prihvaćenih i odbijenih predloga, samo kada kliknete ovo.
+sr-latn	Your style profile is updated.	Profil vašeg stila je ažuriran.
+sr-latn	Start Claude in the Claude panel first.	Prvo pokrenite Claude u oknu Claude.
+sr-latn	Asked Claude. Its answer appears in a moment.	Claude je upitan. Odgovor stiže za trenutak.
+sr-latn	Nothing yet: write a page or so, then click Update my style.	Još ništa: napišite otprilike stranicu, a zatim kliknite „Ažuriraj moj stil”.
+sv	Suggest edits	Föreslå ändringar
+sv	A few edits to the paragraph you're in (Alt+Shift+S)	Några ändringar i stycket du är i (Alt+Skift+S)
+sv	Ask Claude for Edits	Be Claude om ändringar
+sv	Claude is ready: it suggests only when you ask	Claude är redo: föreslår bara när du ber om det
+sv	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Använder din Claude-plan varje gång du pausar. Av: Claude tillfrågas bara när du klickar på en knapp ovan eller trycker på Alt+Skift+S.
+sv	Update my style	Uppdatera min stil
+sv	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude uppdaterar din stilprofil utifrån det du skriver och de förslag du godkänner och avvisar, bara när du klickar här.
+sv	Your style profile is updated.	Din stilprofil är uppdaterad.
+sv	Start Claude in the Claude panel first.	Starta Claude i Claude-panelen först.
+sv	Asked Claude. Its answer appears in a moment.	Claude har tillfrågats. Svaret kommer strax.
+sv	Nothing yet: write a page or so, then click Update my style.	Inget ännu: skriv ungefär en sida och klicka sedan på Uppdatera min stil.
+tr	Suggest edits	Düzenleme öner
+tr	A few edits to the paragraph you're in (Alt+Shift+S)	Bulunduğunuz paragraf için birkaç düzenleme (Alt+Shift+S)
+tr	Ask Claude for Edits	Claude'dan düzenleme iste
+tr	Claude is ready: it suggests only when you ask	Claude hazır: yalnızca siz istediğinizde öneride bulunur
+tr	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Her duraklamada Claude planınızı kullanır. Kapalıyken Claude'a yalnızca yukarıdaki bir düğmeye tıkladığınızda veya Alt+Shift+S tuşlarına bastığınızda sorulur.
+tr	Update my style	Stilimi güncelle
+tr	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude stil profilinizi yazdıklarınızdan ve kabul ettiğiniz ve reddettiğiniz önerilerden yalnızca buna tıkladığınızda günceller.
+tr	Your style profile is updated.	Stil profiliniz güncellendi.
+tr	Start Claude in the Claude panel first.	Önce Claude panelinde Claude'u başlatın.
+tr	Asked Claude. Its answer appears in a moment.	Claude'a soruldu. Yanıt birazdan görünecek.
+tr	Nothing yet: write a page or so, then click Update my style.	Henüz bir şey yok: yaklaşık bir sayfa yazın, sonra Stilimi güncelle'ye tıklayın.
+uk	Suggest edits	Запропонувати правки
+uk	A few edits to the paragraph you're in (Alt+Shift+S)	Кілька правок до абзацу, у якому ви перебуваєте (Alt+Shift+S)
+uk	Ask Claude for Edits	Попросити в Claude правки
+uk	Claude is ready: it suggests only when you ask	Claude готовий: пропонує правки, лише коли ви просите
+uk	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Витрачає ваш тариф Claude під час кожної паузи. Якщо вимкнено, Claude запитують, лише коли ви натискаєте кнопку вище або Alt+Shift+S.
+uk	Update my style	Оновити мій стиль
+uk	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude оновлює профіль вашого стилю на основі вашого тексту та прийнятих і відхилених правок, лише коли ви натискаєте цю кнопку.
+uk	Your style profile is updated.	Профіль вашого стилю оновлено.
+uk	Start Claude in the Claude panel first.	Спершу запустіть Claude на панелі Claude.
+uk	Asked Claude. Its answer appears in a moment.	Запит надіслано Claude. Відповідь з’явиться за мить.
+uk	Nothing yet: write a page or so, then click Update my style.	Поки нічого: напишіть приблизно сторінку, потім натисніть «Оновити мій стиль».
+vi	Suggest edits	Gợi ý chỉnh sửa
+vi	A few edits to the paragraph you're in (Alt+Shift+S)	Một vài chỉnh sửa cho đoạn bạn đang ở (Alt+Shift+S)
+vi	Ask Claude for Edits	Nhờ Claude chỉnh sửa
+vi	Claude is ready: it suggests only when you ask	Claude đã sẵn sàng: chỉ gợi ý khi bạn yêu cầu
+vi	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	Dùng gói Claude của bạn mỗi lần bạn tạm dừng. Khi tắt, Claude chỉ được hỏi khi bạn bấm một nút ở trên hoặc nhấn Alt+Shift+S.
+vi	Update my style	Cập nhật phong cách của tôi
+vi	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	Claude cập nhật hồ sơ phong cách của bạn từ bài viết và các gợi ý bạn chấp nhận hoặc từ chối, chỉ khi bạn bấm nút này.
+vi	Your style profile is updated.	Hồ sơ phong cách của bạn đã được cập nhật.
+vi	Start Claude in the Claude panel first.	Hãy khởi động Claude trong bảng Claude trước.
+vi	Asked Claude. Its answer appears in a moment.	Đã hỏi Claude. Câu trả lời sẽ xuất hiện trong giây lát.
+vi	Nothing yet: write a page or so, then click Update my style.	Chưa có gì: hãy viết khoảng một trang rồi bấm Cập nhật phong cách của tôi.
+zh-hans	Suggest edits	建议修改
+zh-hans	A few edits to the paragraph you're in (Alt+Shift+S)	对你所在段落的几处修改 (Alt+Shift+S)
+zh-hans	Ask Claude for Edits	请 Claude 提出修改
+zh-hans	Claude is ready: it suggests only when you ask	Claude 已就绪：仅在你要求时提出建议
+zh-hans	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	每次停顿都会消耗你的 Claude 套餐。关闭时，只有在你单击上方按钮或按 Alt+Shift+S 时才会询问 Claude。
+zh-hans	Update my style	更新我的风格
+zh-hans	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	仅在你单击此处时，Claude 才会根据你的写作以及你接受和拒绝的建议更新你的风格档案。
+zh-hans	Your style profile is updated.	你的风格档案已更新。
+zh-hans	Start Claude in the Claude panel first.	请先在 Claude 面板中启动 Claude。
+zh-hans	Asked Claude. Its answer appears in a moment.	已询问 Claude。回答稍后出现。
+zh-hans	Nothing yet: write a page or so, then click Update my style.	暂无内容：写一页左右后，单击“更新我的风格”。
+zh-hant	Suggest edits	建議修改
+zh-hant	A few edits to the paragraph you're in (Alt+Shift+S)	對你所在段落的幾處修改 (Alt+Shift+S)
+zh-hant	Ask Claude for Edits	請 Claude 提出修改
+zh-hant	Claude is ready: it suggests only when you ask	Claude 已就緒：只在你要求時提出建議
+zh-hant	Uses your Claude plan every time you pause. Off, Claude is asked only when you click a button above or press Alt+Shift+S.	每次停頓都會使用你的 Claude 方案。關閉時，只有在你按一下上方按鈕或按 Alt+Shift+S 時才會詢問 Claude。
+zh-hant	Update my style	更新我的風格
+zh-hant	Claude updates your style profile from your writing and your accepts and rejects, only when you click this.	只在你按一下這裡時，Claude 才會根據你的寫作以及你接受和拒絕的建議更新你的風格設定檔。
+zh-hant	Your style profile is updated.	你的風格設定檔已更新。
+zh-hant	Start Claude in the Claude panel first.	請先在 Claude 面板中啟動 Claude。
+zh-hant	Asked Claude. Its answer appears in a moment.	已詢問 Claude。回答稍後出現。
+zh-hant	Nothing yet: write a page or so, then click Update my style.	尚無內容：寫一頁左右後，按一下「更新我的風格」。
