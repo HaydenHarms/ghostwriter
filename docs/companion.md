@@ -101,6 +101,18 @@ says, in your voice: no new facts, claims or examples. Words that are already a 
 are marked for Claude so it doesn't build on them. The panel writes the request to `request.json`;
 notes come back in `notes.json` (kept per document, so they're there when you reopen it).
 
+## Thesaurus
+
+Review › **Thesaurus** (or **Shift+F7**) looks up the selected word, or the word at the caret, and
+opens the Thesaurus pane on the right: its meanings, most common first, each with a short
+definition, synonyms and antonyms. Click a synonym to put it in place of the word; it comes in the
+same form and capitalisation (*Improving* gives *Bettering*, *children* gives *kids*). Click
+another to swap again, or press Ctrl+Z. Right-click a synonym to look it up instead, type any word
+in the search box, and use the arrow to go back. Right-click a word in the page for **Synonyms**,
+a short list from the same thesaurus. The words come from
+[Open English WordNet 2024](https://en-word.net) (CC BY 4.0), built into the app, so no
+connection or Claude call is needed.
+
 ## A brief, if you want one
 
 You don't need to tell Ghostwriter anything: it learns your style from your writing (below).
@@ -261,6 +273,15 @@ All code is in new files, except a few hooks, each marked `companion hook`
   and status files, shared by the companion and the Claude panel.
 - `apps/wordcraft-companion/`: the watcher (`learn.rs`: noting decisions and updating the profile). `Cargo.toml` (`default-members`) and
   `xtask/src/layers.rs` list it.
+- The thesaurus: `crates/engine/src/cmd/thesaurus.rs` answers `review.thesaurus` from Open
+  English WordNet 2024 (`assets/thesaurus/oewn-2024.deflate`, rebuilt with
+  `cargo run -p wordcraft-engine --example thesaurus_data -- <oewn2024 dir> assets/thesaurus/oewn-2024.deflate`),
+  finding any form of a word and giving synonyms in the same form and case. It replaces upstream's
+  short built-in list with two lines in `crates/engine/src/cmd/mod.rs` (the module, and
+  `thesaurus::replace` on the command list) and the `miniz_oxide` dependency in
+  `crates/engine/Cargo.toml`. `crates/ui-egui/src/suggest/thesaurus.rs` is the Thesaurus pane
+  (Review › Thesaurus, Shift+F7): one line in `lib.rs` opens it after the command runs, and
+  `suggest/pane.rs` draws it. Its text is translated in `companion.tsv`.
 
 ### Keeping up with upstream
 
@@ -281,7 +302,7 @@ https://github.com/storytold/wordcraft.git main`, `git merge FETCH_HEAD`, and fo
 `docs/roadmap.md`, `AGENTS.md` and `CLAUDE.md` (`git checkout --ours <file>`, then re-apply any
 upstream rule change to the agent files by hand). For the other files in `docs/`, take upstream's
 version and put back the one-paragraph `**Ghostwriter:**` note under the title (and the
-"Ghostwriter additions" section at the end of `docs/architecture.md`). `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 18 lines afterwards.
+"Ghostwriter additions" section at the end of `docs/architecture.md`). `git grep -n "companion hook" -- '*.rs' '*.toml'` should list 22 lines afterwards.
 
 The Ghostwriter name works the same way: the 13 lines marked `ghostwriter brand`
 (`git grep -n "ghostwriter brand" -- '*.rs'`) set the window title, the About box, the

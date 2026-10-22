@@ -69,8 +69,9 @@ pub fn icon(p: &egui::Painter, r: egui::Rect, name: &str) -> bool {
     true
 }
 
-/// The panel, on the right, while open.
+/// The panel, on the right, while open (and the Thesaurus pane beside it).
 pub fn show(app: &mut WordApp, ui: &mut Ui) {
+    super::thesaurus::show(app, ui);
     if !panel_open() {
         return;
     }

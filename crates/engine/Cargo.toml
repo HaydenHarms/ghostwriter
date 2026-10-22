@@ -27,6 +27,7 @@ regex = { workspace = true }
 regex-automata = { workspace = true }
 image = { workspace = true }
 zeroize = { workspace = true }
+miniz_oxide = { workspace = true } # companion hook
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 # The browser clock for `now_iso` (`SystemTime::now()` panics on wasm32).

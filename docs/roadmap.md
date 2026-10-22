@@ -15,6 +15,9 @@ Ghostwriter picks them up by merging upstream, not by working on them here.
    tuning it on real essays: how long a transition may be, how many notes help.
 3. **Own settings and port** (G3), so Ghostwriter and WordCraft can be open at once.
 
+The thesaurus (Review › Thesaurus, Shift+F7) was rebuilt in 1.2.1 on Open English WordNet 2024; see
+[companion.md](companion.md#thesaurus).
+
 Signed builds (G1) are off the list: Ghostwriter is for its owner and friends.
 
 ## Rules for this work

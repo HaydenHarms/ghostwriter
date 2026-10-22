@@ -1214,3 +1214,268 @@ hr	Claude's notes	Claudeove bilješke
 hr	Clear notes	Obriši bilješke
 hr	Go to this paragraph	Idi na ovaj odlomak
 hr	Claude is working on your request…	Claude obrađuje vaš zahtjev…
+# Thesaurus pane (crates/ui-egui/src/suggest/thesaurus.rs).
+bg	Back	Назад
+bg	Search the thesaurus	Търсене в тезауруса
+bg	Select a word, or type one above.	Изберете дума или въведете такава отгоре.
+bg	No synonyms for “{word}”.	Няма синоними за „{word}“.
+bg	Click to use this word; right-click to look it up.	Щракнете, за да използвате тази дума; щракнете с десния бутон, за да я потърсите.
+bg	noun	съществително
+bg	verb	глагол
+bg	adjective	прилагателно
+bg	adverb	наречие
+bg	Antonyms	Антоними
+bg	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Синоними от Open English WordNet 2024 (CC BY 4.0).
+bg	The word has changed in the text. Look it up again.	Думата в текста е променена. Потърсете я отново.
+cs	Back	Zpět
+cs	Search the thesaurus	Hledat v tezauru
+cs	Select a word, or type one above.	Vyberte slovo nebo ho napište výše.
+cs	No synonyms for “{word}”.	Žádná synonyma pro „{word}“.
+cs	Click to use this word; right-click to look it up.	Klepnutím slovo použijete, klepnutím pravým tlačítkem ho vyhledáte.
+cs	noun	podstatné jméno
+cs	verb	sloveso
+cs	adjective	přídavné jméno
+cs	adverb	příslovce
+cs	Antonyms	Antonyma
+cs	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Synonyma z Open English WordNet 2024 (CC BY 4.0).
+cs	The word has changed in the text. Look it up again.	Slovo se v textu změnilo. Vyhledejte ho znovu.
+de	Back	Zurück
+de	Search the thesaurus	Thesaurus durchsuchen
+de	Select a word, or type one above.	Wählen Sie ein Wort aus oder geben Sie oben eines ein.
+de	No synonyms for “{word}”.	Keine Synonyme für „{word}“.
+de	Click to use this word; right-click to look it up.	Klicken, um dieses Wort zu verwenden; Rechtsklick, um es nachzuschlagen.
+de	noun	Substantiv
+de	verb	Verb
+de	adjective	Adjektiv
+de	adverb	Adverb
+de	Antonyms	Antonyme
+de	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Synonyme aus Open English WordNet 2024 (CC BY 4.0).
+de	The word has changed in the text. Look it up again.	Das Wort hat sich im Text geändert. Schlagen Sie es erneut nach.
+es	Back	Atrás
+es	Search the thesaurus	Buscar en el diccionario de sinónimos
+es	Select a word, or type one above.	Seleccione una palabra o escríbala arriba.
+es	No synonyms for “{word}”.	No hay sinónimos para «{word}».
+es	Click to use this word; right-click to look it up.	Haga clic para usar esta palabra; clic derecho para buscarla.
+es	noun	sustantivo
+es	verb	verbo
+es	adjective	adjetivo
+es	adverb	adverbio
+es	Antonyms	Antónimos
+es	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Sinónimos de Open English WordNet 2024 (CC BY 4.0).
+es	The word has changed in the text. Look it up again.	La palabra ha cambiado en el texto. Búsquela de nuevo.
+et	Back	Tagasi
+et	Search the thesaurus	Otsi tesaurusest
+et	Select a word, or type one above.	Valige sõna või tippige see ülal.
+et	No synonyms for “{word}”.	Sõnale „{word}“ pole sünonüüme.
+et	Click to use this word; right-click to look it up.	Klõpsake selle sõna kasutamiseks; paremklõpsake selle otsimiseks.
+et	noun	nimisõna
+et	verb	tegusõna
+et	adjective	omadussõna
+et	adverb	määrsõna
+et	Antonyms	Antonüümid
+et	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Sünonüümid allikast Open English WordNet 2024 (CC BY 4.0).
+et	The word has changed in the text. Look it up again.	Sõna on tekstis muutunud. Otsige see uuesti.
+fr	Back	Retour
+fr	Search the thesaurus	Rechercher dans le dictionnaire des synonymes
+fr	Select a word, or type one above.	Sélectionnez un mot ou tapez-en un ci-dessus.
+fr	No synonyms for “{word}”.	Aucun synonyme pour « {word} ».
+fr	Click to use this word; right-click to look it up.	Cliquez pour utiliser ce mot ; clic droit pour le rechercher.
+fr	noun	nom
+fr	verb	verbe
+fr	adjective	adjectif
+fr	adverb	adverbe
+fr	Antonyms	Antonymes
+fr	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Synonymes issus d’Open English WordNet 2024 (CC BY 4.0).
+fr	The word has changed in the text. Look it up again.	Le mot a changé dans le texte. Recherchez-le à nouveau.
+hr	Back	Natrag
+hr	Search the thesaurus	Pretraži tezaurus
+hr	Select a word, or type one above.	Odaberite riječ ili je upišite gore.
+hr	No synonyms for “{word}”.	Nema sinonima za „{word}”.
+hr	Click to use this word; right-click to look it up.	Kliknite za upotrebu ove riječi; desnom tipkom miša je potražite.
+hr	noun	imenica
+hr	verb	glagol
+hr	adjective	pridjev
+hr	adverb	prilog
+hr	Antonyms	Antonimi
+hr	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Sinonimi iz Open English WordNet 2024 (CC BY 4.0).
+hr	The word has changed in the text. Look it up again.	Riječ se promijenila u tekstu. Potražite je ponovno.
+hu	Back	Vissza
+hu	Search the thesaurus	Keresés a szinonimaszótárban
+hu	Select a word, or type one above.	Jelöljön ki egy szót, vagy írjon be egyet fent.
+hu	No synonyms for “{word}”.	Nincs szinonima a következőhöz: „{word}”.
+hu	Click to use this word; right-click to look it up.	Kattintson a szó használatához; jobb gombbal kattintva megkeresheti.
+hu	noun	főnév
+hu	verb	ige
+hu	adjective	melléknév
+hu	adverb	határozószó
+hu	Antonyms	Ellentétes jelentésű szavak
+hu	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Szinonimák forrása: Open English WordNet 2024 (CC BY 4.0).
+hu	The word has changed in the text. Look it up again.	A szó megváltozott a szövegben. Keresse meg újra.
+it	Back	Indietro
+it	Search the thesaurus	Cerca nel thesaurus
+it	Select a word, or type one above.	Selezionare una parola o digitarla sopra.
+it	No synonyms for “{word}”.	Nessun sinonimo per “{word}”.
+it	Click to use this word; right-click to look it up.	Fare clic per usare questa parola; clic destro per cercarla.
+it	noun	sostantivo
+it	verb	verbo
+it	adjective	aggettivo
+it	adverb	avverbio
+it	Antonyms	Contrari
+it	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Sinonimi da Open English WordNet 2024 (CC BY 4.0).
+it	The word has changed in the text. Look it up again.	La parola è cambiata nel testo. Cercarla di nuovo.
+ja	Back	戻る
+ja	Search the thesaurus	類義語辞典を検索
+ja	Select a word, or type one above.	単語を選択するか、上に入力してください。
+ja	No synonyms for “{word}”.	「{word}」の類義語はありません。
+ja	Click to use this word; right-click to look it up.	クリックするとこの単語を使用します。右クリックで調べます。
+ja	noun	名詞
+ja	verb	動詞
+ja	adjective	形容詞
+ja	adverb	副詞
+ja	Antonyms	対義語
+ja	Synonyms from Open English WordNet 2024 (CC BY 4.0).	類義語の出典: Open English WordNet 2024 (CC BY 4.0)。
+ja	The word has changed in the text. Look it up again.	テキスト内の単語が変更されました。もう一度調べてください。
+ko	Back	뒤로
+ko	Search the thesaurus	동의어 사전 검색
+ko	Select a word, or type one above.	단어를 선택하거나 위에 입력하세요.
+ko	No synonyms for “{word}”.	‘{word}’에 대한 동의어가 없습니다.
+ko	Click to use this word; right-click to look it up.	클릭하면 이 단어를 사용하고, 마우스 오른쪽 단추를 클릭하면 찾아봅니다.
+ko	noun	명사
+ko	verb	동사
+ko	adjective	형용사
+ko	adverb	부사
+ko	Antonyms	반의어
+ko	Synonyms from Open English WordNet 2024 (CC BY 4.0).	동의어 출처: Open English WordNet 2024(CC BY 4.0).
+ko	The word has changed in the text. Look it up again.	텍스트의 단어가 변경되었습니다. 다시 찾아보세요.
+pl	Back	Wstecz
+pl	Search the thesaurus	Szukaj w tezaurusie
+pl	Select a word, or type one above.	Zaznacz słowo lub wpisz je powyżej.
+pl	No synonyms for “{word}”.	Brak synonimów dla „{word}”.
+pl	Click to use this word; right-click to look it up.	Kliknij, aby użyć tego słowa; kliknij prawym przyciskiem, aby je wyszukać.
+pl	noun	rzeczownik
+pl	verb	czasownik
+pl	adjective	przymiotnik
+pl	adverb	przysłówek
+pl	Antonyms	Antonimy
+pl	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Synonimy z Open English WordNet 2024 (CC BY 4.0).
+pl	The word has changed in the text. Look it up again.	Słowo w tekście zostało zmienione. Wyszukaj je ponownie.
+pt-br	Back	Voltar
+pt-br	Search the thesaurus	Pesquisar no dicionário de sinônimos
+pt-br	Select a word, or type one above.	Selecione uma palavra ou digite-a acima.
+pt-br	No synonyms for “{word}”.	Nenhum sinônimo para “{word}”.
+pt-br	Click to use this word; right-click to look it up.	Clique para usar esta palavra; clique com o botão direito para pesquisá-la.
+pt-br	noun	substantivo
+pt-br	verb	verbo
+pt-br	adjective	adjetivo
+pt-br	adverb	advérbio
+pt-br	Antonyms	Antônimos
+pt-br	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Sinônimos do Open English WordNet 2024 (CC BY 4.0).
+pt-br	The word has changed in the text. Look it up again.	A palavra mudou no texto. Pesquise-a novamente.
+ru	Back	Назад
+ru	Search the thesaurus	Поиск в тезаурусе
+ru	Select a word, or type one above.	Выделите слово или введите его выше.
+ru	No synonyms for “{word}”.	Нет синонимов для «{word}».
+ru	Click to use this word; right-click to look it up.	Щелкните, чтобы использовать это слово; щелкните правой кнопкой, чтобы найти его.
+ru	noun	существительное
+ru	verb	глагол
+ru	adjective	прилагательное
+ru	adverb	наречие
+ru	Antonyms	Антонимы
+ru	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Синонимы из Open English WordNet 2024 (CC BY 4.0).
+ru	The word has changed in the text. Look it up again.	Слово в тексте изменилось. Найдите его снова.
+sr	Back	Назад
+sr	Search the thesaurus	Претражи тезаурус
+sr	Select a word, or type one above.	Изаберите реч или је унесите изнад.
+sr	No synonyms for “{word}”.	Нема синонима за „{word}”.
+sr	Click to use this word; right-click to look it up.	Кликните да бисте користили ову реч; десним кликом је потражите.
+sr	noun	именица
+sr	verb	глагол
+sr	adjective	придев
+sr	adverb	прилог
+sr	Antonyms	Антоними
+sr	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Синоними из Open English WordNet 2024 (CC BY 4.0).
+sr	The word has changed in the text. Look it up again.	Реч се променила у тексту. Потражите је поново.
+sr-latn	Back	Nazad
+sr-latn	Search the thesaurus	Pretraži tezaurus
+sr-latn	Select a word, or type one above.	Izaberite reč ili je unesite iznad.
+sr-latn	No synonyms for “{word}”.	Nema sinonima za „{word}”.
+sr-latn	Click to use this word; right-click to look it up.	Kliknite da biste koristili ovu reč; desnim klikom je potražite.
+sr-latn	noun	imenica
+sr-latn	verb	glagol
+sr-latn	adjective	pridev
+sr-latn	adverb	prilog
+sr-latn	Antonyms	Antonimi
+sr-latn	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Sinonimi iz Open English WordNet 2024 (CC BY 4.0).
+sr-latn	The word has changed in the text. Look it up again.	Reč se promenila u tekstu. Potražite je ponovo.
+sv	Back	Tillbaka
+sv	Search the thesaurus	Sök i synonymordlistan
+sv	Select a word, or type one above.	Markera ett ord eller skriv ett ovan.
+sv	No synonyms for “{word}”.	Inga synonymer för ”{word}”.
+sv	Click to use this word; right-click to look it up.	Klicka för att använda ordet; högerklicka för att slå upp det.
+sv	noun	substantiv
+sv	verb	verb
+sv	adjective	adjektiv
+sv	adverb	adverb
+sv	Antonyms	Antonymer
+sv	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Synonymer från Open English WordNet 2024 (CC BY 4.0).
+sv	The word has changed in the text. Look it up again.	Ordet har ändrats i texten. Slå upp det igen.
+tr	Back	Geri
+tr	Search the thesaurus	Eş anlamlılar sözlüğünde ara
+tr	Select a word, or type one above.	Bir sözcük seçin veya yukarıya yazın.
+tr	No synonyms for “{word}”.	“{word}” için eş anlamlı yok.
+tr	Click to use this word; right-click to look it up.	Bu sözcüğü kullanmak için tıklayın; aramak için sağ tıklayın.
+tr	noun	isim
+tr	verb	fiil
+tr	adjective	sıfat
+tr	adverb	zarf
+tr	Antonyms	Zıt anlamlılar
+tr	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Eş anlamlılar: Open English WordNet 2024 (CC BY 4.0).
+tr	The word has changed in the text. Look it up again.	Sözcük metinde değişti. Yeniden arayın.
+uk	Back	Назад
+uk	Search the thesaurus	Пошук у тезаурусі
+uk	Select a word, or type one above.	Виділіть слово або введіть його вище.
+uk	No synonyms for “{word}”.	Немає синонімів для «{word}».
+uk	Click to use this word; right-click to look it up.	Клацніть, щоб використати це слово; клацніть правою кнопкою, щоб знайти його.
+uk	noun	іменник
+uk	verb	дієслово
+uk	adjective	прикметник
+uk	adverb	прислівник
+uk	Antonyms	Антоніми
+uk	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Синоніми з Open English WordNet 2024 (CC BY 4.0).
+uk	The word has changed in the text. Look it up again.	Слово в тексті змінилося. Знайдіть його знову.
+vi	Back	Quay lại
+vi	Search the thesaurus	Tìm trong từ điển đồng nghĩa
+vi	Select a word, or type one above.	Chọn một từ hoặc nhập từ ở trên.
+vi	No synonyms for “{word}”.	Không có từ đồng nghĩa cho “{word}”.
+vi	Click to use this word; right-click to look it up.	Bấm để dùng từ này; bấm chuột phải để tra từ.
+vi	noun	danh từ
+vi	verb	động từ
+vi	adjective	tính từ
+vi	adverb	trạng từ
+vi	Antonyms	Từ trái nghĩa
+vi	Synonyms from Open English WordNet 2024 (CC BY 4.0).	Từ đồng nghĩa từ Open English WordNet 2024 (CC BY 4.0).
+vi	The word has changed in the text. Look it up again.	Từ trong văn bản đã thay đổi. Hãy tra lại.
+zh-hans	Back	返回
+zh-hans	Search the thesaurus	搜索同义词库
+zh-hans	Select a word, or type one above.	选择一个单词，或在上方输入。
+zh-hans	No synonyms for “{word}”.	没有“{word}”的同义词。
+zh-hans	Click to use this word; right-click to look it up.	单击以使用此单词；右键单击以查找它。
+zh-hans	noun	名词
+zh-hans	verb	动词
+zh-hans	adjective	形容词
+zh-hans	adverb	副词
+zh-hans	Antonyms	反义词
+zh-hans	Synonyms from Open English WordNet 2024 (CC BY 4.0).	同义词来自 Open English WordNet 2024 (CC BY 4.0)。
+zh-hans	The word has changed in the text. Look it up again.	文本中的单词已更改。请重新查找。
+zh-hant	Back	返回
+zh-hant	Search the thesaurus	搜尋同義字典
+zh-hant	Select a word, or type one above.	選取一個字詞，或在上方輸入。
+zh-hant	No synonyms for “{word}”.	沒有「{word}」的同義字。
+zh-hant	Click to use this word; right-click to look it up.	按一下以使用此字詞；按右鍵以查詢。
+zh-hant	noun	名詞
+zh-hant	verb	動詞
+zh-hant	adjective	形容詞
+zh-hant	adverb	副詞
+zh-hant	Antonyms	反義字
+zh-hant	Synonyms from Open English WordNet 2024 (CC BY 4.0).	同義字來自 Open English WordNet 2024 (CC BY 4.0)。
+zh-hant	The word has changed in the text. Look it up again.	文字中的字詞已變更。請重新查詢。

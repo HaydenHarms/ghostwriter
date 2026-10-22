@@ -4,6 +4,7 @@
 //! the words it replaces. The Claude panel is in [`pane`].
 
 pub mod pane;
+pub mod thesaurus;
 
 use egui::{Align2, CornerRadius, Id, Pos2, Rect, Sense, Stroke, Ui, pos2, vec2};
 use serde_json::json;

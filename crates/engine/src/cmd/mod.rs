@@ -46,6 +46,7 @@ pub mod table_resize;
 pub mod table_style;
 pub mod templates;
 pub mod text;
+pub mod thesaurus; // companion hook
 pub mod tools;
 pub mod view;
 pub mod wordart;
@@ -102,6 +103,7 @@ pub fn registry() -> Registry {
     v.extend(speech::specs());
     v.extend(controls::specs());
     v.extend(suggest::specs()); // companion hook
+    thesaurus::replace(&mut v); // companion hook
     Registry::new(v)
 }
 

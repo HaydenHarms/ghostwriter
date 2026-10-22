@@ -73,6 +73,32 @@ list (author, source, license) is in ATTRIBUTION.md.
     FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
     OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
     DEALINGS IN THE SOFTWARE.
+- English thesaurus (assets/thesaurus/oewn-2024.deflate; Ghostwriter addition) — built by
+  crates/engine/examples/thesaurus_data.rs from Open English WordNet 2024
+  (https://en-word.net), Copyright 2019-present the Open English WordNet team, used under the
+  Creative Commons Attribution 4.0 International License
+  (https://creativecommons.org/licenses/by/4.0/). Changes: synonyms, short glosses and antonyms
+  only, repacked. It is derived from Princeton WordNet, under the WordNet License:
+
+    WordNet 3.1 Copyright 2011 by Princeton University. All rights reserved.
+
+    Permission to use, copy, modify and distribute this software and database and its
+    documentation for any purpose and without fee or royalty is hereby granted, provided that
+    you agree to comply with the following copyright notice and statements, including the
+    disclaimer, and that the same appear on ALL copies of the software, database and
+    documentation, including modifications that you make for internal use or for distribution.
+
+    THIS SOFTWARE AND DATABASE IS PROVIDED "AS IS" AND PRINCETON UNIVERSITY MAKES NO
+    REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED. BY WAY OF EXAMPLE, BUT NOT LIMITATION,
+    PRINCETON UNIVERSITY MAKES NO REPRESENTATIONS OR WARRANTIES OF MERCHANTABILITY OR FITNESS
+    FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF THE LICENSED SOFTWARE, DATABASE OR
+    DOCUMENTATION WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER
+    RIGHTS.
+
+    The name of Princeton University or Princeton may not be used in advertising or publicity
+    pertaining to distribution of the software and/or database. Title to copyright in this
+    software, database and any associated documentation shall at all times remain with
+    Princeton University and LICENSEE agrees to preserve same.
 - All UI icons are drawn in code (crates/ui-egui/src/icons.rs) and are original work, MIT OR Apache-2.0.
 
 Rust dependencies (egui, eframe, vello_cpu, skrifa, harfrust, krilla, quick-xml, zip, image, …)

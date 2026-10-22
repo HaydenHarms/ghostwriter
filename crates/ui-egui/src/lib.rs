@@ -904,6 +904,7 @@ impl WordApp {
         if id == "file.accessibility" && r.is_ok() {
             self.session.view.accessibility_pane = true;
         }
+        suggest::thesaurus::after_run(id, &r); // companion hook
         // Match Fields and Check for Errors show what they found.
         if let Ok(v) = &r
             && let Some(d) = dialogs::Dialog::report(id, v)

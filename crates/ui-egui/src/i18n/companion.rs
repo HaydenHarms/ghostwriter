@@ -17,9 +17,9 @@ mod tests {
     fn rows_are_per_language() {
         let de = super::rows("de");
         assert!(de.contains("\tAccept Suggestion\tVorschlag annehmen\n"));
-        assert_eq!(de.lines().count(), 55);
+        assert_eq!(de.lines().count(), 67);
         // "sr" must not pick up "sr-latn" rows.
-        assert_eq!(super::rows("sr").lines().count(), 55);
+        assert_eq!(super::rows("sr").lines().count(), 67);
         assert!(super::rows("en").is_empty());
     }
 }

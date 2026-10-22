@@ -2,7 +2,7 @@
 
 **Stage: 1.2, Windows** · next: tuning on real writing; own settings (G3)
 
-> **Last updated:** 2026-10-20 · **Change:** major (the goal restated as live Claude suggestions; WordCraft's Word-parity roadmap moved to upstream)
+> **Last updated:** 2026-10-21 · **Change:** minor (a real thesaurus, released in 1.2.1)
 
 Ghostwriter's goal is **Claude suggesting edits in the page while you write**, with the writer
 always in charge: suggestions, never silent rewrites. It isn't trying to copy Microsoft Word. The
@@ -12,7 +12,7 @@ parity is tracked upstream, in WordCraft's own
 in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (see
 [docs/companion.md](docs/companion.md#keeping-up-with-upstream)).
 
-## What works today (1.2.0)
+## What works today (1.2.1)
 
 | Area | State |
 |---|---|
@@ -27,6 +27,7 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 | Learning your style | done: accepts and rejects noted in a feedback log; a style profile Claude builds from your writing by itself (first after ~150 words) and refines from your decisions; rejected edits not repeated; MCP clients get the profile too |
 | Claude panel | done: Home › Claude; start Claude from the window, suggestions and learning on/off, per-document learning, model, profile preview, forget; live, no restart |
 | Ask Claude | done: panel buttons for a transition, a missing step and a structure review; notes in the panel, click to jump |
+| Thesaurus | done: Review › Thesaurus (Shift+F7) opens a pane from Open English WordNet 2024 (about 150,000 words); synonyms come in the word’s own form and case, click to swap |
 | Interface languages | the suggestion commands are translated into all 22 of WordCraft's languages |
 
 ## Next
@@ -44,6 +45,8 @@ in [`docs/`](docs/). Ghostwriter takes those improvements by merging upstream (s
 
 ## Progress log
 
+- **2026-10-21 · 1.2.1.** A real thesaurus: the Thesaurus pane and Open English WordNet 2024 replace
+  upstream’s 29-word list, whose button showed nothing.
 - **2026-10-20 · 1.2.0.** Ask Claude (transition, missing step, structure review), released.
 - **2026-10-20 · Ask Claude.** Claude panel buttons for a transition, a missing step and a
   structure review; the review's notes sit in the panel and jump to their paragraph.
